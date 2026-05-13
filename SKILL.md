@@ -124,12 +124,34 @@ remaining unknowns do not block the first change
 
 Initialize OpenSpec early so the project can track specs and changes.
 
+OpenSpec initialization is not complete until the agent verifies the install result.
+
+Verify:
+
+```text
+openspec/ exists
+openspec/specs/ exists
+openspec/changes/ exists
+the selected tool adapter was installed or intentionally skipped
+the OpenSpec CLI can run a basic command after initialization
+```
+
+If OpenSpec initialization partially fails, do not treat it as a clean success. Classify the failure:
+
+```text
+project-local OpenSpec structure missing -> blocking; fix before continuing
+selected tool adapter failed to install -> blocking for that tool; guide the user to fix or explicitly continue without the adapter
+global prompt/config write failed -> explain the exact path and permission issue; give the user the command or permission change needed; ask whether to retry, skip global install, or continue project-local only
+```
+
+When continuing after a non-blocking OpenSpec issue, record the limitation in `docs/ai-tools.md` and tell the user what will not work until it is fixed.
+
 Do not create a formal change until the user confirms propose.
 
 Gate prompt to user:
 
 ```text
-OpenSpec is initialized. Next I recommend grill-with-docs to fill CONTEXT.md and docs/ from the clarified PRD before creating the first change.
+OpenSpec is initialized and verified. Next I recommend grill-with-docs to fill CONTEXT.md and docs/ from the clarified PRD before creating the first change.
 ```
 
 ### 3. Fill Project Context With grill-with-docs

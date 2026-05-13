@@ -51,6 +51,26 @@ docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for ha
 Do not write code or create a change until I confirm propose.
 ```
 
+## Initialize OpenSpec
+
+```text
+Confirmed: initialize OpenSpec.
+
+Initialize OpenSpec for this project, but do not create a formal change and do not write business code.
+
+After initialization, verify:
+- openspec/ exists
+- openspec/specs/ exists
+- openspec/changes/ exists
+- the selected tool adapter was installed or explicitly skipped
+- the OpenSpec CLI can run a basic command
+
+If any part fails, do not call it fully successful.
+Explain the exact failure, whether it blocks the next stage, and the concrete command or permission fix the user should run.
+
+If continuing project-local only after a non-blocking global adapter failure, record the limitation in docs/ai-tools.md.
+```
+
 ## Create OpenSpec Change
 
 ```text

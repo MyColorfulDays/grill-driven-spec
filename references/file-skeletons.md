@@ -148,6 +148,13 @@ This project uses AGENTS.md as the shared project-level agent guide.
 
 Missing OpenSpec or Lore should not block initial project skeleton creation or requirement grilling.
 
+## Tool Status
+
+TBD
+
+Record tool setup failures here, including blocked global prompt/config writes, skipped adapters,
+permission issues, and the command or user action needed to fix them.
+
 Do not assume every IDE or agent automatically reads AGENTS.md.
 If a tool has its own configuration directory, install or refresh the OpenSpec workflow for that tool.
 ```
