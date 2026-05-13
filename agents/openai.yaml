@@ -1,0 +1,3 @@
+display_name: Grill Driven Spec
+short_description: Turn vague ideas into OpenSpec-ready specs.
+default_prompt: Use grill-driven-spec to turn my vague project idea into PRD, docs, and an OpenSpec change without jumping into code.
