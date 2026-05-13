@@ -16,15 +16,14 @@ Core rule:
 grill first, spec second, code last
 ```
 
-## When To Use
+## Use Cases
 
-Use this workflow when:
+Grill Driven Spec supports two main situations:
 
-- starting a new project from a vague idea
-- adding a feature whose requirements are not clear yet
-- you want PRD and OpenSpec work before implementation
-- you want the agent to ask questions instead of jumping into code
-- you want decisions, non-goals, tests, and verification steps captured as the project evolves
+- **0 to 1:** start from a vague idea, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
+- **Existing project adoption:** summarize the current project history, establish shared docs, and use the workflow for future changes.
+
+The current recommended path is to test the 0 to 1 flow first.
 
 ## Use With Any Agent
 
@@ -45,23 +44,11 @@ The workflow is the stable core. Tool-specific files belong in `agents/` as adap
 ## Quick Start Prompt
 
 ```text
-Use grill-driven-spec to turn my vague project idea into PRD, project docs, and an OpenSpec change.
+Use grill-driven-spec for a new 0-to-1 project.
+Start by creating the minimal project docs, then grill me one question at a time.
+Do not create an OpenSpec change or write code until I confirm.
 
-Do not jump into code.
-Ask one important question at a time.
-Update PRD.md after important answers.
-Do not create an OpenSpec change until I confirm propose.
-
-My idea is: <describe idea here>
-```
-
-For an empty project, use:
-
-```text
-Use grill-driven-spec.
-
-Initialize the current empty project with the minimal spec skeleton.
-Then grill me one question at a time before creating any OpenSpec change.
+Idea: <describe idea here>
 ```
 
 ## Workflow
