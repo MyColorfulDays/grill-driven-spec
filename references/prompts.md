@@ -104,6 +104,8 @@ Confirmed: begin development.
 
 Follow tasks.md in order. Prefer TDD for behavior changes.
 Update tasks.md as work completes.
+If resuming after an interruption, first read tasks.md, test/lint/build status, dev server state, git status, and known blockers.
+Continue from the first incomplete or failed task instead of restarting completed work.
 If requirements or design conflict with reality, pause and update PRD.md, design.md, or tasks.md before continuing.
 ```
 
@@ -113,6 +115,8 @@ If requirements or design conflict with reality, pause and update PRD.md, design
 Tell me how to verify the MVP.
 
 Include startup commands, core flows, MVP behaviors, explicit non-goals, test status, and known limitations.
+Do not claim browser or manual verification passed unless it actually ran and passed.
+If local browser automation, network, sandbox, or server issues block verification, leave the task unchecked and ask me to verify the listed flows.
 ```
 
 ## Sync and Archive
@@ -122,4 +126,5 @@ Before archiving, check tasks, tests/lint/build, README.md, PRD.md, CONTEXT.md, 
 and unresolved open questions or ADRs.
 
 If checks pass and user verification passed, sync specs and archive the change.
+If the archive tool creates a date-stamped directory that differs from the session date, report it and keep the tool-generated name.
 ```

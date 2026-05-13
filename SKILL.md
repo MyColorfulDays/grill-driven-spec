@@ -246,6 +246,18 @@ Implement only after user confirmation.
 
 Follow `tasks.md` in order. Prefer TDD for behavior changes. Update `tasks.md` as work completes.
 
+If work is interrupted or resumed, first re-read the current status before continuing:
+
+```text
+tasks.md completion state
+recent test/lint/build results
+running dev server state, if relevant
+git status
+known blockers or failed verification steps
+```
+
+Continue from the first incomplete or failed task. Do not restart the project or repeat completed work unless the current files show it is necessary.
+
 If new facts appear, update the correct artifact:
 
 ```text
@@ -261,6 +273,8 @@ work breakdown -> tasks.md
 
 After implementation and tests, do not archive immediately.
 
+Do not claim manual or browser verification passed unless it actually ran and passed. If a browser bridge, UI automation tool, network, sandbox, or local server prevents the agent from completing manual verification, leave the relevant task unchecked, explain the limitation, and ask the user to run the verification steps.
+
 Tell the user:
 
 ```text
@@ -273,6 +287,8 @@ known limitations
 ```
 
 If verification fails, classify the issue as bug, unclear spec, PRD change, or documentation drift before editing.
+
+If the user reports that manual verification passed, update `tasks.md` or the relevant change artifact to mark that verification complete, then re-check validation before recommending archive.
 
 ### 8. Sync and Archive
 
@@ -291,6 +307,8 @@ no blocking open questions or ADRs remain
 ```
 
 Then sync specs and archive the change.
+
+If the archive tool generates an archive directory name with a date that differs from the current session date, do not rename it manually. Report both dates clearly, keep the tool-generated name, and verify the archived change and synced specs using the tool.
 
 ## Hard Rules
 
