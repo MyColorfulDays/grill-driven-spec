@@ -49,6 +49,8 @@ The workflow is the stable core. Tool-specific files belong in `agents/` as adap
 
 For a new project, the agent should run preflight, initialize the git repository if needed, preserve any raw notes or source materials, create the minimal project documents, then start grilling one question at a time.
 
+The agent should not ask visual companion, stack, design, or product questions before the minimal skeleton exists.
+
 ## Workflow
 
 1. Run preflight and seed the project skeleton.

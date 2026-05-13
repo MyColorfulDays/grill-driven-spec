@@ -29,6 +29,10 @@ For a 0-to-1 entry such as:
 
 first run a small preflight before asking product questions.
 
+Stage 0 must run before any optional companion, mockup, brainstorming, stack-selection, product-clarification, or design question. For a 0-to-1 entry, the expected first action is to inspect the folder, initialize git if needed, and create or update the minimal project skeleton.
+
+Ask before Stage 0 only when continuing would risk data loss, overwrite a meaningful existing file, require user approval for a privileged install, or when the folder is clearly an existing implemented project rather than a 0-to-1 or unstructured project folder.
+
 Check:
 
 ```text
@@ -90,7 +94,7 @@ README.md should contain only a single H1 using the current directory name.
 
 Keep all other files thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product scope, product features, technical stack, business rules, architecture, user personas, or implementation directories.
 
-For empty projects, create basic files first, then immediately enter grilling. Do not ask multiple setup questions before creating the skeleton.
+For empty or unstructured projects, create basic files first, then immediately enter grilling. Do not ask setup, visual companion, stack, design, or product questions before creating the skeleton.
 
 Gate prompt to user:
 
