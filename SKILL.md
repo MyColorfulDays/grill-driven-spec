@@ -168,7 +168,31 @@ docs/adr/ for hard-to-reverse decisions with real tradeoffs
 docs/inbox/ for raw stakeholder materials
 ```
 
-Advance only when the project context is sufficient to create a first OpenSpec change.
+Stage 3 is a context pass, not a full product-design interview. Ask only questions that block a testable first OpenSpec change.
+
+Examples of blocking Stage 3 questions:
+
+```text
+canonical domain terms or names
+data lifecycle rules
+important business rules
+hard technical constraints
+security, privacy, or data-handling constraints
+choices that would cause a hard-to-reverse architecture decision
+```
+
+Examples that should usually move to `design.md` or `tasks.md` instead of more grilling:
+
+```text
+screen layout
+button labels
+component structure
+CSS framework
+minor UI copy
+default implementation details with low reversibility cost
+```
+
+Advance as soon as the project context is sufficient to create a first OpenSpec change. When only non-blocking UI or implementation details remain, stop grilling and ask the user to confirm entering propose.
 
 If blocked, name exactly one blocking question and continue grilling.
 

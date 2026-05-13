@@ -45,9 +45,14 @@ Do not write code or create an OpenSpec change.
 ```text
 Use grill-with-docs to review PRD.md, AGENTS.md, CONTEXT.md, docs/, and openspec/.
 
-Ask one most important question at a time.
+Ask one most important blocking question at a time.
 Update PRD.md for product intent, CONTEXT.md for stable domain language,
 docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for hard-to-reverse decisions.
+
+Do not continue grilling for non-blocking UI or implementation details such as screen layout,
+button labels, component structure, CSS framework, or copy. Put those in design.md or tasks.md later.
+When the context is enough for a testable first OpenSpec change, ask me to confirm propose.
+
 Do not write code or create a change until I confirm propose.
 ```
 
