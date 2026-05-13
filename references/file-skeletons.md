@@ -65,6 +65,7 @@ Follow the project documents before writing code:
 - Do not create OpenSpec changes from vague intent.
 - Do not invent product scope, stack, architecture, or business rules.
 - Keep unknowns explicit as TBD or Open Questions.
+- Before changing security-sensitive behavior, read SECURITY.md and keep unknown security decisions explicit.
 ```
 
 ## CONTEXT.md
@@ -85,6 +86,21 @@ TBD
 ## Open Questions
 
 TBD
+```
+
+## SECURITY.md
+
+```markdown
+# Security
+
+Security requirements are not decided yet.
+
+Use this file to record confirmed security, privacy, secrets, authentication,
+authorization, compliance, abuse-prevention, and data-handling constraints.
+
+Unknowns should stay explicit as TBD or Open Questions.
+
+Do not invent a security policy before requirements are confirmed.
 ```
 
 ## docs/inbox/README.md

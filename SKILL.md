@@ -38,7 +38,7 @@ Check:
 ```text
 current directory name
 whether the directory is already a git repository
-whether README.md, PRD.md, AGENTS.md, CONTEXT.md, docs/, or openspec/ already exist
+whether README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, or openspec/ already exist
 raw source materials such as notes, drafts, meeting summaries, exports, screenshots, PDFs, or docs
 signals that this is already an implemented project rather than a 0-to-1 folder
 git availability
@@ -83,6 +83,7 @@ README.md
 PRD.md
 AGENTS.md
 CONTEXT.md
+SECURITY.md
 docs/inbox/README.md
 docs/architecture.md
 docs/adr/README.md

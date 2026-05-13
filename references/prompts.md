@@ -19,7 +19,7 @@ Run preflight first:
 - do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
 - do not ask visual companion, stack, design, or product questions before the skeleton is in place
 
-Create README.md, PRD.md, AGENTS.md, CONTEXT.md, docs/inbox/README.md,
+Create README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/inbox/README.md,
 docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-tools.md.
 
 README.md should contain only a single H1 using the current directory name.
