@@ -20,7 +20,7 @@ grill first, spec second, code last
 
 Grill Driven Spec supports two main situations:
 
-- **0 to 1:** start from a vague idea, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
+- **0 to 1:** start from an empty or unstructured folder, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
 - **Existing project adoption:** summarize the current project history, establish shared docs, and use the workflow for future changes.
 
 The current recommended path is to test the 0 to 1 flow first.
@@ -44,16 +44,14 @@ The workflow is the stable core. Tool-specific files belong in `agents/` as adap
 ## Quick Start Prompt
 
 ```text
-Use grill-driven-spec for a new 0-to-1 project.
-Start by creating the minimal project docs, then grill me one question at a time.
-Do not create an OpenSpec change or write code until I confirm.
-
-Idea: <describe idea here>
+/grill-driven-spec I want to build <project idea>
 ```
+
+For a new project, the agent should run preflight, initialize the git repository if needed, preserve any raw notes or source materials, create the minimal project documents, then start grilling one question at a time.
 
 ## Workflow
 
-1. Seed the project skeleton.
+1. Run preflight and seed the project skeleton.
 2. Clarify product intent with grill-me.
 3. Initialize OpenSpec.
 4. Fill project context with grill-with-docs.

@@ -5,13 +5,27 @@ Use these prompts as compact starting points. Adapt them to the current project.
 ## Seed Project Skeleton
 
 ```text
-Please initialize the current empty project with a minimal grill-driven spec skeleton.
+Use grill-driven-spec for a new 0-to-1 project.
+
+Idea: <describe idea here>
+
+Run preflight first:
+- check whether this directory is already a git repository
+- scan for existing raw source materials such as notes, drafts, PDFs, docs, screenshots, exports, or meeting summaries
+- check whether this looks like an empty or unstructured 0-to-1 folder, not an already implemented project
+- check whether git, OpenSpec, and Lore are available
+- initialize git if available and this is not already a git repository
+- do not let missing OpenSpec or Lore block the initial skeleton and grill phase
+- do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
 
 Create README.md, PRD.md, AGENTS.md, CONTEXT.md, docs/inbox/README.md,
 docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-tools.md.
 
-Keep all files thin. Use TBD for unknown stack, commands, architecture, or decisions.
-Do not write business code, create business directories, invent features, or create an OpenSpec change.
+README.md should contain only a single H1 using the current directory name.
+Keep all other files thin. Use TBD for unknown stack, commands, architecture, or decisions.
+Do not write business code, create business directories, invent features, choose a stack, or create an OpenSpec change.
+
+After the skeleton is in place, start grilling me one question at a time.
 ```
 
 ## grill-me

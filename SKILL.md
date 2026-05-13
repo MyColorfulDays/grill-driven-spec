@@ -19,7 +19,58 @@ The user expresses ideas and confirms phase transitions. You ask focused questio
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
-### 0. Seed the Project Skeleton
+### 0. Preflight and Seed the Project Skeleton
+
+For a 0-to-1 entry such as:
+
+```text
+/grill-driven-spec I want to build <project idea>
+```
+
+first run a small preflight before asking product questions.
+
+Check:
+
+```text
+current directory name
+whether the directory is already a git repository
+whether README.md, PRD.md, AGENTS.md, CONTEXT.md, docs/, or openspec/ already exist
+raw source materials such as notes, drafts, meeting summaries, exports, screenshots, PDFs, or docs
+signals that this is already an implemented project rather than a 0-to-1 folder
+git availability
+OpenSpec availability
+Lore availability, if commits are expected
+```
+
+Dependency rules:
+
+```text
+git is required before initializing the repository or committing
+OpenSpec is required before Stage 2 initializes OpenSpec or Stage 4 creates a change
+Lore is recommended before committing workflow, docs, or spec decisions, but it must not block initial grilling
+```
+
+If `git` is available and the current directory is not a git repository, initialize it with `git init`.
+
+If `git` is missing, tell the user it must be installed before repository initialization or commits, then continue only with file work if the environment allows it.
+
+If OpenSpec is missing, do not create an OpenSpec change. Install it or ask the user to install it before Stage 2.
+
+If Lore is missing, install it or ask the user to install it before creating Lore-managed commits. Do not delay Stage 0 or Stage 1 just because Lore is unavailable.
+
+0-to-1 does not require a perfectly empty directory. A folder with raw source materials is still a 0-to-1 candidate if it does not already have a coherent project skeleton.
+
+Treat existing raw materials as inbox sources:
+
+```text
+do not delete, move, rename, summarize destructively, or overwrite user files without explicit approval
+do not treat raw materials as confirmed requirements
+record their paths as raw sources or open questions where useful
+distill only clearly stated facts, and keep uncertain interpretations under Open Questions
+ask the user to confirm important requirements before marking them confirmed
+```
+
+If the folder already contains meaningful implementation artifacts, such as a source tree, package manifest, application config, or existing product docs, pause and tell the user this appears closer to Existing Project Adoption than 0-to-1. Recommend the adoption flow instead of overwriting the project with a new skeleton.
 
 Create or update the minimum project context:
 
@@ -35,7 +86,11 @@ docs/diagrams/README.md
 docs/ai-tools.md
 ```
 
-Keep files thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product scope.
+README.md should contain only a single H1 using the current directory name.
+
+Keep all other files thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product scope, product features, technical stack, business rules, architecture, user personas, or implementation directories.
+
+For empty projects, create basic files first, then immediately enter grilling. Do not ask multiple setup questions before creating the skeleton.
 
 Gate prompt to user:
 
