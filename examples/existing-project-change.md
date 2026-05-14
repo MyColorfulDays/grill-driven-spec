@@ -46,6 +46,7 @@ Or after the first OpenSpec change has shipped, run:
 - For convention-impacting changes, the agent asks one blocking impact question about the affected area.
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
 - The agent creates an OpenSpec proposal only after desired behavior and convention impact are clear.
+- If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
 - The agent does not implement until review passes and the user confirms development.
 
 ## Regression Risks
@@ -56,5 +57,6 @@ Or after the first OpenSpec change has shipped, run:
 - Invoking a visual companion, mockup flow, or broad brainstorming flow before the next product slice is selected.
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
+- Ignoring an unfinished active change and recommending a new next slice.
 - Treating observed legacy behavior as confirmed desired behavior.
 - Letting a data, security, deployment, or shared UI convention change pass review without one focused impact question.

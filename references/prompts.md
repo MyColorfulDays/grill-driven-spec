@@ -13,6 +13,19 @@ Next-slice selection -> an initial OpenSpec change is complete or shipped and th
 
 If signals conflict, explain the classification briefly and ask before crossing a major gate.
 
+When resuming a previous workflow, inspect current artifacts before choosing a stage:
+
+```text
+check git status and current branch
+read PRD.md, CONTEXT.md, SECURITY.md, docs/, and docs/ai-tools.md when present
+check raw sources already recorded in PRD.md
+inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
+inspect active change proposal.md, specs/, design.md, and tasks.md when present
+use active changes in openspec/changes/ as the primary change-state signal
+continue from the earliest incomplete gate
+do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
+```
+
 When entering a new workflow stage or adoption phase, print a large Markdown heading first:
 
 ```markdown

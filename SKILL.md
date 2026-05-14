@@ -89,6 +89,46 @@ If signals conflict, explain the classification briefly and ask the user before 
 gate. Do not run the 0-to-1 skeleton flow in an implemented project. Do not run full adoption when a
 baseline is already sufficient for the requested change.
 
+## Workflow Resume
+
+When a session resumes or the user says to continue, inspect the current artifacts before choosing a
+stage. Do not rely on chat memory alone.
+
+Resume preflight should check:
+
+```text
+git status and current branch
+PRD.md, CONTEXT.md, SECURITY.md, and docs/
+raw sources already recorded in PRD.md
+openspec/, openspec/specs/, openspec/changes/, and archived changes
+active OpenSpec change artifacts: proposal.md, specs/, design.md, tasks.md
+task checkbox state, review notes, validation results, and user verification status when present
+recent test/lint/build status if implementation has started
+known blockers, Open Questions, and tool setup limitations in docs/ai-tools.md
+```
+
+Use OpenSpec as the primary change-state signal when it is available:
+
+```text
+active changes in openspec/changes/ take precedence over recommending a new change
+archived changes are history, not active work
+if openspec/ is missing, Stage 2 is not complete
+if an active change has only proposal.md, continue Stage 4 and complete the change artifacts
+if proposal.md, specs/, design.md, and tasks.md exist but review has not passed, continue Stage 5
+if review passed and development was confirmed, continue Stage 6 from the first incomplete task
+if implementation is complete but user verification is not recorded, continue Stage 7
+if user verification passed but the change is not archived, continue Stage 8
+```
+
+Prefer OpenSpec CLI/status commands when available, such as listing changes or validating the active
+change, but do not rely only on CLI output. Also inspect the project artifacts. If CLI output and
+files disagree, explain the mismatch and ask before crossing a major gate.
+
+Resume from the earliest incomplete gate. Do not repeat completed stages unless artifacts are
+missing, inconsistent, or the user explicitly asks to revisit them. Do not reclassify raw materials
+as confirmed requirements. Do not create a new OpenSpec change while an unfinished active change is
+present unless the user explicitly chooses to abandon, archive, or defer it.
+
 ## Project Artifact Language
 
 Use one stable primary language for project artifacts created or updated by this workflow.
@@ -627,7 +667,8 @@ Implement only after user confirmation.
 
 Follow `tasks.md` in order. Prefer TDD for behavior changes. Update `tasks.md` as work completes.
 
-If work is interrupted or resumed, first re-read the current status before continuing:
+If work is interrupted or resumed during implementation, use the global Workflow Resume rules and
+first re-read the current implementation status before continuing:
 
 ```text
 tasks.md completion state
