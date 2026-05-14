@@ -40,6 +40,38 @@ SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and doc
 Use Observed, Confirmed, and Open Questions language where useful.
 After the baseline is in place, ask me one blocking adoption question at a time to separate desired
 behavior from legacy or accidental behavior.
+Stop adoption once baseline docs are sufficient, observed and confirmed behavior are separated, and
+the smallest first change is confirmed or intentionally deferred.
+```
+
+## Existing Project Change
+
+```text
+Use grill-driven-spec to prepare this change in an existing implemented project.
+
+Requested change: <describe change here>
+
+Run lightweight change preflight first:
+- check repository status and current branch
+- identify likely source, test, config, documentation, and OpenSpec locations for this change
+- check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
+- identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+- check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
+
+Do not run the 0-to-1 skeleton flow.
+Do not force full adoption if the baseline is already sufficient for this change.
+Do not choose a new stack, redesign shared UI, migrate data, or change deployment conventions unless the requested change affects them.
+
+If baseline context is missing or too thin to judge desired behavior, create or refresh only the
+minimum adoption baseline first. If the change follows existing conventions, inherit them and record
+that in design.md. If the change affects architecture, data, security, deployment, shared UI, or
+workflow conventions, ask one blocking impact question before creating an OpenSpec proposal.
+
+If product intent is vague, invoke grill-me with a change-scoped contract. If project/domain context
+is the blocker, invoke grill-with-docs with a change-scoped contract. Ask only questions needed to
+make the requested change testable and reviewable.
+
+Do not create an OpenSpec change until desired behavior and convention impact are clear enough for review.
 ```
 
 ## Seed Project Skeleton

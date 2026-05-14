@@ -22,6 +22,7 @@ Grill Driven Spec supports two main situations:
 
 - **0 to 1:** start from an empty or unstructured folder, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
 - **Existing project adoption:** inventory current product reality, establish shared docs, and use the workflow for future changes.
+- **Existing project changes:** prepare a new change in an already implemented project while inheriting current architecture, UI, test, and deployment conventions unless the change affects them.
 
 ## Use With Any Agent
 
@@ -93,6 +94,8 @@ The agent should inventory the current product reality, create or refresh shared
 9. Sync and archive after verification passes.
 
 Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
+
+Existing project changes use a lighter entry path when the project already has enough baseline context: clarify the desired behavior, check whether the change affects architecture, data, security, deployment, shared UI, or workflow conventions, then proceed to OpenSpec review without re-adopting the whole project.
 
 ## Hard Rules
 

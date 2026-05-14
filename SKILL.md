@@ -140,6 +140,15 @@ security, privacy, data, or operational constraints
 the smallest first change worth proposing after adoption
 ```
 
+Stop adoption when:
+
+```text
+baseline docs are thin but sufficient to orient future work
+observed behavior and confirmed desired behavior are clearly separated
+the user has confirmed the smallest first change worth proposing, or confirmed there is no immediate change
+remaining unknowns can be carried as Open Questions without blocking future change review
+```
+
 Initialize or verify OpenSpec after the baseline is understood. For existing behavior, specs may
 describe confirmed behavior that must be protected. Future changes still follow propose, review,
 implement, verify, and archive.
@@ -149,6 +158,62 @@ Gate prompt to user:
 ```text
 I have inventoried the existing project and created or refreshed only thin guidance docs.
 Next I recommend an adoption grill: I will ask one blocking question at a time to separate desired behavior from observed behavior before creating any OpenSpec change.
+```
+
+### Existing Project Change Entry
+
+Use this path when the folder already contains a meaningful implemented product and the user asks to
+add, change, or fix product behavior rather than adopt the whole project.
+
+Do not run the 0-to-1 skeleton flow. Do not force a full adoption pass when the existing project
+already has enough baseline context for the requested change.
+
+First run a lightweight change preflight:
+
+```text
+check repository status and current branch
+identify the likely source, test, config, docs, and OpenSpec locations for this change
+check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
+identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+check git, OpenSpec, and Lore availability when relevant
+check grill-me and grill-with-docs availability when clarification may be needed
+```
+
+Branch the flow:
+
+```text
+if baseline context is missing or too thin to judge desired behavior -> do a minimal adoption baseline first
+if the change fits existing architecture, UI, test, deployment, and workflow conventions -> inherit them by default
+if the change affects architecture, data, security, deployment, shared UI, or workflow conventions -> ask one blocking impact question before proposing
+if product intent is vague -> invoke grill-me with a change-scoped contract
+if project/domain context is the blocker -> invoke grill-with-docs with a change-scoped contract
+```
+
+Change-scoped grill contract:
+
+```text
+goal: clarify only what is needed for the requested change
+inputs: current project docs, relevant code/docs, and any existing OpenSpec artifacts
+write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, and the future OpenSpec change when confirmed
+question focus: desired behavior, compatibility with existing workflows, non-goals, and convention impact
+stop condition: the change can be proposed as testable behavior and its convention impact is known
+constraints: do not re-adopt the whole project, choose a new stack, redesign shared UI, migrate data, or implement before review unless the user explicitly asks for that scope
+```
+
+For small changes that follow existing conventions, do not block on stack, architecture, or UI
+questions. Record in `design.md` that the implementation follows existing conventions.
+
+For convention-impacting changes, keep the question narrow. Ask about the specific affected area,
+not the whole product vision.
+
+Do not create an OpenSpec change until desired behavior and convention impact are clear enough for
+review.
+
+Gate prompt to user:
+
+```text
+I have checked the existing project context for this change.
+This looks like a change-scoped flow rather than full adoption. I will clarify only the behavior and convention impact needed before creating an OpenSpec proposal.
 ```
 
 ### 0. Preflight and Seed the Project Skeleton

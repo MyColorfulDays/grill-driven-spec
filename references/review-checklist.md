@@ -24,6 +24,7 @@ Use after an OpenSpec change is created and before development begins.
 - Are technical constraints and risks explicit?
 - For greenfield projects, are stack, runtime, persistence, sensitive-data handling, integrations, broad UI direction, local verification, and deployment decisions confirmed or explicitly delegated to the agent as conservative defaults?
 - For existing projects, does the design either follow inherited architecture, stack, UI, test, and deployment conventions or identify the specific conventions it changes?
+- For existing-project changes, is the impact on architecture, data, security, deployment, shared UI, and workflow conventions explicit?
 - Are important tradeoffs recorded?
 - Should any decision move to `docs/adr/`?
 - Are open questions listed instead of hidden?
