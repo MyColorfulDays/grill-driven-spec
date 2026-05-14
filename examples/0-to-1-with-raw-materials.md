@@ -23,6 +23,7 @@ Then run:
 ## Expected Behavior
 
 - The agent treats the folder as a 0-to-1 candidate, not as Existing Project Adoption.
+- The agent makes each stage transition visually obvious with a large Markdown stage heading.
 - The agent does not delete, move, rename, overwrite, or destructively summarize raw source files.
 - The agent initializes git when available and creates the thin Stage 0 skeleton.
 - `PRD.md` records raw source paths under `Raw Sources`.

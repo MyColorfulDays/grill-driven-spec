@@ -24,6 +24,7 @@ Then run:
 ## Expected Behavior
 
 - The agent does not run the 0-to-1 skeleton flow.
+- The agent makes each adoption phase transition visually obvious with a large Markdown adoption heading.
 - The agent inventories source, tests, configs, docs, scripts, and product surfaces before asking product questions.
 - Existing docs are preserved and refreshed only when missing, clearly thin, or explicitly requested.
 - Observed code behavior is labeled as observed until the user confirms it is desired behavior.

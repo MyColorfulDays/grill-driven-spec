@@ -53,6 +53,30 @@ Prefer enabling already-installed local skills over installing new global packag
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
+## Stage Transition Output
+
+When entering a new stage or adoption phase, make the transition visually obvious to the user with a
+large Markdown heading before doing stage work.
+
+Use this format:
+
+```markdown
+# Stage <number>: <short stage name>
+
+Current gate: <one sentence describing what must happen before the next stage>.
+```
+
+For Existing Project Adoption, use:
+
+```markdown
+# Adoption: <short phase name>
+
+Current gate: <one sentence describing what must happen before the next phase>.
+```
+
+Keep the heading short and stable. Do not rely on emojis, colors, terminal control codes, or
+agent-specific UI features for stage visibility.
+
 ### Existing Project Adoption Entry
 
 Use this path when the folder already contains a meaningful implemented product, such as a source

@@ -2,6 +2,16 @@
 
 Use these prompts as compact starting points. Adapt them to the current project.
 
+When entering a new workflow stage or adoption phase, print a large Markdown heading first:
+
+```markdown
+# Stage <number>: <short stage name>
+
+Current gate: <one sentence describing what must happen before the next stage>.
+```
+
+For adoption, use `# Adoption: <short phase name>`.
+
 ## Adopt Existing Project
 
 ```text
