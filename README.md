@@ -46,14 +46,21 @@ Installing this skill does not automatically install every dependency it compose
 Before crossing workflow gates, the agent should verify:
 
 - `git`: system Git CLI.
-- `grill-me`: AI agent workflow skill.
-- `grill-with-docs`: AI agent workflow skill.
-- `OpenSpec`: intended OpenSpec workflow/CLI and tool adapter.
-- `Lore`: Lore commit tool/CLI, when Lore commits are expected.
+- `grill-me`: AI agent workflow skill from `https://github.com/mattpocock/skills`.
+- `grill-with-docs`: AI agent workflow skill from `https://github.com/mattpocock/skills`.
+- `OpenSpec`: intended OpenSpec workflow/CLI from `https://github.com/Fission-AI/OpenSpec`.
+- `Lore`: Lore commit tool/CLI from `https://github.com/Ian-stetsenko/lore-protocol`, when Lore commits are expected.
 
-Do not install similarly named packages just because a dependency is missing. If the exact install
-source is not known in the current agent environment, the agent should ask the user for the intended
-source or installation instructions.
+Known install sources:
+
+```text
+grill skills: npx skills@latest add mattpocock/skills
+OpenSpec: npm install -g @fission-ai/openspec@latest
+Lore: npm install -g lore-protocol
+```
+
+Do not install similarly named packages just because a dependency is missing. If these commands are
+not appropriate for the user's agent or environment, ask the user before substituting another source.
 
 ## Quick Start Prompt
 

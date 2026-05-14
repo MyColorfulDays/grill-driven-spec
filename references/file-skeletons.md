@@ -170,12 +170,20 @@ Missing grill-me blocks Stage 1. Missing grill-with-docs blocks Stage 3.
 ## Dependency Identity
 
 - Git means the system Git CLI, verified with `git --version`.
-- grill-me and grill-with-docs mean AI agent workflow skills, not arbitrary packages with similar names.
-- OpenSpec means the intended OpenSpec workflow/CLI and selected tool adapter for this project.
-- Lore means the Lore commit tool/CLI, verified with `lore --version` or `lore help`.
+- grill-me and grill-with-docs mean AI agent workflow skills from `https://github.com/mattpocock/skills`, not arbitrary packages with similar names.
+- OpenSpec means the intended OpenSpec workflow/CLI from `https://github.com/Fission-AI/OpenSpec` and selected tool adapter for this project.
+- Lore means the Lore commit tool/CLI from `https://github.com/Ian-stetsenko/lore-protocol`, verified with `lore --version` or `lore help`.
 
-Do not guess package-manager names for missing workflow skills or tools. If the exact install source
-is unknown, ask the user for the intended source or installation instructions.
+Known install sources:
+
+```text
+grill skills: npx skills@latest add mattpocock/skills
+OpenSpec: npm install -g @fission-ai/openspec@latest
+Lore: npm install -g lore-protocol
+```
+
+Do not guess package-manager names for missing workflow skills or tools. If these commands are not
+appropriate for the current agent or environment, ask the user before substituting another source.
 
 ## Tool Status
 

@@ -39,15 +39,15 @@ Dependency identity and install policy:
 
 ```text
 git -> system Git CLI; verify with git --version; install only through the user's OS package manager or official Git distribution.
-grill-me -> AI agent workflow skill named grill-me; verify through the agent's skill registry or local skill files; do not install a random package named grill.
-grill-with-docs -> AI agent workflow skill named grill-with-docs; verify through the agent's skill registry or local skill files; do not install a random package named grill-with-docs.
-OpenSpec -> OpenSpec workflow/CLI used by the project; verify the intended adapter and CLI before initialization; do not substitute an unrelated package or spec tool.
-Lore -> Lore commit tool/CLI; verify with lore --version or lore help; do not substitute a different changelog or commit helper.
+grill-me -> AI agent workflow skill from https://github.com/mattpocock/skills; install with npx skills@latest add mattpocock/skills when appropriate; do not install a random package named grill.
+grill-with-docs -> AI agent workflow skill from https://github.com/mattpocock/skills; install with npx skills@latest add mattpocock/skills when appropriate; do not install a random package named grill-with-docs.
+OpenSpec -> OpenSpec workflow/CLI from https://github.com/Fission-AI/OpenSpec; install with npm install -g @fission-ai/openspec@latest when appropriate; verify the selected adapter and CLI before initialization.
+Lore -> Lore commit tool/CLI from https://github.com/Ian-stetsenko/lore-protocol; install with npm install -g lore-protocol when appropriate; verify with lore --version or lore help.
 ```
 
-If the exact install source or command is not known in the current agent environment, stop and ask
-the user for the intended install source. Do not guess package-manager names for workflow skills or
-CLIs. Prefer enabling already-installed local skills over installing new global packages.
+If these commands are not appropriate for the current agent or environment, stop and ask the user
+before substituting another source. Do not guess package-manager names for workflow skills or CLIs.
+Prefer enabling already-installed local skills over installing new global packages.
 
 ## Stage Gates
 
