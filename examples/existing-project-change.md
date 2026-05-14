@@ -49,6 +49,7 @@ Or create two unfinished feature threads:
 - The agent does not force full adoption when baseline context is already sufficient.
 - The agent runs a lightweight change preflight to find relevant source, tests, docs, and OpenSpec artifacts.
 - When asked what to build next, the agent recommends a few small product slices and asks one selection question.
+- After the user selects a recommended slice, the agent continues change-scoped clarification instead of invoking a separate brainstorming flow.
 - For small changes, the agent inherits existing architecture, stack, UI, test, deployment, and workflow conventions.
 - For convention-impacting changes, the agent asks one blocking impact question about the affected area.
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
@@ -65,6 +66,7 @@ Or create two unfinished feature threads:
 - Re-adopting the whole project for a small change with clear existing conventions.
 - Labeling next-slice selection as Adoption when the project baseline is already understood.
 - Invoking a visual companion, mockup flow, or broad brainstorming flow before the next product slice is selected.
+- Invoking a separate brainstorming flow after the user has already selected the next slice.
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
 - Ignoring an unfinished active change and recommending a new next slice.

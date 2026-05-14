@@ -31,6 +31,10 @@ to invoke them, what project artifacts they should read and update, when to stop
 must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
 specific contract needed for PRD/OpenSpec convergence.
 
+Do not insert a separate brainstorming, mockup, or visual companion workflow as a prerequisite for
+`grill-driven-spec` unless the user explicitly asks for that separate workflow. Product and context
+clarification inside this workflow is handled by the grill contracts and OpenSpec gates.
+
 Check dependency availability during preflight. If a required dependent skill or tool is missing,
 install it from a verified source, enable it, or ask the user to do so before crossing the stage that
 requires it. Do not pretend to invoke a missing skill or tool.
@@ -345,6 +349,9 @@ change candidates and ask the single selection question that decides the next Op
 Do not invoke a visual companion, mockup flow, or broad brainstorming flow just to choose the next
 slice. Use visual exploration only when the user explicitly asks for it, or when a confirmed visual
 or workflow design choice blocks the OpenSpec proposal.
+
+After the user selects a recommended next slice, continue with change-scoped clarification and the
+OpenSpec proposal gate. Do not restart into a separate brainstorming flow before proposing.
 
 Change-scoped grill contract:
 

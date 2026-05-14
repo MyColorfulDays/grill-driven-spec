@@ -108,6 +108,8 @@ workflow conventions, ask one blocking impact question before creating an OpenSp
 If I ask what to build next, recommend a small number of change candidates and ask the single
 selection question that decides the next OpenSpec proposal. Do not invoke a visual companion,
 mockup flow, or broad brainstorming flow just to choose the next slice.
+After I select a recommended slice, continue with change-scoped clarification and the OpenSpec
+proposal gate. Do not restart into a separate brainstorming flow before proposing.
 
 If product intent is vague, invoke grill-me with a change-scoped contract. If project/domain context
 is the blocker, invoke grill-with-docs with a change-scoped contract. Ask only questions needed to
