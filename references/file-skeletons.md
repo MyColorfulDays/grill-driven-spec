@@ -159,10 +159,23 @@ This project uses AGENTS.md as the shared project-level agent guide.
 ## Tools
 
 - Git is required for repository initialization and commits.
+- grill-me is required before Stage 1 product clarification.
+- grill-with-docs is required before Stage 3 project context alignment.
 - OpenSpec is required before creating or updating OpenSpec changes.
 - Lore is recommended for commits that should preserve decision context.
 
 Missing OpenSpec or Lore should not block initial project skeleton creation or requirement grilling.
+Missing grill-me blocks Stage 1. Missing grill-with-docs blocks Stage 3.
+
+## Dependency Identity
+
+- Git means the system Git CLI, verified with `git --version`.
+- grill-me and grill-with-docs mean AI agent workflow skills, not arbitrary packages with similar names.
+- OpenSpec means the intended OpenSpec workflow/CLI and selected tool adapter for this project.
+- Lore means the Lore commit tool/CLI, verified with `lore --version` or `lore help`.
+
+Do not guess package-manager names for missing workflow skills or tools. If the exact install source
+is unknown, ask the user for the intended source or installation instructions.
 
 ## Tool Status
 

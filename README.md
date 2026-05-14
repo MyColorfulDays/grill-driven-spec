@@ -39,6 +39,22 @@ It is intended to work with tools such as:
 
 The workflow is the stable core. Tool-specific files belong in `agents/` as adapters.
 
+## Dependencies
+
+Installing this skill does not automatically install every dependency it composes.
+
+Before crossing workflow gates, the agent should verify:
+
+- `git`: system Git CLI.
+- `grill-me`: AI agent workflow skill.
+- `grill-with-docs`: AI agent workflow skill.
+- `OpenSpec`: intended OpenSpec workflow/CLI and tool adapter.
+- `Lore`: Lore commit tool/CLI, when Lore commits are expected.
+
+Do not install similarly named packages just because a dependency is missing. If the exact install
+source is not known in the current agent environment, the agent should ask the user for the intended
+source or installation instructions.
+
 ## Quick Start Prompt
 
 ```text

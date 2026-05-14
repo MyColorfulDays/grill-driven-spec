@@ -14,12 +14,14 @@ Run adoption preflight first:
 - check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ already exist
 - identify obvious product surfaces, core workflows, and domain terms from code or docs
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
+- verify dependency identity before installing anything: grill-me and grill-with-docs are workflow skills, OpenSpec and Lore are the intended project tools, and git is the system Git CLI
 
 Do not run the 0-to-1 skeleton flow.
 Do not overwrite existing docs with thin starter files.
 Do not treat undocumented code behavior as desired behavior until I confirm it.
 Do not refactor, redesign, migrate, implement, or create a new OpenSpec change during adoption.
 Do not pretend to invoke a missing grill or OpenSpec dependency.
+Do not guess package names or install similarly named tools when a dependency is missing.
 
 Create or refresh only missing or clearly thin guidance files such as AGENTS.md, CONTEXT.md,
 SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and docs/diagrams/README.md.
@@ -41,9 +43,11 @@ Run preflight first:
 - scan for existing raw source materials such as notes, drafts, PDFs, docs, screenshots, exports, or meeting summaries
 - check whether this looks like an empty or unstructured 0-to-1 folder, not an already implemented project
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available
+- verify dependency identity before installing anything: grill-me and grill-with-docs are workflow skills, OpenSpec and Lore are the intended project tools, and git is the system Git CLI
 - initialize git if available and this is not already a git repository
 - do not let missing OpenSpec or Lore block the initial skeleton and grill phase
 - do not pretend to invoke missing grill-me, grill-with-docs, or OpenSpec dependencies
+- do not guess package names or install similarly named tools when a dependency is missing
 - do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
 - if raw source materials exist, list their paths in PRD.md under Raw Sources before grilling
 - only copy clearly stated facts into PRD.md; put interpretations, conflicts, or suspected requirements under Open Questions

@@ -32,8 +32,22 @@ must not be crossed. The dependent skill owns its own interaction style unless t
 specific contract needed for PRD/OpenSpec convergence.
 
 Check dependency availability during preflight. If a required dependent skill or tool is missing,
-install it, enable it, or ask the user to do so before crossing the stage that requires it. Do not
-pretend to invoke a missing skill or tool.
+install it from a verified source, enable it, or ask the user to do so before crossing the stage that
+requires it. Do not pretend to invoke a missing skill or tool.
+
+Dependency identity and install policy:
+
+```text
+git -> system Git CLI; verify with git --version; install only through the user's OS package manager or official Git distribution.
+grill-me -> AI agent workflow skill named grill-me; verify through the agent's skill registry or local skill files; do not install a random package named grill.
+grill-with-docs -> AI agent workflow skill named grill-with-docs; verify through the agent's skill registry or local skill files; do not install a random package named grill-with-docs.
+OpenSpec -> OpenSpec workflow/CLI used by the project; verify the intended adapter and CLI before initialization; do not substitute an unrelated package or spec tool.
+Lore -> Lore commit tool/CLI; verify with lore --version or lore help; do not substitute a different changelog or commit helper.
+```
+
+If the exact install source or command is not known in the current agent environment, stop and ask
+the user for the intended install source. Do not guess package-manager names for workflow skills or
+CLIs. Prefer enabling already-installed local skills over installing new global packages.
 
 ## Stage Gates
 
@@ -156,15 +170,20 @@ If `git` is available and the current directory is not a git repository, initial
 
 If `git` is missing, tell the user it must be installed before repository initialization or commits, then continue only with file work if the environment allows it.
 
-If OpenSpec is missing, do not create an OpenSpec change. Install it or ask the user to install it before Stage 2.
+If OpenSpec is missing, do not create an OpenSpec change. Install it only from the verified OpenSpec
+source for the current agent/tool adapter, or ask the user to install it before Stage 2.
 
-If `grill-me` is missing, do not enter Stage 1 as if grill-me ran. Install or enable it, or ask the
-user to do so before Stage 1.
+If `grill-me` is missing, do not enter Stage 1 as if grill-me ran. Enable or install the `grill-me`
+workflow skill only from the agent's known skill registry or local skill source, or ask the user to
+do so before Stage 1.
 
-If `grill-with-docs` is missing, do not enter Stage 3 as if grill-with-docs ran. Install or enable
-it, or ask the user to do so before Stage 3.
+If `grill-with-docs` is missing, do not enter Stage 3 as if grill-with-docs ran. Enable or install
+the `grill-with-docs` workflow skill only from the agent's known skill registry or local skill
+source, or ask the user to do so before Stage 3.
 
-If Lore is missing, install it or ask the user to install it before creating Lore-managed commits. Do not delay Stage 0 or Stage 1 just because Lore is unavailable.
+If Lore is missing, install it only from the verified Lore source, or ask the user to install it
+before creating Lore-managed commits. Do not delay Stage 0 or Stage 1 just because Lore is
+unavailable.
 
 0-to-1 does not require a perfectly empty directory. A folder with raw source materials is still a 0-to-1 candidate if it does not already have a coherent project skeleton.
 
