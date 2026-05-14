@@ -23,6 +23,7 @@ Run adoption preflight first:
 - inspect package manifests, build scripts, CI, deploy config, and environment examples
 - check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ already exist
 - identify obvious product surfaces, core workflows, and domain terms from code or docs
+- identify the primary language of existing authoritative project docs and use it for updated artifacts
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
 
@@ -56,6 +57,7 @@ Run lightweight change preflight first:
 - identify likely source, test, config, documentation, and OpenSpec locations for this change
 - check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
 - identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+- identify the primary language of existing authoritative project docs and use it for updated artifacts
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
 
 Do not run the 0-to-1 skeleton flow.
@@ -85,6 +87,7 @@ Run preflight first:
 - check whether this directory is already a git repository
 - scan for existing raw source materials such as notes, drafts, PDFs, docs, screenshots, exports, or meeting summaries
 - check whether this looks like an empty or unstructured 0-to-1 folder, not an already implemented project
+- use the primary language of my initial project request for generated artifacts unless I specify another language
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
 - initialize git if available and this is not already a git repository

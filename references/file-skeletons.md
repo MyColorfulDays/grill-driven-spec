@@ -2,6 +2,10 @@
 
 Use these minimal skeletons when seeding a new project. Keep them honest and thin.
 
+Write generated artifact content in the project's primary language. For new projects, default to the
+primary language of the user's initial request. Keep file names, commands, code identifiers,
+dependency names, and workflow/tool names in their established form.
+
 ## README.md
 
 ```markdown

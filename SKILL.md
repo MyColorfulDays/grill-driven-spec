@@ -53,6 +53,25 @@ Prefer enabling already-installed local skills over installing new global packag
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
+## Project Artifact Language
+
+Use one stable primary language for project artifacts created or updated by this workflow.
+
+Default rules:
+
+```text
+for new projects, use the primary language of the user's initial project request
+for existing projects, inherit the primary language of authoritative docs such as README.md, PRD.md, CONTEXT.md, or OpenSpec artifacts
+if the project language is unclear, ask the user once before creating substantial docs
+do not switch artifact language just because a later chat message uses a different language
+keep file names, commands, code identifiers, dependency names, and workflow/tool names such as grill-me, grill-with-docs, OpenSpec, Lore, Stage, gate, proposal.md, design.md, tasks.md, Observed, Confirmed, and Open Questions in their established form
+preserve raw source materials in their original language
+write summaries, confirmed requirements, specs, design notes, and tasks in the project artifact language unless quoting source material
+```
+
+Do not rewrite unrelated existing docs just to normalize language. Keep language consistent within
+the files and OpenSpec change touched by the current workflow.
+
 ## Stage Transition Output
 
 When entering a new stage or adoption phase, make the transition visually obvious to the user with a
@@ -99,6 +118,7 @@ main source, test, config, and documentation locations
 package manifests, build scripts, CI, deploy config, and environment examples
 existing README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/
 obvious product surfaces, core workflows, and domain terms visible in code or docs
+primary language of existing authoritative project docs
 git, OpenSpec, and Lore availability when relevant
 grill-me and grill-with-docs availability when Stage 1 or Stage 3 may be needed
 ```
@@ -175,6 +195,7 @@ check repository status and current branch
 identify the likely source, test, config, docs, and OpenSpec locations for this change
 check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
 identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+identify the primary language of existing authoritative project docs
 check git, OpenSpec, and Lore availability when relevant
 check grill-me and grill-with-docs availability when clarification may be needed
 ```
@@ -238,6 +259,7 @@ whether the directory is already a git repository
 whether README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, or openspec/ already exist
 raw source materials such as notes, drafts, meeting summaries, exports, screenshots, PDFs, or docs
 signals that this is already an implemented project rather than a 0-to-1 folder
+primary artifact language from the user's initial request or existing authoritative docs
 git availability
 grill-me availability
 grill-with-docs availability
