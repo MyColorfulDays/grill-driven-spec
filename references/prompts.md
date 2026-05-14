@@ -33,6 +33,10 @@ lightweight candidate in the existing candidate artifact, or in `PRD.md` under `
 Keep only a short label, one-sentence intent, status, blocking question, and OpenSpec change link
 when promoted.
 
+If I switch feature focus within the same session, record the previous focus state before continuing:
+active, deferred, abandoned, or promoted to an OpenSpec change. Then name the new focus and do not
+carry unresolved assumptions across features.
+
 When entering a new workflow stage or adoption phase, print a large Markdown heading first:
 
 ```markdown

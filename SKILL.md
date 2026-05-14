@@ -122,7 +122,7 @@ if user verification passed but the change is not archived, continue Stage 8
 
 If multiple active changes exist, do not guess the current focus. List each active change with the
 detected earliest incomplete gate, then ask the user which one to continue. A session should have
-one active focus even when the project has multiple active changes.
+one active focus at a time even when the project has multiple active changes.
 
 Prefer OpenSpec CLI/status commands when available, such as listing changes or validating the active
 change, but do not rely only on CLI output. Also inspect the project artifacts. If CLI output and
@@ -140,12 +140,18 @@ Keep change context from different features separate.
 Rules:
 
 ```text
-one session has one active focus
+one active focus at a time
+a session may switch focus when the user explicitly changes topic or chooses another feature
 a project may have multiple active OpenSpec changes
 if multiple active changes exist, list them with detected stage and ask the user to choose focus
+when switching focus, record the previous focus state before proceeding
 do not mix PRD, design, tasks, or review state between active changes
 do not start a new feature while another active change is unfinished unless the user explicitly defers, abandons, archives, or switches focus
 ```
+
+On focus switch, summarize the previous focus, record whether it is active, deferred, abandoned, or
+promoted to an OpenSpec change, then name the new focus before continuing. Do not carry unresolved
+assumptions from the previous focus into the new one.
 
 For feature ideas that are discussed but not ready for a formal OpenSpec change, record a lightweight
 candidate instead of relying on chat memory. Prefer an existing project artifact if one already

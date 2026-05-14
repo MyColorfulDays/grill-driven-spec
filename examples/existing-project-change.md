@@ -56,6 +56,7 @@ Or create two unfinished feature threads:
 - If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
 - If multiple active changes exist, the agent lists them with detected stage and asks which one to continue.
 - If a feature idea is not ready for OpenSpec, the agent records it as a lightweight candidate instead of relying on chat memory.
+- If the user switches feature focus in the same session, the agent records the previous focus state before continuing.
 - The agent does not implement until review passes and the user confirms development.
 
 ## Regression Risks
@@ -69,5 +70,6 @@ Or create two unfinished feature threads:
 - Ignoring an unfinished active change and recommending a new next slice.
 - Mixing context between multiple unfinished features.
 - Losing a half-discussed feature because it was never recorded as a candidate or active change.
+- Treating one session as unable to switch feature focus when the user explicitly changes topic.
 - Treating observed legacy behavior as confirmed desired behavior.
 - Letting a data, security, deployment, or shared UI convention change pass review without one focused impact question.
