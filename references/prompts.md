@@ -25,8 +25,7 @@ SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and doc
 
 Use Observed, Confirmed, and Open Questions language where useful.
 After the baseline is in place, ask me one blocking adoption question at a time to separate desired
-behavior from legacy or accidental behavior. Include your recommended answer, a short reason, and a
-clear note that I can override the recommendation.
+behavior from legacy or accidental behavior.
 ```
 
 ## Seed Project Skeleton
@@ -63,7 +62,12 @@ After the skeleton is in place, start grilling me one question at a time.
 ```text
 Use grill-me to clarify PRD.md.
 
-Ask one most important question at a time. Give your recommended answer and reason.
+Invoke grill-me with this contract:
+- goal: clarify enough product intent for the first OpenSpec change
+- primary write target: PRD.md
+- stop condition: MVP boundary, non-goals, and testable core behavior are clear
+- constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
+
 After each important answer, update PRD.md.
 Put uncertain content under open questions. Put confirmed exclusions under non-goals.
 Do not write code or create an OpenSpec change.
@@ -74,8 +78,14 @@ Do not write code or create an OpenSpec change.
 ```text
 Use grill-with-docs to review PRD.md, AGENTS.md, CONTEXT.md, docs/, and openspec/.
 
-Ask one most important blocking question at a time. Give your recommended answer and reason.
-Make clear that I can override your recommendation.
+Invoke grill-with-docs with this contract:
+- goal: fill only the context needed for the first OpenSpec proposal
+- inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
+- write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
+- question focus: only questions that block a testable first OpenSpec change
+- stop condition: enough project context exists to propose the first OpenSpec change
+- constraints: do not continue grilling for non-blocking UI or implementation details, do not write code, and do not create a change until I confirm propose
+
 Update PRD.md for product intent, CONTEXT.md for stable domain language,
 docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for hard-to-reverse decisions.
 

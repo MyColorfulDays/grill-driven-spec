@@ -15,20 +15,25 @@ grill first, spec second, code last
 
 The user expresses ideas and confirms phase transitions. You ask focused questions, update project documents, decide whether the current phase is ready to advance, and explicitly ask for confirmation before crossing major gates.
 
+## Skill Composition
+
+This workflow composes other skills when they are available:
+
+```text
+grill-me -> Stage 1 product intent clarification
+grill-with-docs -> Stage 3 project context alignment
+OpenSpec -> proposal, specs, design, tasks, validation, and archive lifecycle
+Lore -> commits that should preserve decision context
+```
+
+Do not copy the full behavior of dependent skills into this file. `grill-driven-spec` defines when
+to invoke them, what project artifacts they should read and update, when to stop, and which gates
+must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
+specific contract needed for PRD/OpenSpec convergence.
+
 ## Stage Gates
 
 Follow these gates in order unless the project already has later-stage artifacts.
-
-When grilling in Stage 1, Stage 3, or Existing Project Adoption, each question should include:
-
-```text
-exactly one blocking question
-the agent's recommended answer
-a short reason for that recommendation
-a clear invitation for the user to override the recommendation
-```
-
-The recommendation is not a confirmed requirement until the user accepts it.
 
 ### Existing Project Adoption Entry
 
@@ -82,8 +87,7 @@ Keep adoption docs factual and thin. Use `Observed`, `Confirmed`, and `Open Ques
 where useful. Put current code facts in observed sections, and only move them to confirmed product
 requirements after user confirmation.
 
-Then ask one blocking alignment question at a time, using the grill question format above. Prefer
-questions about:
+Then ask one blocking alignment question at a time. Prefer questions about:
 
 ```text
 which current workflows must remain compatible
@@ -196,7 +200,17 @@ Next I recommend grill-me: I will ask one question at a time and update PRD.md a
 
 ### 1. Clarify Product Intent With grill-me
 
-Ask one important question at a time, using the grill question format above. Prefer questions that shrink MVP scope, identify first users, define success, or expose non-goals.
+Invoke `grill-me` for product clarification.
+
+Pass this contract:
+
+```text
+goal: clarify enough product intent for the first OpenSpec change
+primary write target: PRD.md
+preferred question focus: MVP boundary, first users, success criteria, non-goals, and testable core behavior
+stop condition: MVP boundary, non-goals, and core behavior can become testable requirements
+constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
+```
 
 After each important answer, update `PRD.md`.
 
@@ -249,7 +263,20 @@ OpenSpec is initialized and verified. Next I recommend grill-with-docs to fill C
 
 Read `PRD.md`, `AGENTS.md`, `CONTEXT.md`, `docs/`, and `openspec/`.
 
-Ask one question at a time, using the grill question format above. Update:
+Invoke `grill-with-docs` for project context alignment.
+
+Pass this contract:
+
+```text
+goal: fill only the context needed for the first OpenSpec proposal
+inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
+write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
+question focus: only questions that block a testable first OpenSpec change
+stop condition: enough project context exists to propose the first OpenSpec change
+constraints: do not continue grilling for non-blocking UI or implementation details, do not write code, and do not create a change until the user confirms propose
+```
+
+Update:
 
 ```text
 PRD.md for product intent

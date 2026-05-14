@@ -29,7 +29,6 @@ Then run:
 - Observed code behavior is labeled as observed until the user confirms it is desired behavior.
 - The agent does not refactor, redesign, migrate, implement, or create a new OpenSpec change during adoption.
 - The agent asks one blocking alignment question at a time after the baseline is understood.
-- Each adoption grill question includes the agent's recommended answer, a short reason, and an explicit invitation to override it.
 - OpenSpec is initialized or verified only after the baseline is clear enough to avoid encoding accidental behavior as desired behavior.
 
 ## Regression Risks

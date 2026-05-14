@@ -28,8 +28,7 @@ Then run:
 - `PRD.md` records raw source paths under `Raw Sources`.
 - Clearly stated facts may be copied into `PRD.md`, but inferred requirements stay under `Open Questions`.
 - `Confirmed Requirements` stays empty until the user confirms requirements during grill-me.
-- The agent enters grill-me after the skeleton exists and asks one question at a time.
-- Each grill question includes the agent's recommended answer, a short reason, and an explicit invitation to override it.
+- The agent enters grill-me after the skeleton exists, passing the PRD/OpenSpec convergence contract instead of copying grill-me's internal rules.
 
 ## Regression Risks
 
