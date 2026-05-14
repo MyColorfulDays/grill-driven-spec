@@ -79,6 +79,7 @@ The workflow must not:
 - `references/prompts.md`: reusable prompts for each stage
 - `references/file-skeletons.md`: starter project documentation templates
 - `references/review-checklist.md`: pre-development review checklist
+- `examples/`: scenario notes and regression observations
 - `agents/openai.yaml`: OpenAI/Codex adapter metadata
 
 ## Lore Commits

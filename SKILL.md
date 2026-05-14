@@ -69,10 +69,15 @@ Treat existing raw materials as inbox sources:
 ```text
 do not delete, move, rename, summarize destructively, or overwrite user files without explicit approval
 do not treat raw materials as confirmed requirements
-record their paths as raw sources or open questions where useful
-distill only clearly stated facts, and keep uncertain interpretations under Open Questions
+record their paths in PRD.md under Raw Sources, or in Open Questions when their relevance is unclear
+distill only clearly stated facts into PRD.md, and keep uncertain interpretations under Open Questions
 ask the user to confirm important requirements before marking them confirmed
 ```
+
+When raw materials exist, Stage 0 should still create the same thin skeleton. The difference is that
+`PRD.md` should name the source files under `Raw Sources` before grilling begins. Do not summarize
+large source files unless the user asks, and do not convert source material into product scope before
+Stage 1 confirmation.
 
 If the folder already contains meaningful implementation artifacts, such as a source tree, package manifest, application config, or existing product docs, pause and tell the user this appears closer to Existing Project Adoption than 0-to-1. Recommend the adoption flow instead of overwriting the project with a new skeleton.
 

@@ -17,6 +17,8 @@ Run preflight first:
 - initialize git if available and this is not already a git repository
 - do not let missing OpenSpec or Lore block the initial skeleton and grill phase
 - do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
+- if raw source materials exist, list their paths in PRD.md under Raw Sources before grilling
+- only copy clearly stated facts into PRD.md; put interpretations, conflicts, or suspected requirements under Open Questions
 - do not ask visual companion, stack, design, or product questions before the skeleton is in place
 
 Create README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/inbox/README.md,

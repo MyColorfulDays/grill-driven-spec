@@ -1,0 +1,38 @@
+# 0-to-1 With Raw Materials
+
+Use this scenario to test a new project folder that is not empty, but does not yet contain a
+coherent project skeleton or implementation.
+
+## Setup
+
+Create an otherwise empty folder with raw source materials, for example:
+
+```text
+idea-notes.md
+meeting-notes.md
+screenshots/
+exports/
+```
+
+Then run:
+
+```text
+/grill-driven-spec I want to build <project idea>
+```
+
+## Expected Behavior
+
+- The agent treats the folder as a 0-to-1 candidate, not as Existing Project Adoption.
+- The agent does not delete, move, rename, overwrite, or destructively summarize raw source files.
+- The agent initializes git when available and creates the thin Stage 0 skeleton.
+- `PRD.md` records raw source paths under `Raw Sources`.
+- Clearly stated facts may be copied into `PRD.md`, but inferred requirements stay under `Open Questions`.
+- `Confirmed Requirements` stays empty until the user confirms requirements during grill-me.
+- The agent enters grill-me after the skeleton exists and asks one question at a time.
+
+## Regression Risks
+
+- Treating raw notes as confirmed product requirements.
+- Asking product, stack, or design questions before creating the skeleton.
+- Moving raw files into `docs/inbox/` without explicit approval.
+- Over-summarizing large source materials during Stage 0.
