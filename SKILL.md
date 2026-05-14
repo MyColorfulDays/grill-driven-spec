@@ -31,9 +31,35 @@ to invoke them, what project artifacts they should read and update, when to stop
 must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
 specific contract needed for PRD/OpenSpec convergence.
 
-Do not insert a separate brainstorming, mockup, or visual companion workflow as a prerequisite for
-`grill-driven-spec` unless the user explicitly asks for that separate workflow. Product and context
-clarification inside this workflow is handled by the grill contracts and OpenSpec gates.
+### Skill Delegation Boundary
+
+When `grill-driven-spec` is active, it owns:
+
+```text
+workflow path selection
+stage and gate transitions
+user confirmation points
+artifact routing
+OpenSpec proposal, review, development, verification, and archive lifecycle
+```
+
+Other skills may be invoked only as bounded helpers when the user explicitly asks for that
+skill/workflow, or when the current `grill-driven-spec` stage delegates a narrow task to it.
+
+A delegated helper must:
+
+```text
+receive a narrow contract
+write findings back to grill-driven-spec artifacts such as PRD.md, CONTEXT.md, docs/, or the active OpenSpec change
+avoid introducing its own unrelated major gates
+avoid redirecting to its own unrelated artifact structure
+avoid bypassing OpenSpec gates
+return control to grill-driven-spec after the bounded task
+```
+
+Do not let a helper skill start its own end-to-end workflow, require its own visual/browser/setup
+gate, or create parallel specs outside the Grill Driven Spec artifacts unless the user explicitly
+requested that separate workflow or that gate is the current blocking question.
 
 Check dependency availability during preflight. If a required dependent skill or tool is missing,
 install it from a verified source, enable it, or ask the user to do so before crossing the stage that

@@ -13,6 +13,12 @@ Next-slice selection -> an initial OpenSpec change is complete or shipped and th
 
 If signals conflict, explain the classification briefly and ask before crossing a major gate.
 
+When grill-driven-spec is active, keep it as the owner of workflow path, gates, artifacts, and
+OpenSpec lifecycle. Other skills may be used only as bounded helpers with a narrow contract, and
+must return findings to PRD.md, CONTEXT.md, docs/, or the active OpenSpec change. Do not let a helper
+skill start its own end-to-end workflow, introduce unrelated gates, or create parallel specs unless I
+explicitly ask for that separate workflow.
+
 When resuming a previous workflow, inspect current artifacts before choosing a stage:
 
 ```text
