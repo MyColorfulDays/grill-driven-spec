@@ -353,6 +353,7 @@ canonical domain terms or names
 data lifecycle rules
 important business rules
 hard technical constraints
+technical choices that directly affect the first implementation slice
 security, privacy, or data-handling constraints
 choices that would cause a hard-to-reverse architecture decision
 ```
@@ -367,6 +368,20 @@ CSS framework
 minor UI copy
 default implementation details with low reversibility cost
 ```
+
+For greenfield projects, do not skip technical readiness. Before asking the user to enter
+development, the workflow must know enough to implement the first slice safely. That can come from:
+
+```text
+the user confirming the stack, runtime, storage, deployment target, and integration constraints
+existing project conventions in an adoption flow
+an explicit user instruction that the agent may choose conservative defaults
+```
+
+If these are unknown, keep them as Open Questions in `design.md` and block development review until
+the user confirms them or authorizes default choices. Do not turn every low-level library choice into
+grilling; focus on choices that affect project shape, data persistence, security, deployment, or the
+ability to run and verify the MVP.
 
 Advance as soon as the project context is sufficient to create a first OpenSpec change. When only non-blocking UI or implementation details remain, stop grilling and ask the user to confirm entering propose.
 
@@ -392,6 +407,19 @@ design.md records technical approach, constraints, risks, and open questions
 tasks.md includes implementation, tests, docs, CI, TDD, and lightweight DDD tasks where relevant
 ```
 
+For greenfield projects, `design.md` must include a Technical Approach section before review. It
+should record confirmed choices, proposed defaults awaiting approval, and technical open questions
+for at least:
+
+```text
+application shape and runtime
+primary data storage or persistence approach
+authentication, authorization, privacy, or sensitive-data handling when relevant
+external integrations and AI/tool dependencies when relevant
+local run, test, and verification expectations
+deployment target if it affects the first slice
+```
+
 Do not implement after creating the change.
 
 ### 5. Review Before Development
@@ -402,10 +430,17 @@ Review the new change before coding. Check:
 proposal matches PRD.md
 specs are testable
 design does not depend on unconfirmed assumptions
+technical approach is ready for implementation
 tasks are executable and ordered
 tests, docs, and CI are represented
 MVP is not too large
 ```
+
+Technical approach is ready only when blocking technical choices are either confirmed, inherited from
+an existing project, or explicitly delegated to the agent as conservative defaults. If the stack,
+runtime, persistence, security/data handling, or verification environment is still TBD and needed for
+the first implementation slice, review fails and the agent must ask one technical readiness question
+before development.
 
 If anything is unclear, return to grill-me or grill-with-docs, update the relevant files, and review again.
 

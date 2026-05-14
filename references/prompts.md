@@ -100,7 +100,7 @@ Invoke grill-with-docs with this contract:
 - goal: fill only the context needed for the first OpenSpec proposal
 - inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
 - write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
-- question focus: only questions that block a testable first OpenSpec change
+- question focus: only questions that block a testable first OpenSpec change, including technical choices that directly affect the first implementation slice
 - stop condition: enough project context exists to propose the first OpenSpec change
 - constraints: do not continue grilling for non-blocking UI or implementation details, do not write code, and do not create a change until I confirm propose
 
@@ -109,6 +109,8 @@ docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for ha
 
 Do not continue grilling for non-blocking UI or implementation details such as screen layout,
 button labels, component structure, CSS framework, or copy. Put those in design.md or tasks.md later.
+Do ask or record one technical readiness question when stack, runtime, persistence, security/data
+handling, integrations, local verification, or deployment target would block safe implementation.
 When the context is enough for a testable first OpenSpec change, ask me to confirm propose.
 
 Do not write code or create a change until I confirm propose.
@@ -142,6 +144,9 @@ Confirmed: enter OpenSpec propose.
 Create the first OpenSpec change from PRD.md, CONTEXT.md, docs/, and the grill results.
 Write proposal.md, specs/, design.md, and tasks.md.
 Include implementation, tests, docs, CI, TDD, and lightweight DDD tasks where relevant.
+In design.md, include Technical Approach with confirmed choices, proposed defaults awaiting approval,
+and technical open questions for stack/runtime, persistence, sensitive-data handling, integrations,
+local verification, and deployment when relevant.
 Do not implement.
 ```
 
@@ -151,7 +156,9 @@ Do not implement.
 Review the current OpenSpec change before development.
 
 Check proposal vs PRD.md, testability of specs, unconfirmed assumptions in design,
-task size and order, and missing tests/docs/CI.
+technical readiness for implementation, task size and order, and missing tests/docs/CI.
+Review must fail if required stack/runtime, persistence, security/data handling, integrations,
+local verification, or deployment choices are still TBD and not explicitly delegated to the agent.
 If unclear, return to grill and update the relevant files. Do not code.
 ```
 
