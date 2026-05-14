@@ -62,12 +62,17 @@ Run lightweight change preflight first:
 
 Do not run the 0-to-1 skeleton flow.
 Do not force full adoption if the baseline is already sufficient for this change.
+Do not label this as adoption unless the baseline itself is the work.
 Do not choose a new stack, redesign shared UI, migrate data, or change deployment conventions unless the requested change affects them.
 
 If baseline context is missing or too thin to judge desired behavior, create or refresh only the
 minimum adoption baseline first. If the change follows existing conventions, inherit them and record
 that in design.md. If the change affects architecture, data, security, deployment, shared UI, or
 workflow conventions, ask one blocking impact question before creating an OpenSpec proposal.
+
+If I ask what to build next, recommend a small number of change candidates and ask the single
+selection question that decides the next OpenSpec proposal. Do not invoke a visual companion,
+mockup flow, or broad brainstorming flow just to choose the next slice.
 
 If product intent is vague, invoke grill-me with a change-scoped contract. If project/domain context
 is the blocker, invoke grill-with-docs with a change-scoped contract. Ask only questions needed to

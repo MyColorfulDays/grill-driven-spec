@@ -93,6 +93,14 @@ For Existing Project Adoption, use:
 Current gate: <one sentence describing what must happen before the next phase>.
 ```
 
+For Existing Project Change, use:
+
+```markdown
+# Change: <short phase name>
+
+Current gate: <one sentence describing what must happen before the next phase>.
+```
+
 Keep the heading short and stable. Do not rely on emojis, colors, terminal control codes, or
 agent-specific UI features for stage visibility.
 
@@ -188,6 +196,10 @@ add, change, or fix product behavior rather than adopt the whole project.
 Do not run the 0-to-1 skeleton flow. Do not force a full adoption pass when the existing project
 already has enough baseline context for the requested change.
 
+Do not label this path as adoption unless the baseline itself is the work. When the user asks what
+to build next after an initial OpenSpec change has shipped, treat that as change selection in an
+existing project.
+
 First run a lightweight change preflight:
 
 ```text
@@ -209,6 +221,12 @@ if the change affects architecture, data, security, deployment, shared UI, or wo
 if product intent is vague -> invoke grill-me with a change-scoped contract
 if project/domain context is the blocker -> invoke grill-with-docs with a change-scoped contract
 ```
+
+When the user asks which feature or product slice should come next, recommend a small number of
+change candidates and ask the single selection question that decides the next OpenSpec proposal.
+Do not invoke a visual companion, mockup flow, or broad brainstorming flow just to choose the next
+slice. Use visual exploration only when the user explicitly asks for it, or when a confirmed visual
+or workflow design choice blocks the OpenSpec proposal.
 
 Change-scoped grill contract:
 
