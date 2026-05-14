@@ -19,6 +19,17 @@ The user expresses ideas and confirms phase transitions. You ask focused questio
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
+When grilling in Stage 1, Stage 3, or Existing Project Adoption, each question should include:
+
+```text
+exactly one blocking question
+the agent's recommended answer
+a short reason for that recommendation
+a clear invitation for the user to override the recommendation
+```
+
+The recommendation is not a confirmed requirement until the user accepts it.
+
 ### Existing Project Adoption Entry
 
 Use this path when the folder already contains a meaningful implemented product, such as a source
@@ -71,7 +82,8 @@ Keep adoption docs factual and thin. Use `Observed`, `Confirmed`, and `Open Ques
 where useful. Put current code facts in observed sections, and only move them to confirmed product
 requirements after user confirmation.
 
-Then ask one blocking alignment question at a time. Prefer questions about:
+Then ask one blocking alignment question at a time, using the grill question format above. Prefer
+questions about:
 
 ```text
 which current workflows must remain compatible
@@ -184,7 +196,7 @@ Next I recommend grill-me: I will ask one question at a time and update PRD.md a
 
 ### 1. Clarify Product Intent With grill-me
 
-Ask one important question at a time. Prefer questions that shrink MVP scope, identify first users, define success, or expose non-goals.
+Ask one important question at a time, using the grill question format above. Prefer questions that shrink MVP scope, identify first users, define success, or expose non-goals.
 
 After each important answer, update `PRD.md`.
 
@@ -237,7 +249,7 @@ OpenSpec is initialized and verified. Next I recommend grill-with-docs to fill C
 
 Read `PRD.md`, `AGENTS.md`, `CONTEXT.md`, `docs/`, and `openspec/`.
 
-Ask one question at a time. Update:
+Ask one question at a time, using the grill question format above. Update:
 
 ```text
 PRD.md for product intent

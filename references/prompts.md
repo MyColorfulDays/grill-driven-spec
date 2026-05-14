@@ -25,7 +25,8 @@ SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and doc
 
 Use Observed, Confirmed, and Open Questions language where useful.
 After the baseline is in place, ask me one blocking adoption question at a time to separate desired
-behavior from legacy or accidental behavior.
+behavior from legacy or accidental behavior. Include your recommended answer, a short reason, and a
+clear note that I can override the recommendation.
 ```
 
 ## Seed Project Skeleton
@@ -73,7 +74,8 @@ Do not write code or create an OpenSpec change.
 ```text
 Use grill-with-docs to review PRD.md, AGENTS.md, CONTEXT.md, docs/, and openspec/.
 
-Ask one most important blocking question at a time.
+Ask one most important blocking question at a time. Give your recommended answer and reason.
+Make clear that I can override your recommendation.
 Update PRD.md for product intent, CONTEXT.md for stable domain language,
 docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for hard-to-reverse decisions.
 

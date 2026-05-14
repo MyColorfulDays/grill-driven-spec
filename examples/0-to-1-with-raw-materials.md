@@ -29,6 +29,7 @@ Then run:
 - Clearly stated facts may be copied into `PRD.md`, but inferred requirements stay under `Open Questions`.
 - `Confirmed Requirements` stays empty until the user confirms requirements during grill-me.
 - The agent enters grill-me after the skeleton exists and asks one question at a time.
+- Each grill question includes the agent's recommended answer, a short reason, and an explicit invitation to override it.
 
 ## Regression Risks
 
