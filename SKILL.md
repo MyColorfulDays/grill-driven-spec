@@ -31,6 +31,10 @@ to invoke them, what project artifacts they should read and update, when to stop
 must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
 specific contract needed for PRD/OpenSpec convergence.
 
+Check dependency availability during preflight. If a required dependent skill or tool is missing,
+install it, enable it, or ask the user to do so before crossing the stage that requires it. Do not
+pretend to invoke a missing skill or tool.
+
 ## Stage Gates
 
 Follow these gates in order unless the project already has later-stage artifacts.
@@ -58,6 +62,7 @@ package manifests, build scripts, CI, deploy config, and environment examples
 existing README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/
 obvious product surfaces, core workflows, and domain terms visible in code or docs
 git, OpenSpec, and Lore availability when relevant
+grill-me and grill-with-docs availability when Stage 1 or Stage 3 may be needed
 ```
 
 Adoption rules:
@@ -131,6 +136,8 @@ whether README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, or openspe
 raw source materials such as notes, drafts, meeting summaries, exports, screenshots, PDFs, or docs
 signals that this is already an implemented project rather than a 0-to-1 folder
 git availability
+grill-me availability
+grill-with-docs availability
 OpenSpec availability
 Lore availability, if commits are expected
 ```
@@ -139,6 +146,8 @@ Dependency rules:
 
 ```text
 git is required before initializing the repository or committing
+grill-me is required before Stage 1 product clarification
+grill-with-docs is required before Stage 3 context alignment
 OpenSpec is required before Stage 2 initializes OpenSpec or Stage 4 creates a change
 Lore is recommended before committing workflow, docs, or spec decisions, but it must not block initial grilling
 ```
@@ -148,6 +157,12 @@ If `git` is available and the current directory is not a git repository, initial
 If `git` is missing, tell the user it must be installed before repository initialization or commits, then continue only with file work if the environment allows it.
 
 If OpenSpec is missing, do not create an OpenSpec change. Install it or ask the user to install it before Stage 2.
+
+If `grill-me` is missing, do not enter Stage 1 as if grill-me ran. Install or enable it, or ask the
+user to do so before Stage 1.
+
+If `grill-with-docs` is missing, do not enter Stage 3 as if grill-with-docs ran. Install or enable
+it, or ask the user to do so before Stage 3.
 
 If Lore is missing, install it or ask the user to install it before creating Lore-managed commits. Do not delay Stage 0 or Stage 1 just because Lore is unavailable.
 
