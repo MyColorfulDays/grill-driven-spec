@@ -30,7 +30,7 @@ Then run:
 - Clearly stated facts may be copied into `PRD.md`, but inferred requirements stay under `Open Questions`.
 - `Confirmed Requirements` stays empty until the user confirms requirements during grill-me.
 - The agent enters grill-me after the skeleton exists, passing the PRD/OpenSpec convergence contract instead of copying grill-me's internal rules.
-- Before development, the agent confirms blocking technical choices or asks the user to authorize conservative defaults.
+- Before development, the agent asks a compact greenfield readiness question for blocking technical/UI choices or asks the user to authorize conservative defaults.
 
 ## Regression Risks
 

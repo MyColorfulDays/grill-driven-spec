@@ -369,18 +369,41 @@ minor UI copy
 default implementation details with low reversibility cost
 ```
 
-For greenfield projects, do not skip technical readiness. Before asking the user to enter
-development, the workflow must know enough to implement the first slice safely. That can come from:
+Technical readiness depends on the project branch.
+
+For greenfield projects, do not skip technical and experience readiness. Before asking the user to
+enter development, the workflow must know enough to implement the first slice safely without
+inventing project shape. Keep this lightweight; prefer one compact readiness question or ask the user
+to authorize conservative defaults.
+
+Greenfield readiness can come from:
 
 ```text
-the user confirming the stack, runtime, storage, deployment target, and integration constraints
-existing project conventions in an adoption flow
+the user confirming stack/runtime, storage, deployment target, integration constraints, and broad UI direction
 an explicit user instruction that the agent may choose conservative defaults
 ```
 
-If these are unknown, keep them as Open Questions in `design.md` and block development review until
-the user confirms them or authorizes default choices. Do not turn every low-level library choice into
-grilling; focus on choices that affect project shape, data persistence, security, deployment, or the
+For existing projects, inherit current architecture, stack, UI patterns, design system, test style,
+and deployment conventions by default. Ask technical or UI questions only when the proposed change
+would affect:
+
+```text
+architecture boundaries or module ownership
+data model, migrations, persistence, or lifecycle rules
+authentication, authorization, privacy, or sensitive-data handling
+external integrations or AI/tool dependencies
+deployment, runtime, CI, or local verification
+shared UI patterns, design system, navigation, or user workflow conventions
+```
+
+If the change fits existing conventions and does not affect those areas, do not block development
+with stack, architecture, or UI questions. Record that the implementation will follow existing
+patterns in `design.md`.
+
+If readiness is unknown, keep it as Open Questions in `design.md` and block development review until
+the user confirms the choice, the existing project provides the convention, or the user authorizes
+default choices. Do not turn every low-level library choice into grilling; focus on choices that
+affect project shape, user experience direction, data persistence, security, deployment, or the
 ability to run and verify the MVP.
 
 Advance as soon as the project context is sufficient to create a first OpenSpec change. When only non-blocking UI or implementation details remain, stop grilling and ask the user to confirm entering propose.
@@ -416,9 +439,13 @@ application shape and runtime
 primary data storage or persistence approach
 authentication, authorization, privacy, or sensitive-data handling when relevant
 external integrations and AI/tool dependencies when relevant
+basic UI direction or experience surface when user-facing UI is part of the first slice
 local run, test, and verification expectations
 deployment target if it affects the first slice
 ```
+
+For existing projects, `design.md` should state whether the change follows existing technical and UI
+conventions or list the specific conventions it changes.
 
 Do not implement after creating the change.
 
@@ -436,11 +463,13 @@ tests, docs, and CI are represented
 MVP is not too large
 ```
 
-Technical approach is ready only when blocking technical choices are either confirmed, inherited from
-an existing project, or explicitly delegated to the agent as conservative defaults. If the stack,
-runtime, persistence, security/data handling, or verification environment is still TBD and needed for
-the first implementation slice, review fails and the agent must ask one technical readiness question
-before development.
+Technical approach is ready only when blocking technical and UI choices are confirmed, inherited from
+an existing project, or explicitly delegated to the agent as conservative defaults. For greenfield
+projects, if stack/runtime, persistence, security/data handling, UI direction, or verification
+environment is still TBD and needed for the first implementation slice, review fails and the agent
+must ask one compact readiness question before development. For existing projects, review should not
+fail on inherited stack or UI choices unless the change affects architecture, data, security,
+deployment, local verification, shared UI conventions, or user workflow conventions.
 
 If anything is unclear, return to grill-me or grill-with-docs, update the relevant files, and review again.
 

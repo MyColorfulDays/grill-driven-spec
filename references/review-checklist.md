@@ -22,7 +22,8 @@ Use after an OpenSpec change is created and before development begins.
 
 - Does `design.md` depend on unconfirmed product assumptions?
 - Are technical constraints and risks explicit?
-- Are stack, runtime, persistence, sensitive-data handling, integrations, local verification, and deployment decisions confirmed, inherited from the project, or explicitly delegated to the agent as conservative defaults?
+- For greenfield projects, are stack, runtime, persistence, sensitive-data handling, integrations, broad UI direction, local verification, and deployment decisions confirmed or explicitly delegated to the agent as conservative defaults?
+- For existing projects, does the design either follow inherited architecture, stack, UI, test, and deployment conventions or identify the specific conventions it changes?
 - Are important tradeoffs recorded?
 - Should any decision move to `docs/adr/`?
 - Are open questions listed instead of hidden?
@@ -40,6 +41,7 @@ Use after an OpenSpec change is created and before development begins.
 
 If review passes, ask user to confirm development.
 
-If review fails because technical readiness is missing, ask one technical readiness question before
-development. If review fails for product or domain reasons, name the single most important blocking
-question and return to grill-me or grill-with-docs.
+If greenfield review fails because technical or experience readiness is missing, ask one compact
+readiness question before development. If existing-project review follows existing conventions, do
+not block on stack or UI questions. If review fails for product or domain reasons, name the single
+most important blocking question and return to grill-me or grill-with-docs.
