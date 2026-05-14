@@ -56,7 +56,7 @@ Or create two unfinished feature threads:
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
 - The agent creates an OpenSpec proposal only after desired behavior and convention impact are clear.
 - If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
-- If multiple active changes exist, the agent lists them with detected stage and asks which one to continue.
+- If multiple active changes exist, the agent lists them with detected gate or phase and asks which one to continue.
 - If a feature idea is not ready for OpenSpec, the agent records it as a lightweight candidate instead of relying on chat memory.
 - If the user switches feature focus in the same session, the agent records the previous focus state before continuing.
 - The agent does not implement until review passes and the user confirms development.

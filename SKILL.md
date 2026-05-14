@@ -173,7 +173,7 @@ Rules:
 one active focus at a time
 a session may switch focus when the user explicitly changes topic or chooses another feature
 a project may have multiple active OpenSpec changes
-if multiple active changes exist, list them with detected stage and ask the user to choose focus
+if multiple active changes exist, list them with detected gate or phase and ask the user to choose focus
 when switching focus, record the previous focus state before proceeding
 do not mix PRD, design, tasks, or review state between active changes
 do not start a new feature while another active change is unfinished unless the user explicitly defers, abandons, archives, or switches focus
@@ -220,34 +220,25 @@ write summaries, confirmed requirements, specs, design notes, and tasks in the p
 Do not rewrite unrelated existing docs just to normalize language. Keep language consistent within
 the files and OpenSpec change touched by the current workflow.
 
-## Stage Transition Output
+## Driving Transition Output
 
-When entering a new stage or adoption phase, make the transition visually obvious to the user with a
-large Markdown heading before doing stage work.
+When entering a new workflow phase, make the transition visually obvious to the user with a large
+Markdown heading before doing phase work.
 
 Use this format:
 
 ```markdown
-# Stage <number>: <short stage name>
+# Driving: <short phase or focus>
 
-Current gate: <one sentence describing what must happen before the next stage>.
+Current gate: <one sentence describing what must happen before moving on>.
 ```
 
-For Existing Project Adoption, use:
+Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
+verification, and archive. Do not rely on numbered Stage headings, `Adoption:` headings, or
+`Change:` headings in user-facing transition output.
 
-```markdown
-# Adoption: <short phase name>
-
-Current gate: <one sentence describing what must happen before the next phase>.
-```
-
-For Existing Project Change, use:
-
-```markdown
-# Change: <short phase name>
-
-Current gate: <one sentence describing what must happen before the next phase>.
-```
+Tool-generated labels such as `Implementing: <change-name>` may appear, but they do not replace the
+`Driving` heading and current gate.
 
 Keep the heading short and stable. Do not rely on emojis, colors, terminal control codes, or
 agent-specific UI features for stage visibility.

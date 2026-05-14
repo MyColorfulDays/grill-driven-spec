@@ -1,4 +1,4 @@
-# Stage Prompts
+# Workflow Prompts
 
 Use these prompts as compact starting points. Adapt them to the current project.
 
@@ -28,7 +28,7 @@ check raw sources already recorded in PRD.md
 inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
 inspect active change proposal.md, specs/, design.md, and tasks.md when present
 use active changes in openspec/changes/ as the primary change-state signal
-if multiple active changes exist, list them with detected stage and ask me which one to continue
+if multiple active changes exist, list them with detected gate or phase and ask me which one to continue
 also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
 continue from the earliest incomplete gate
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
@@ -43,15 +43,17 @@ If I switch feature focus within the same session, record the previous focus sta
 active, deferred, abandoned, or promoted to an OpenSpec change. Then name the new focus and do not
 carry unresolved assumptions across features.
 
-When entering a new workflow stage or adoption phase, print a large Markdown heading first:
+When entering a new workflow phase, print a large Markdown heading first:
 
 ```markdown
-# Stage <number>: <short stage name>
+# Driving: <short phase or focus>
 
-Current gate: <one sentence describing what must happen before the next stage>.
+Current gate: <one sentence describing what must happen before moving on>.
 ```
 
-For adoption, use `# Adoption: <short phase name>`.
+Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
+verification, and archive. Tool-generated labels such as `Implementing: <change-name>` may appear,
+but they do not replace the `Driving` heading and current gate.
 
 ## Adopt Existing Project
 
