@@ -53,6 +53,42 @@ Prefer enabling already-installed local skills over installing new global packag
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
+## Project State Detection
+
+Before choosing a workflow path, classify the current folder and user intent using both file signals
+and the user's words.
+
+Use this decision table:
+
+```text
+0-to-1:
+- no meaningful implementation artifacts
+- no coherent PRD/CONTEXT/OpenSpec baseline
+- raw materials may exist, but they are source materials rather than an implemented product
+- user asks to start or build a new idea
+
+Existing Project Adoption:
+- meaningful implementation artifacts exist
+- Grill Driven Spec, project docs, or OpenSpec baseline is missing or too thin to orient future work
+- user asks to adopt, document, understand, or bring an existing project into the workflow
+- baseline understanding is the work, not a specific product change
+
+Existing Project Change:
+- meaningful implementation artifacts exist
+- baseline docs or OpenSpec artifacts exist enough to orient the requested change
+- user asks to add, change, fix, continue, improve, or choose the next product slice
+- the work is a new change, not adoption of the whole project
+
+Next-slice selection:
+- an initial OpenSpec change is complete, archived, or clearly shipped
+- user asks what to improve next or where to continue
+- recommend a few small candidate changes and ask one selection question before proposing
+```
+
+If signals conflict, explain the classification briefly and ask the user before crossing a major
+gate. Do not run the 0-to-1 skeleton flow in an implemented project. Do not run full adoption when a
+baseline is already sufficient for the requested change.
+
 ## Project Artifact Language
 
 Use one stable primary language for project artifacts created or updated by this workflow.

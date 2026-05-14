@@ -2,6 +2,17 @@
 
 Use these prompts as compact starting points. Adapt them to the current project.
 
+Before using a stage prompt, classify the project state:
+
+```text
+0-to-1 -> no meaningful implementation and no coherent PRD/CONTEXT/OpenSpec baseline
+Existing Project Adoption -> implementation exists, but baseline docs/OpenSpec are missing or too thin and baseline understanding is the work
+Existing Project Change -> implementation exists, baseline is enough to orient the requested add/change/fix/continue work
+Next-slice selection -> an initial OpenSpec change is complete or shipped and the user asks what to improve next
+```
+
+If signals conflict, explain the classification briefly and ask before crossing a major gate.
+
 When entering a new workflow stage or adoption phase, print a large Markdown heading first:
 
 ```markdown

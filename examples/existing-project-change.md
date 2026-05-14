@@ -38,6 +38,7 @@ Or after the first OpenSpec change has shipped, run:
 
 - The agent treats this as an existing-project change, not as 0-to-1.
 - The agent labels the phase as Change, not Adoption, when the baseline itself is not the work.
+- The agent uses file signals such as implementation artifacts, PRD/CONTEXT, OpenSpec artifacts, and archived changes to classify the project state.
 - The agent does not force full adoption when baseline context is already sufficient.
 - The agent runs a lightweight change preflight to find relevant source, tests, docs, and OpenSpec artifacts.
 - When asked what to build next, the agent recommends a few small product slices and asks one selection question.
