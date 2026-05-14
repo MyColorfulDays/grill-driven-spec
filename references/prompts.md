@@ -2,6 +2,32 @@
 
 Use these prompts as compact starting points. Adapt them to the current project.
 
+## Adopt Existing Project
+
+```text
+Use grill-driven-spec to adopt this existing implemented project.
+
+Run adoption preflight first:
+- check repository status and current branch
+- identify main source, test, config, and documentation locations
+- inspect package manifests, build scripts, CI, deploy config, and environment examples
+- check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ already exist
+- identify obvious product surfaces, core workflows, and domain terms from code or docs
+- check whether git, OpenSpec, and Lore are available when relevant
+
+Do not run the 0-to-1 skeleton flow.
+Do not overwrite existing docs with thin starter files.
+Do not treat undocumented code behavior as desired behavior until I confirm it.
+Do not refactor, redesign, migrate, implement, or create a new OpenSpec change during adoption.
+
+Create or refresh only missing or clearly thin guidance files such as AGENTS.md, CONTEXT.md,
+SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and docs/diagrams/README.md.
+
+Use Observed, Confirmed, and Open Questions language where useful.
+After the baseline is in place, ask me one blocking adoption question at a time to separate desired
+behavior from legacy or accidental behavior.
+```
+
 ## Seed Project Skeleton
 
 ```text

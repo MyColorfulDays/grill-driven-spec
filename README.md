@@ -21,9 +21,7 @@ grill first, spec second, code last
 Grill Driven Spec supports two main situations:
 
 - **0 to 1:** start from an empty or unstructured folder, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
-- **Existing project adoption:** summarize the current project history, establish shared docs, and use the workflow for future changes.
-
-The current recommended path is to test the 0 to 1 flow first.
+- **Existing project adoption:** inventory current product reality, establish shared docs, and use the workflow for future changes.
 
 ## Use With Any Agent
 
@@ -51,6 +49,14 @@ For a new project, the agent should run preflight, initialize the git repository
 
 The agent should not ask visual companion, stack, design, or product questions before the minimal skeleton exists.
 
+For an existing implemented product, use:
+
+```text
+/grill-driven-spec adopt this existing project
+```
+
+The agent should inventory the current product reality, create or refresh shared docs, align with the user on which behavior is desired, then use OpenSpec for future changes. It should not overwrite the project with a new 0-to-1 skeleton.
+
 ## Workflow
 
 1. Run preflight and seed the project skeleton.
@@ -62,6 +68,8 @@ The agent should not ask visual companion, stack, design, or product questions b
 7. Implement and test after confirmation.
 8. Ask the user to verify.
 9. Sync and archive after verification passes.
+
+Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
 
 ## Hard Rules
 

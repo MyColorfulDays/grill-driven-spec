@@ -1,6 +1,6 @@
 ---
 name: grill-driven-spec
-description: Use when starting a new project or feature from a vague idea and the user wants AI-led requirement clarification, PRD/docs updates, and OpenSpec proposal/spec/task workflow before coding. Trigger when the user mentions grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, from 0 to 1 project setup, or asks to clarify requirements before implementation.
+description: Use when starting a new project from a vague idea, adopting an existing implemented project, or preparing a feature through AI-led requirement clarification, PRD/docs updates, and OpenSpec proposal/spec/task workflow before coding. Trigger when the user mentions grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, 0-to-1 project setup, existing project adoption, or asks to clarify requirements before implementation.
 ---
 
 # Grill Driven Spec
@@ -18,6 +18,79 @@ The user expresses ideas and confirms phase transitions. You ask focused questio
 ## Stage Gates
 
 Follow these gates in order unless the project already has later-stage artifacts.
+
+### Existing Project Adoption Entry
+
+Use this path when the folder already contains a meaningful implemented product, such as a source
+tree, package manifest, application config, tests, deployment config, existing product docs, or
+production-like data model.
+
+For an adoption entry such as:
+
+```text
+/grill-driven-spec adopt this existing project
+```
+
+do not run the 0-to-1 skeleton flow. First inventory the existing project reality.
+
+Adoption preflight should check:
+
+```text
+repository status and current branch
+main source, test, config, and documentation locations
+package manifests, build scripts, CI, deploy config, and environment examples
+existing README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/
+obvious product surfaces, core workflows, and domain terms visible in code or docs
+git, OpenSpec, and Lore availability when relevant
+```
+
+Adoption rules:
+
+```text
+do not overwrite existing product docs with new 0-to-1 skeletons
+do not treat undocumented code behavior as desired behavior until the user confirms it
+do not refactor, redesign, migrate, or implement during adoption
+do not create a new OpenSpec change until baseline context and desired behavior are clear
+preserve existing project conventions unless the user explicitly wants to change them
+```
+
+Create or refresh only missing or clearly thin project guidance files, using the existing project as
+source material:
+
+```text
+AGENTS.md
+CONTEXT.md
+SECURITY.md
+docs/architecture.md
+docs/ai-tools.md
+docs/adr/README.md
+docs/diagrams/README.md
+```
+
+Keep adoption docs factual and thin. Use `Observed`, `Confirmed`, and `Open Questions` language
+where useful. Put current code facts in observed sections, and only move them to confirmed product
+requirements after user confirmation.
+
+Then ask one blocking alignment question at a time. Prefer questions about:
+
+```text
+which current workflows must remain compatible
+which behavior is desired versus accidental or legacy
+domain terms that should become canonical
+security, privacy, data, or operational constraints
+the smallest first change worth proposing after adoption
+```
+
+Initialize or verify OpenSpec after the baseline is understood. For existing behavior, specs may
+describe confirmed behavior that must be protected. Future changes still follow propose, review,
+implement, verify, and archive.
+
+Gate prompt to user:
+
+```text
+I have inventoried the existing project and created or refreshed only thin guidance docs.
+Next I recommend an adoption grill: I will ask one blocking question at a time to separate desired behavior from observed behavior before creating any OpenSpec change.
+```
 
 ### 0. Preflight and Seed the Project Skeleton
 
