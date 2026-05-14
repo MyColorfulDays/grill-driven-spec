@@ -34,6 +34,13 @@ Or after the first OpenSpec change has shipped, run:
 /grill-driven-spec the first version is done; what should we improve next?
 ```
 
+Or create two unfinished feature threads:
+
+```text
+/grill-driven-spec start candidate workbench
+/grill-driven-spec start JD matching, but pause before proposal
+```
+
 ## Expected Behavior
 
 - The agent treats this as an existing-project change, not as 0-to-1.
@@ -47,6 +54,8 @@ Or after the first OpenSpec change has shipped, run:
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
 - The agent creates an OpenSpec proposal only after desired behavior and convention impact are clear.
 - If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
+- If multiple active changes exist, the agent lists them with detected stage and asks which one to continue.
+- If a feature idea is not ready for OpenSpec, the agent records it as a lightweight candidate instead of relying on chat memory.
 - The agent does not implement until review passes and the user confirms development.
 
 ## Regression Risks
@@ -58,5 +67,7 @@ Or after the first OpenSpec change has shipped, run:
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
 - Ignoring an unfinished active change and recommending a new next slice.
+- Mixing context between multiple unfinished features.
+- Losing a half-discussed feature because it was never recorded as a candidate or active change.
 - Treating observed legacy behavior as confirmed desired behavior.
 - Letting a data, security, deployment, or shared UI convention change pass review without one focused impact question.

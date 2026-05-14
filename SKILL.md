@@ -120,6 +120,10 @@ if implementation is complete but user verification is not recorded, continue St
 if user verification passed but the change is not archived, continue Stage 8
 ```
 
+If multiple active changes exist, do not guess the current focus. List each active change with the
+detected earliest incomplete gate, then ask the user which one to continue. A session should have
+one active focus even when the project has multiple active changes.
+
 Prefer OpenSpec CLI/status commands when available, such as listing changes or validating the active
 change, but do not rely only on CLI output. Also inspect the project artifacts. If CLI output and
 files disagree, explain the mismatch and ask before crossing a major gate.
@@ -128,6 +132,38 @@ Resume from the earliest incomplete gate. Do not repeat completed stages unless 
 missing, inconsistent, or the user explicitly asks to revisit them. Do not reclassify raw materials
 as confirmed requirements. Do not create a new OpenSpec change while an unfinished active change is
 present unless the user explicitly chooses to abandon, archive, or defer it.
+
+## Change Focus and Candidates
+
+Keep change context from different features separate.
+
+Rules:
+
+```text
+one session has one active focus
+a project may have multiple active OpenSpec changes
+if multiple active changes exist, list them with detected stage and ask the user to choose focus
+do not mix PRD, design, tasks, or review state between active changes
+do not start a new feature while another active change is unfinished unless the user explicitly defers, abandons, archives, or switches focus
+```
+
+For feature ideas that are discussed but not ready for a formal OpenSpec change, record a lightweight
+candidate instead of relying on chat memory. Prefer an existing project artifact if one already
+tracks candidates; otherwise use a thin `PRD.md` section named `Candidate Changes`.
+
+Each candidate should stay small:
+
+```text
+name or short label
+one-sentence intent
+current status: candidate, deferred, abandoned, promoted-to-change
+known blocking question, if any
+link to active OpenSpec change when promoted
+```
+
+When resuming and both active changes and candidate changes exist, show both groups and ask the user
+which focus to continue. Do not promote a candidate into `openspec/changes/` until desired behavior
+and convention impact are clear enough for review.
 
 ## Project Artifact Language
 

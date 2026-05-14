@@ -22,9 +22,16 @@ check raw sources already recorded in PRD.md
 inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
 inspect active change proposal.md, specs/, design.md, and tasks.md when present
 use active changes in openspec/changes/ as the primary change-state signal
+if multiple active changes exist, list them with detected stage and ask me which one to continue
+also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
 continue from the earliest incomplete gate
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
 ```
+
+When I discuss a feature idea but it is not ready for a formal OpenSpec change, record it as a
+lightweight candidate in the existing candidate artifact, or in `PRD.md` under `Candidate Changes`.
+Keep only a short label, one-sentence intent, status, blocking question, and OpenSpec change link
+when promoted.
 
 When entering a new workflow stage or adoption phase, print a large Markdown heading first:
 
