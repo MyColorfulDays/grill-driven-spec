@@ -233,6 +233,24 @@ Do not invoke maturity helpers just because they exist. Use them when the curren
 project state, or OpenSpec review reveals that maturity dimension. Keep the first working slice fast;
 let product, design, and architecture maturity deepen over later iterations.
 
+### Maturity Helper Invocation Contract
+
+Before invoking a product, design, or architecture maturity helper, state the helper contract:
+
+```text
+trigger: why this maturity helper is needed now
+narrow question: the single decision or artifact it should help with
+writeback target: PRD.md, DESIGN.md, CONTEXT.md, docs/architecture.md, docs/adr/, SECURITY.md, active OpenSpec design.md/tasks.md, or Candidate Changes
+stop condition: what output is enough to return to grill-driven-spec
+fallback: what to do if the helper, external reference, MCP, browser, private skill, or network access is unavailable
+```
+
+Maturity helpers must not block the Fast Path. If a helper implementation is unavailable, record the
+limitation and fall back to local project artifacts, existing docs, screenshots, or agent-native
+reasoning. Helper findings are advisory until written into Grill Driven Spec artifacts and accepted
+by the relevant OpenSpec review gate. Treat findings as blocking only when they affect safety,
+correctness, data, deployment, reversibility, or the user's confirmed goal.
+
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
 ## Project Artifact Language

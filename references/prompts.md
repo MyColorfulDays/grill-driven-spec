@@ -49,6 +49,10 @@ Use Progressive Maturity lightly:
 - Design maturity helpers only when visual quality, usability, consistency, or DESIGN.md is the problem.
 - Architecture maturity helpers only when architecture, data, security, integrations, performance, deployment, technology choice, refactoring, or release risk is the problem.
 
+Before using a maturity helper, state its trigger, narrow question, writeback target, stop condition,
+and fallback. If the helper/tool/site/private skill is unavailable, record the limitation and fall
+back to project artifacts or agent-native reasoning instead of stopping by default.
+
 When entering a new workflow phase, print a large Markdown heading first:
 
 ```markdown

@@ -5,6 +5,21 @@ Use these as optional capability slots. They are not fixed dependencies.
 `grill-driven-spec` remains the driver: helpers enrich the current phase and return decisions to the
 project artifacts and OpenSpec gates.
 
+Before using any helper, define:
+
+- trigger
+- narrow question
+- writeback target
+- stop condition
+- fallback if the helper, external reference, MCP, browser, private skill, or network access is unavailable
+
+If a helper is unavailable, do not stop the workflow by default. Record the limitation and fall back
+to local project artifacts, existing docs, screenshots, or agent-native reasoning.
+
+Helper findings are advisory until written into Grill Driven Spec artifacts and accepted by the
+relevant OpenSpec review gate. Treat findings as blocking only when they affect safety,
+correctness, data, deployment, reversibility, or the user's confirmed goal.
+
 ## Product Maturity Helper
 
 Use when:
@@ -33,6 +48,8 @@ Possible implementations:
 - installed PM skills
 - project-specific product docs
 - agent-native product reasoning
+
+Do not turn a small next-slice decision into a full discovery workflow unless the user asks for it.
 
 ## Design Maturity Helper
 
@@ -66,6 +83,7 @@ Possible implementations:
 - agent-native UI review
 
 Do not copy a reference brand blindly. Record the design direction that fits the product.
+Do not block the workflow if a design reference site, browser, or MCP is unavailable.
 
 ## Architecture Maturity Helper
 
@@ -117,3 +135,5 @@ Example mapping for an architecture helper pack:
 
 Do not invoke architecture helpers for routine feature changes unless architecture risk is actually
 part of the current problem.
+If a public or private architecture helper is unavailable, use local architecture docs and
+agent-native architecture review instead of stopping by default.
