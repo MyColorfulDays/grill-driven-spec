@@ -40,6 +40,21 @@ It is intended to work with tools such as:
 
 The workflow is the stable core. Tool-specific files belong in `agents/` as adapters.
 
+## Progressive Maturity
+
+Grill Driven Spec starts lightweight. The early path should get the first useful slice working
+without pulling in every possible product, design, or architecture process.
+
+As the project matures, the workflow can delegate bounded helper capabilities:
+
+- **Product maturity:** prioritization, user journey, roadmap, metrics, and candidate-change shaping.
+- **Design maturity:** design references, UI direction, component/style principles, and a project-level `DESIGN.md`.
+- **Architecture maturity:** solution design, architecture review, technology selection, threat modeling, technical debt, and release gating.
+
+These helpers are capability slots, not fixed dependencies. A project may use public skills, private
+skills, local docs, reference sites, or agent-native reasoning, as long as decisions return to the
+Grill Driven Spec artifacts and OpenSpec gates.
+
 ## Dependencies
 
 Installing this skill does not automatically install every dependency it composes.
@@ -112,6 +127,7 @@ The workflow must not:
 - `SKILL.md`: main workflow definition
 - `references/prompts.md`: reusable prompts for each stage
 - `references/file-skeletons.md`: starter project documentation templates
+- `references/helper-capabilities.md`: optional PM, design, and architecture helper capability slots
 - `references/review-checklist.md`: pre-development review checklist
 - `examples/`: scenario notes and regression observations
 - `agents/openai.yaml`: OpenAI/Codex adapter metadata

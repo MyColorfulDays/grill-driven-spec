@@ -201,6 +201,40 @@ When resuming and both active changes and candidate changes exist, show both gro
 which focus to continue. Do not promote a candidate into `openspec/changes/` until desired behavior
 and convention impact are clear enough for review.
 
+## Progressive Maturity
+
+Start lightweight, then add maturity helpers only when the project shows that need.
+
+Use this progression:
+
+```text
+Fast Path:
+- default for 0-to-1 and early MVP work
+- seed thin artifacts, clarify enough, create the first OpenSpec slice, implement, and verify
+- do not introduce PM, design, or architecture helper work just because it is available
+
+Product Maturity:
+- use when the user asks what to build next, feature direction feels scattered, or prioritization is unclear
+- optional helper capability: product discovery, prioritization, journey mapping, roadmap, metrics
+- write outcomes to PRD.md, Candidate Changes, CONTEXT.md, or the active OpenSpec proposal
+
+Design Maturity:
+- use when the product works but feels rough, inconsistent, ugly, or hard to use
+- optional helper capability: design references, UI direction, component/style principles, product-level DESIGN.md
+- future UI-related OpenSpec design.md files should reference DESIGN.md when it exists
+
+Architecture Maturity:
+- use when a change affects architecture boundaries, data model, security, privacy, integrations, performance, reliability, deployment, technology selection, or intentional refactoring
+- optional helper capability: solution design, architecture review, technology selection, threat modeling, technical debt assessment, release gating
+- write outcomes to docs/architecture.md, docs/adr/, SECURITY.md, active OpenSpec design.md, and tasks.md
+```
+
+Do not invoke maturity helpers just because they exist. Use them when the current user goal,
+project state, or OpenSpec review reveals that maturity dimension. Keep the first working slice fast;
+let product, design, and architecture maturity deepen over later iterations.
+
+See `references/helper-capabilities.md` for helper capability slots and example implementations.
+
 ## Project Artifact Language
 
 Use one stable primary language for project artifacts created or updated by this workflow.

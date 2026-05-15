@@ -43,6 +43,12 @@ If I switch feature focus within the same session, record the previous focus sta
 active, deferred, abandoned, or promoted to an OpenSpec change. Then name the new focus and do not
 carry unresolved assumptions across features.
 
+Use Progressive Maturity lightly:
+- Fast Path for 0-to-1 and early MVP work.
+- Product maturity helpers only when direction, prioritization, journey, roadmap, or metrics are the problem.
+- Design maturity helpers only when visual quality, usability, consistency, or DESIGN.md is the problem.
+- Architecture maturity helpers only when architecture, data, security, integrations, performance, deployment, technology choice, refactoring, or release risk is the problem.
+
 When entering a new workflow phase, print a large Markdown heading first:
 
 ```markdown
