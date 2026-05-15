@@ -84,11 +84,11 @@ Possible implementations:
 
 Do not copy a reference brand blindly. Record the design direction that fits the product.
 Do not block the workflow if a design reference site, browser, or MCP is unavailable.
-Do not use a brainstorming visual companion as the default design helper. If visual exploration is
-useful, keep it inside the current Grill Driven Spec Driving phase. Do not create
-`.superpowers/brainstorm/` artifacts, show a separate brainstorming progress board, or rely on a
-visual click as the only continuation path. Mirror visual choices in chat and write decisions to
-`DESIGN.md` or the active OpenSpec `design.md`.
+Visual companion tools may be used when they improve UI or interaction discussion. They are
+acceptable only if the current `Driving` phase remains clear, the board answers a narrow design
+question, text replies work as well as visual clicks, choices are mirrored back into chat, and
+decisions are written to `DESIGN.md` or the active OpenSpec `design.md`. If not, fall back to chat,
+screenshots, existing UI, or agent-native UI review.
 
 ## Architecture Maturity Helper
 

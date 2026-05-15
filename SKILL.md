@@ -251,12 +251,12 @@ reasoning. Helper findings are advisory until written into Grill Driven Spec art
 by the relevant OpenSpec review gate. Treat findings as blocking only when they affect safety,
 correctness, data, deployment, reversibility, or the user's confirmed goal.
 
-For Design Maturity, do not use a brainstorming visual companion as the default helper
-implementation. Visual references, screenshots, browser previews, or mockups may be used only as
-bounded inputs under the current Driving phase. They must not create `.superpowers/brainstorm/`
-artifacts, show a separate brainstorming progress board, or wait on a visual tool click as the only
-way to continue. If a visual tool is used, mirror the decision back into chat and project artifacts,
-and accept an ordinary text reply as the source of truth.
+For Design Maturity, visual companion tools may be used when they make UI or interaction decisions
+easier to evaluate. They are acceptable only when the current `Driving` phase and gate remain clear,
+the visual board answers a narrow design question, text replies are accepted equally to visual
+clicks, choices are mirrored back into chat, and decisions are written to `DESIGN.md` or the active
+OpenSpec `design.md`. If those conditions are not met, fall back to chat, screenshots, existing
+project UI, or agent-native UI review.
 
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
