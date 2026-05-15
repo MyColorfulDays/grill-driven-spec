@@ -52,6 +52,10 @@ Use Progressive Maturity lightly:
 Before using a maturity helper, state its trigger, narrow question, writeback target, stop condition,
 and fallback. If the helper/tool/site/private skill is unavailable, record the limitation and fall
 back to project artifacts or agent-native reasoning instead of stopping by default.
+For Design Maturity, do not use a brainstorming visual companion as the default helper. Visual
+references or previews must stay inside the current Driving phase, avoid `.superpowers/brainstorm/`
+artifacts or separate progress boards, and mirror any visual choice back into chat and project
+artifacts. Text replies are always valid for continuing the workflow.
 
 When entering a new workflow phase, print a large Markdown heading first:
 

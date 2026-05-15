@@ -69,6 +69,8 @@ Or create two unfinished feature threads:
 - Invoking a visual companion, mockup flow, or broad brainstorming flow before the next product slice is selected.
 - Invoking a separate brainstorming flow after the user has already selected the next slice.
 - Letting a helper skill take over gates, artifact routing, or the OpenSpec lifecycle.
+- Using a brainstorming visual companion as the default Design Maturity helper and creating `.superpowers/brainstorm/` artifacts.
+- Depending on a visual tool click without accepting a normal text reply as the workflow decision.
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
 - Ignoring an unfinished active change and recommending a new next slice.
