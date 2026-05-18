@@ -1,22 +1,53 @@
 # Grill Driven Spec
 
-Grill Driven Spec is a tool-agnostic workflow skill for AI coding agents.
+Answer the questions. Let your AI agent drive the spec.
 
-It helps an agent turn vague project ideas into:
+Grill Driven Spec turns your coding agent into a low-friction SDD driver: it grills unclear
+intent, captures the answers as project context and OpenSpec changes, then carries the work through
+review, implementation, and verification.
 
-- a PRD
-- project context docs
-- OpenSpec proposals
-- reviewed implementation tasks
-- verified implementation
+```text
+You:    /grill-driven-spec I want to build...
+Agent:  Let's grill the idea first.
+        I'll ask the questions, write down the decisions, and drive the spec before code.
+```
 
 Core rule:
 
 ```text
-grill first, spec second, code last
+grill first -> spec second -> code last
 ```
 
-## Workflow at a Glance
+## Start in 30 Seconds
+
+Install the skill:
+
+```text
+npx skills@latest add MyColorfulDays/grill-driven-spec
+```
+
+Start a new project:
+
+```text
+/grill-driven-spec I want to build <project idea>
+```
+
+Adopt an existing project:
+
+```text
+/grill-driven-spec adopt this existing project
+```
+
+Prepare a change in an existing project:
+
+```text
+/grill-driven-spec add <feature or behavior>
+```
+
+If your agent does not support the `skills` installer, copy this repository's `SKILL.md`
+into your agent's custom skills or instruction directory.
+
+## What It Does
 
 ```text
 0 to 1        Existing adoption        Existing change
@@ -47,9 +78,18 @@ grill first, spec second, code last
              Sync + Archive
 ```
 
+Grill Driven Spec is a tool-agnostic workflow skill for AI coding agents. It helps an
+agent turn new ideas or existing project changes into:
+
+- a PRD
+- project context docs
+- OpenSpec proposals
+- reviewed implementation tasks
+- verified implementation
+
 ## Use Cases
 
-Grill Driven Spec supports two main situations:
+Grill Driven Spec supports three common situations:
 
 - **0 to 1:** start from an empty or unstructured folder, create the first project docs, clarify the MVP, then produce an OpenSpec change before coding.
 - **Existing project adoption:** inventory current product reality, establish shared docs, and use the workflow for future changes.
@@ -58,15 +98,6 @@ Grill Driven Spec supports two main situations:
 ## Use With Any Agent
 
 Paste or install this workflow into your AI coding agent's instruction system.
-
-If your agent supports the `skills` installer, install this skill with:
-
-```text
-npx skills@latest add MyColorfulDays/grill-driven-spec
-```
-
-If your agent does not support the installer, copy this repository's `SKILL.md` into your agent's
-custom skills or instruction directory.
 
 It is intended to work with tools such as:
 
@@ -79,6 +110,34 @@ It is intended to work with tools such as:
 - other agents that can read project instructions and edit files
 
 The workflow is the stable core. Tool-specific files belong in `agents/` as adapters.
+
+## What Happens Next
+
+- **New project:** the agent runs preflight, initializes git if needed, preserves raw notes,
+  creates the minimal project documents, then starts grilling one question at a time.
+- **Existing project adoption:** the agent inventories current product reality, creates or
+  refreshes baseline docs, then uses that baseline for future OpenSpec changes.
+- **Existing project change:** the agent clarifies the desired behavior, checks whether existing
+  conventions are affected, then prepares an OpenSpec proposal before coding.
+
+The agent should not ask visual companion, stack, design, or product questions before the minimal
+skeleton exists. It should not overwrite an existing product with a new 0-to-1 skeleton.
+
+## Workflow
+
+1. Run preflight and seed the project skeleton.
+2. Clarify product intent with grill-me.
+3. Initialize OpenSpec.
+4. Fill project context with grill-with-docs.
+5. Create an OpenSpec proposal after confirmation.
+6. Review before development.
+7. Implement and test after confirmation.
+8. Ask the user to verify.
+9. Sync and archive after verification passes.
+
+Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
+
+Existing project changes use a lighter entry path when the project already has enough baseline context: clarify the desired behavior, check whether the change affects architecture, data, security, deployment, shared UI, or workflow conventions, then proceed to OpenSpec review without re-adopting the whole project.
 
 ## Progressive Maturity
 
@@ -117,40 +176,6 @@ Lore: npm install -g lore-protocol
 
 Do not install similarly named packages just because a dependency is missing. If these commands are
 not appropriate for the user's agent or environment, ask the user before substituting another source.
-
-## Quick Start Prompt
-
-```text
-/grill-driven-spec I want to build <project idea>
-```
-
-For a new project, the agent should run preflight, initialize the git repository if needed, preserve any raw notes or source materials, create the minimal project documents, then start grilling one question at a time.
-
-The agent should not ask visual companion, stack, design, or product questions before the minimal skeleton exists.
-
-For an existing implemented product, use:
-
-```text
-/grill-driven-spec adopt this existing project
-```
-
-The agent should inventory the current product reality, create or refresh shared docs, align with the user on which behavior is desired, then use OpenSpec for future changes. It should not overwrite the project with a new 0-to-1 skeleton.
-
-## Workflow
-
-1. Run preflight and seed the project skeleton.
-2. Clarify product intent with grill-me.
-3. Initialize OpenSpec.
-4. Fill project context with grill-with-docs.
-5. Create an OpenSpec proposal after confirmation.
-6. Review before development.
-7. Implement and test after confirmation.
-8. Ask the user to verify.
-9. Sync and archive after verification passes.
-
-Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
-
-Existing project changes use a lighter entry path when the project already has enough baseline context: clarify the desired behavior, check whether the change affects architecture, data, security, deployment, shared UI, or workflow conventions, then proceed to OpenSpec review without re-adopting the whole project.
 
 ## Hard Rules
 
