@@ -59,6 +59,15 @@ Grill Driven Spec supports two main situations:
 
 Paste or install this workflow into your AI coding agent's instruction system.
 
+If your agent supports the `skills` installer, install this skill with:
+
+```text
+npx skills@latest add MyColorfulDays/grill-driven-spec
+```
+
+If your agent does not support the installer, copy this repository's `SKILL.md` into your agent's
+custom skills or instruction directory.
+
 It is intended to work with tools such as:
 
 - Claude Code
