@@ -293,6 +293,14 @@ clicks, choices are mirrored back into chat, and decisions are written to `DESIG
 OpenSpec `design.md`. If those conditions are not met, fall back to chat, screenshots, existing
 project UI, or agent-native UI review.
 
+Helper skills and visual companions may run their own lightweight interaction flow when that improves
+the user's thinking. Treat that flow as a bounded handoff, not a replacement for Grill Driven Spec.
+Before yielding to a helper-specific prompt, keep the current `Driving` gate visible and say what
+decision the helper is helping with. If the helper requires a standalone invitation, browser consent,
+or other waiting step, the next assistant turn must resume from the user's reply and reconnect it to
+the current gate. Do not leave the user with an unexplained helper prompt, and do not require a visual
+click when a normal chat reply is enough.
+
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
 ## Project Artifact Language

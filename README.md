@@ -16,6 +16,37 @@ Core rule:
 grill first, spec second, code last
 ```
 
+## Workflow at a Glance
+
+```text
+0 to 1        Existing adoption        Existing change
+   \                 |                       /
+    \                |                      /
+                  Intent
+                    |
+                    v
+                  GRILL
+           Ask until intent is real
+                    |
+                    v
+             Context + PRD
+                    |
+                    v
+            OpenSpec Proposal
+                    |
+                    v
+              Review Gate
+                    |
+                    v
+              Code + Test
+                    |
+                    v
+           User Verification
+                    |
+                    v
+             Sync + Archive
+```
+
 ## Use Cases
 
 Grill Driven Spec supports two main situations:

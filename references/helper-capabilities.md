@@ -90,6 +90,12 @@ question, text replies work as well as visual clicks, choices are mirrored back 
 decisions are written to `DESIGN.md` or the active OpenSpec `design.md`. If not, fall back to chat,
 screenshots, existing UI, or agent-native UI review.
 
+Helper skills may use their own lightweight interaction patterns when they make the discussion
+better. Keep them bounded: state the current `Driving` gate, name the narrow decision the helper is
+supporting, and reconnect the user's next reply to that gate. A standalone visual-companion prompt or
+browser consent step is allowed, but it must not become an unexplained stop in the main workflow.
+Accept ordinary chat replies as valid decisions unless the user explicitly chose a visual-only flow.
+
 ## Architecture Maturity Helper
 
 Use when a change affects:

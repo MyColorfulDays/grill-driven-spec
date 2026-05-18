@@ -58,6 +58,12 @@ question, accept text replies equally to visual clicks, mirror choices back into
 decisions to DESIGN.md or the active OpenSpec design.md. If that does not hold, fall back to chat,
 screenshots, existing UI, or agent-native UI review.
 
+Helper skills may use lightweight helper-specific prompts, browser consent, or visual companion
+handoffs when they genuinely improve the conversation. Keep the handoff bounded: say which current
+Driving gate it supports, what decision is being clarified, and reconnect the user's next reply to
+that gate. Do not leave a standalone helper prompt unexplained, and do not require visual clicks when
+a normal chat reply answers the question.
+
 When entering a new workflow phase, print a large Markdown heading first:
 
 ```markdown
