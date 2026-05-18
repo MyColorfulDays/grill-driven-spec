@@ -12,41 +12,6 @@ Agent:  Let's grill the idea first.
         I'll ask the questions, write down the decisions, and drive the spec before code.
 ```
 
-Core rule:
-
-```text
-grill first -> spec second -> code last
-```
-
-## Start in 30 Seconds
-
-Install the skill:
-
-```text
-npx skills@latest add MyColorfulDays/grill-driven-spec
-```
-
-Start a new project:
-
-```text
-/grill-driven-spec I want to build <project idea>
-```
-
-Adopt an existing project:
-
-```text
-/grill-driven-spec adopt this existing project
-```
-
-Prepare a change in an existing project:
-
-```text
-/grill-driven-spec add <feature or behavior>
-```
-
-If your agent does not support the `skills` installer, copy this repository's `SKILL.md`
-into your agent's custom skills or instruction directory.
-
 ## What It Does
 
 ```text
@@ -86,6 +51,67 @@ agent turn new ideas or existing project changes into:
 - OpenSpec proposals
 - reviewed implementation tasks
 - verified implementation
+
+## Project Shape
+
+A new or adopted project usually grows toward this shape:
+
+```text
+your-project/
+|-- README.md                    # Human-facing project overview
+|-- PRD.md                       # Raw idea, confirmed requirements, non-goals, MVP direction
+|-- CONTEXT.md                   # Stable domain language, business rules, project facts
+|-- AGENTS.md                    # Local instructions that keep agents on the same workflow
+|-- SECURITY.md                  # Security, privacy, auth, data-handling, and abuse constraints
+|-- DESIGN.md                    # Optional UI direction and design decisions when needed
+|-- docs/
+|   |-- inbox/                   # Raw notes, screenshots, meeting notes, pasted requirements
+|   |-- architecture.md          # Architecture context and decisions as they become real
+|   `-- adr/                     # Optional architecture decision records
+|-- openspec/
+|   |-- project.md               # OpenSpec project context
+|   `-- changes/
+|       `-- <change-name>/
+|           |-- proposal.md      # What should change and why
+|           |-- design.md        # Technical/product design when the change needs it
+|           |-- tasks.md         # Reviewed implementation checklist
+|           `-- specs/           # Requirement deltas for affected capabilities
+|-- src/                         # Product code, created or changed only after review
+`-- tests/                       # Verification for the implemented behavior
+```
+
+The exact tree stays project-specific. Grill Driven Spec keeps the important path stable:
+raw intent becomes confirmed context, confirmed context becomes an OpenSpec change, and reviewed
+tasks become code.
+
+## Start in 30 Seconds
+
+Install the skill:
+
+```text
+npx skills@latest add MyColorfulDays/grill-driven-spec
+```
+
+Start a new project:
+
+```text
+/grill-driven-spec I want to build <project idea>
+```
+
+Adopt an existing project:
+
+```text
+/grill-driven-spec adopt this existing project
+```
+
+Prepare a change in an existing project:
+
+```text
+/grill-driven-spec add <feature or behavior>
+```
+
+If your agent does not support the `skills` installer, copy this repository's `SKILL.md`
+into your agent's custom skills or instruction directory.
 
 ## Use Cases
 
