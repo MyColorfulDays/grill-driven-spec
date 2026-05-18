@@ -83,6 +83,41 @@ Prefer enabling already-installed local skills over installing new global packag
 
 Follow these gates in order unless the project already has later-stage artifacts.
 
+## Progress Tracking
+
+Maintain a visible task plan for the workflow whenever the agent environment provides a task,
+checklist, or progress-plan tool.
+
+Rules:
+
+```text
+create the progress plan during preflight or resume, before doing substantial stage work
+use one task per active gate or phase, not one task per tiny substep
+keep exactly one task in progress whenever possible
+mark tasks completed as soon as their gate is actually satisfied
+when resuming, rebuild the plan from the earliest incomplete gate based on files, not chat memory
+when switching focus, replace the plan with tasks for the newly selected focus
+do not mark implementation, user verification, or archive complete until the corresponding file/tool/user evidence exists
+```
+
+Default plan items for a full 0-to-1 flow:
+
+```text
+Preflight and seed project skeleton
+Clarify product intent
+Initialize and verify OpenSpec
+Fill project context
+Create OpenSpec proposal
+Review before development
+Implement and test
+User verification
+Sync and archive
+```
+
+For Existing Project Adoption, Existing Project Change, or Next-slice selection, create a shorter
+plan that matches the chosen path and starts at the earliest incomplete gate. Keep the user-facing
+`Driving` heading as the phase label in chat, and use the progress plan as the side-channel status.
+
 ## Project State Detection
 
 Before choosing a workflow path, classify the current folder and user intent using both file signals
