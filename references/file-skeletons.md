@@ -70,6 +70,28 @@ Follow the project documents before writing code:
 - Do not invent product scope, stack, architecture, or business rules.
 - Keep unknowns explicit as TBD or Open Questions.
 - Before changing security-sensitive behavior, read SECURITY.md and keep unknown security decisions explicit.
+
+## Documentation Sync
+
+Keep durable project knowledge up to date as work changes.
+
+When a change affects requirements, domain language, architecture, security, operational behavior,
+or user-facing workflows, update the relevant project document in the existing documentation
+structure.
+
+Use this project's established docs first. If this project follows the Grill Driven Spec structure,
+route updates like this:
+
+- Product intent or requirements -> PRD.md
+- Domain language or business rules -> CONTEXT.md
+- Security, privacy, or data-handling constraints -> SECURITY.md
+- Architecture knowledge -> docs/architecture.md
+- Hard-to-reverse decisions -> docs/adr/
+- Change-specific design or task state -> the active OpenSpec change
+
+If the project uses a different documentation structure, update the closest existing authoritative
+document instead of creating new Grill Driven Spec files. Create a new document only when no suitable
+home exists, and keep the link or reference discoverable from the existing docs.
 ```
 
 ## CONTEXT.md

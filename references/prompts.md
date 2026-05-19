@@ -193,9 +193,9 @@ docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-t
 
 README.md should contain only a single H1 using the current directory name.
 Keep all other files thin. Use TBD for unknown stack, commands, architecture, or decisions.
-Do not write business code, create business directories, invent features, choose a stack, create
-UBIQUITOUS_LANGUAGE.md, or create an OpenSpec change unless the user explicitly asks for
-DDD-oriented documentation.
+Do not write business code, create business directories, invent features, or choose a stack.
+Do not create UBIQUITOUS_LANGUAGE.md unless the user explicitly asks for DDD-oriented documentation.
+Do not create an OpenSpec change.
 
 After the skeleton is in place, start grilling me one question at a time.
 ```
