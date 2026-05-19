@@ -30,7 +30,10 @@ Then run:
 - Clearly stated facts may be copied into `PRD.md`, but inferred requirements stay under `Open Questions`.
 - `Confirmed Requirements` stays empty until the user confirms requirements during grill-me.
 - The agent enters grill-me after the skeleton exists, passing the PRD/OpenSpec convergence contract instead of copying grill-me's internal rules.
-- Before development, the agent asks a compact greenfield readiness question for blocking technical/UI choices or asks the user to authorize conservative defaults.
+- Before development, the agent asks a compact greenfield readiness question for blocking technical/UI choices. If stack/runtime is missing, it recommends an MVP stack with brief rationale and asks the user to confirm it or explicitly authorize conservative defaults.
+- If the idea depends on an external system, the agent asks for enough docs/examples/access details or asks whether to proceed with a provisional mock boundary and documented assumptions.
+- If the external system belongs to a mature domain, the agent may suggest a conservative domain-informed mock, but it names the pattern and records assumptions instead of treating them as real external-system facts.
+- The same external knowledge readiness rule should also apply later if an existing-project change adds or changes an external system contract.
 
 ## Regression Risks
 
@@ -38,4 +41,6 @@ Then run:
 - Asking product, stack, or design questions before creating the skeleton.
 - Moving raw files into `docs/inbox/` without explicit approval.
 - Over-summarizing large source materials during Stage 0.
-- Passing review and prompting development while stack, runtime, persistence, sensitive-data handling, or verification choices are still blocking TBDs.
+- Passing review and prompting development while stack, runtime, source layout, persistence, sensitive-data handling, or verification choices are still blocking TBDs or only implied defaults.
+- Passing review and prompting development while required external-system behavior is unknown and no explicit mock path has been approved.
+- Turning a domain-informed mock into a broad domain-modeling interview or treating industry-pattern assumptions as confirmed requirements.

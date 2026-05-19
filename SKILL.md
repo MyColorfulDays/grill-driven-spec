@@ -335,6 +335,47 @@ workflow identifiers such as `Driving`, `OpenSpec`, `proposal.md`, `design.md`, 
 command names unchanged when translating them would reduce precision. Surrounding explanation should
 read naturally in the project language.
 
+## External Knowledge and Domain Pattern Readiness
+
+Apply this rule in every workflow path: 0-to-1, Existing Project Adoption, Existing Project Change,
+Next-slice selection, proposal review, and implementation resume.
+
+When the first slice or requested change depends on external knowledge, classify that dependency
+before review passes. External knowledge includes external systems, vendor services, third-party
+APIs, organization-owned workflows, industry rules, legacy data formats, customer-provided files,
+model APIs, data warehouses, identity providers, payment providers, HR systems, and similar facts
+the project cannot safely invent.
+
+Use this classification:
+
+```text
+known -> enough facts are available from user-provided docs/examples/access details, existing project code, adapters, schemas, contract tests, fixtures, or authoritative project docs
+provisional -> the user explicitly approves a mock, fixture, fake adapter, or guessed contract; design.md records the boundary, assumptions, non-goals, replacement trigger, and what must change when real facts arrive
+blocking -> neither enough facts nor explicit provisional approval exists; ask one readiness question before proposal review, development, or archive continues
+```
+
+For existing projects, inherit external knowledge from current adapters, schemas, contract tests,
+fixtures, runbooks, and documented conventions when the change only consumes them. Re-run readiness
+when the change adds a new external dependency, changes an external contract, changes sensitive-data
+handling, or exposes previously hidden external behavior to users.
+
+When real external facts are unavailable but the domain has mature patterns, the provisional mock may
+be domain-informed. Keep this lightweight:
+
+```text
+briefly name the pattern when it helps the first slice
+explain why it fits in one sentence
+propose a conservative boundary instead of a broad domain model
+ask at most one blocking question at a time
+record pattern assumptions in PRD.md Open Questions or design.md, not specs
+do not treat industry-pattern assumptions as confirmed external-system facts
+```
+
+Do not block the Fast Path just because more domain knowledge could be gathered. Block only when the
+missing external fact affects safety, correctness, data shape, integration behavior, local
+verification, reversibility, or the user's confirmed goal. Otherwise, carry it as an Open Question,
+non-goal, or provisional design assumption.
+
 ## Driving Transition Output
 
 When entering a new workflow phase, make the transition visually obvious to the user with a large
@@ -465,6 +506,7 @@ check repository status and current branch
 identify the likely source, test, config, docs, and OpenSpec locations for this change
 check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
 identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+identify relevant external-system adapters, schemas, fixtures, contract tests, docs, and conventions for this change
 identify the primary language of existing authoritative project docs
 check git, OpenSpec, and Lore availability when relevant
 check grill-me and grill-with-docs availability when clarification may be needed
@@ -476,6 +518,7 @@ Branch the flow:
 if baseline context is missing or too thin to judge desired behavior -> do a minimal adoption baseline first
 if the change fits existing architecture, UI, test, deployment, and workflow conventions -> inherit them by default
 if the change affects architecture, data, security, deployment, shared UI, or workflow conventions -> ask one blocking impact question before proposing
+if the change adds or changes external knowledge -> classify it as known, provisional, or blocking using External Knowledge and Domain Pattern Readiness
 if product intent is vague -> invoke grill-me with a change-scoped contract
 if project/domain context is the blocker -> invoke grill-with-docs with a change-scoped contract
 ```
@@ -496,6 +539,7 @@ goal: clarify only what is needed for the requested change
 inputs: current project docs, relevant code/docs, and any existing OpenSpec artifacts
 write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, and the future OpenSpec change when confirmed
 question focus: desired behavior, compatibility with existing workflows, non-goals, and convention impact
+external knowledge: inherit known external-system contracts from existing code/docs, or classify new/changed external knowledge as known, provisional, or blocking
 stop condition: the change can be proposed as testable behavior and its convention impact is known
 constraints: do not re-adopt the whole project, choose a new stack, redesign shared UI, migrate data, or implement before review unless the user explicitly asks for that scope
 ```
@@ -632,6 +676,7 @@ Pass this contract:
 goal: clarify enough product intent for the first OpenSpec change
 primary write target: PRD.md
 preferred question focus: MVP boundary, first users, success criteria, non-goals, and testable core behavior
+external knowledge: when external systems or mature domain patterns appear, classify them lightly using External Knowledge and Domain Pattern Readiness
 stop condition: MVP boundary, non-goals, and core behavior can become testable requirements
 constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
 ```
@@ -639,6 +684,10 @@ constraints: do not create OpenSpec changes, choose a stack, write business code
 After each important answer, update `PRD.md`.
 
 Do not create an OpenSpec change yet.
+
+Use External Knowledge and Domain Pattern Readiness during product clarification, but keep it
+lightweight. Surface a domain pattern only when it helps clarify the first slice, and ask at most one
+blocking question at a time.
 
 Advance only when:
 
@@ -696,6 +745,7 @@ goal: fill only the context needed for the first OpenSpec proposal
 inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
 write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
 question focus: only questions that block a testable first OpenSpec change
+external knowledge: classify required external systems, external docs, and domain-pattern assumptions as known, provisional, or blocking
 stop condition: enough project context exists to propose the first OpenSpec change
 constraints: do not continue grilling for non-blocking UI or implementation details, do not write code, and do not create a change until the user confirms propose
 ```
@@ -724,6 +774,10 @@ security, privacy, or data-handling constraints
 choices that would cause a hard-to-reverse architecture decision
 ```
 
+Use External Knowledge and Domain Pattern Readiness during Stage 3. Domain patterns should reduce
+questions rather than multiply them: propose a small default boundary for the first OpenSpec slice
+and carry the rest as Open Questions or non-goals.
+
 Examples that should usually move to `design.md` or `tasks.md` instead of more grilling:
 
 ```text
@@ -739,15 +793,26 @@ Technical readiness depends on the project branch.
 
 For greenfield projects, do not skip technical and experience readiness. Before asking the user to
 enter development, the workflow must know enough to implement the first slice safely without
-inventing project shape. Keep this lightweight; prefer one compact readiness question or ask the user
-to authorize conservative defaults.
+inventing project shape. Keep this lightweight, but do not treat silence as approval to choose the
+stack.
 
 Greenfield readiness can come from:
 
 ```text
 the user confirming stack/runtime, source layout, storage, deployment target, integration constraints, and broad UI direction
-an explicit user instruction that the agent may choose conservative defaults
+an explicit user instruction that the agent may choose conservative defaults, followed by the agent recording the selected defaults and rationale in design.md
 ```
+
+When stack/runtime is not already confirmed for a greenfield implementation, ask one compact
+technical readiness question before review can pass. Make the question useful, not open-ended:
+recommend a default stack for the MVP, give one short reason, mention one or two reasonable
+alternatives when relevant, and ask the user to confirm the recommendation or authorize the agent to
+choose conservative defaults. Do not start development from a response that merely says the change is
+ready if stack/runtime, source layout, and local verification are still only implied.
+
+For external systems, vendor services, organization-owned workflows, and domain-pattern assumptions,
+apply the workflow-wide External Knowledge and Domain Pattern Readiness rule instead of treating
+greenfield projects as a special case.
 
 Source layout is part of technical readiness. Before implementation creates business code, the
 workflow must know where product source and tests belong. Do not place business source files such as
@@ -783,10 +848,10 @@ with stack, architecture, or UI questions. Record that the implementation will f
 patterns in `design.md`.
 
 If readiness is unknown, keep it as Open Questions in `design.md` and block development review until
-the user confirms the choice, the existing project provides the convention, or the user authorizes
-default choices. Do not turn every low-level library choice into grilling; focus on choices that
-affect project shape, user experience direction, data persistence, security, deployment, or the
-ability to run and verify the MVP.
+the user confirms the choice, the existing project provides the convention, or the user explicitly
+authorizes default choices and the agent records the chosen defaults. Do not turn every low-level
+library choice into grilling; focus on choices that affect project shape, user experience direction,
+data persistence, security, deployment, or the ability to run and verify the MVP.
 
 Advance as soon as the project context is sufficient to create a first OpenSpec change. When only non-blocking UI or implementation details remain, stop grilling and ask the user to confirm entering propose.
 
@@ -827,8 +892,20 @@ local run, test, and verification expectations
 deployment target if it affects the first slice
 ```
 
+Before review passes, any proposed default that is required to implement the first slice must either
+be confirmed by the user or converted into an explicit agent-selected default under user
+authorization. Do not leave required stack/runtime, source layout, or local verification choices as
+"proposed" or "awaiting approval" while asking to enter development.
+
 For existing projects, `design.md` should state whether the change follows existing technical and UI
 conventions or list the specific conventions it changes.
+
+For any workflow path, if the change depends on external knowledge, `design.md` must record the
+External Knowledge and Domain Pattern Readiness classification. For known dependencies, reference
+the source of truth such as docs, adapters, schemas, fixtures, or contract tests. For provisional
+dependencies, record the mock boundary, assumptions, non-goals, replacement trigger, and any
+domain-pattern assumptions. Specs must describe behavior against the agreed boundary, not pretend
+unknown external behavior is confirmed.
 
 Do not implement after creating the change.
 
@@ -850,9 +927,16 @@ Technical approach is ready only when blocking technical and UI choices are conf
 an existing project, or explicitly delegated to the agent as conservative defaults. For greenfield
 projects, if stack/runtime, source layout, persistence, security/data handling, UI direction, or verification
 environment is still TBD and needed for the first implementation slice, review fails and the agent
-must ask one compact readiness question before development. For existing projects, review should not
+must ask one compact readiness question before development. That question should recommend a
+specific stack/runtime when the project shape is unclear, not simply ask whether to proceed. For
+existing projects, review should not
 fail on inherited stack or UI choices unless the change affects architecture, data, security,
 deployment, source layout, local verification, shared UI conventions, or user workflow conventions.
+
+For any workflow path, if required external knowledge is blocking, review fails unless the dependency
+is classified as known or explicitly provisional. The next gate should ask for docs/examples/access
+details, identify the existing project contract to inherit, or ask whether to proceed with a mock
+boundary and documented assumptions.
 
 If anything is unclear, return to grill-me or grill-with-docs, update the relevant files, and review again.
 

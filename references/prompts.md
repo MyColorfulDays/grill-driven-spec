@@ -97,6 +97,7 @@ Run adoption preflight first:
 - inspect package manifests, build scripts, CI, deploy config, and environment examples
 - check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ already exist
 - identify obvious product surfaces, core workflows, and domain terms from code or docs
+- identify existing external-system adapters, schemas, fixtures, contract tests, docs, runbooks, and conventions
 - identify the primary language of existing authoritative project docs and use it for updated artifacts
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
@@ -131,6 +132,7 @@ Run lightweight change preflight first:
 - identify likely source, test, config, documentation, and OpenSpec locations for this change
 - check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec/ provide enough baseline context
 - identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
+- identify relevant external-system adapters, schemas, fixtures, contract tests, docs, and conventions for this change
 - identify the primary language of existing authoritative project docs and use it for updated artifacts
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
 
@@ -143,6 +145,9 @@ If baseline context is missing or too thin to judge desired behavior, create or 
 minimum adoption baseline first. If the change follows existing conventions, inherit them and record
 that in design.md. If the change affects architecture, data, security, deployment, shared UI, or
 workflow conventions, ask one blocking impact question before creating an OpenSpec proposal.
+If the change adds or changes external knowledge, classify it as known, provisional, or blocking:
+inherit existing adapters/docs/tests when known, ask for docs/examples/access details when blocking,
+or ask whether to proceed with an explicit mock boundary.
 
 If I ask what to build next, recommend a small number of change candidates and ask the single
 selection question that decides the next OpenSpec proposal. Do not invoke a visual companion,
@@ -201,6 +206,7 @@ Invoke grill-me with this contract:
 - primary write target: PRD.md
 - stop condition: MVP boundary, non-goals, and testable core behavior are clear
 - constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
+- domain pattern awareness: when a mature domain or external system is mentioned, briefly name the likely pattern only if it helps the first slice, ask at most one blocking question, and record unconfirmed pattern assumptions as Open Questions rather than confirmed requirements
 
 After each important answer, update PRD.md.
 Put uncertain content under open questions. Put confirmed exclusions under non-goals.
@@ -217,6 +223,7 @@ Invoke grill-with-docs with this contract:
 - inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
 - write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
 - question focus: only questions that block a testable first OpenSpec change, including technical choices that directly affect the first implementation slice
+- external knowledge: classify required external systems, external docs, and domain-pattern assumptions as known, provisional, or blocking
 - stop condition: enough project context exists to propose the first OpenSpec change
 - constraints: do not continue grilling for non-blocking UI or implementation details, do not write code, and do not create a change until I confirm propose
 
@@ -226,9 +233,19 @@ docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for ha
 Do not continue grilling for non-blocking UI or implementation details such as screen layout,
 button labels, component structure, CSS framework, or copy. Put those in design.md or tasks.md later.
 For greenfield projects, ask or record one compact technical/experience readiness question when
-stack, runtime, source layout, persistence, security/data handling, integrations, broad UI direction, local
-verification, or deployment target would block safe implementation. For existing projects, inherit
+stack, runtime, source layout, persistence, security/data handling, integrations, broad UI direction,
+local verification, or deployment target would block safe implementation. For existing projects, inherit
 current architecture, stack, source layout, UI, test, and deployment conventions unless the change affects them.
+If stack/runtime is not confirmed, recommend a default stack for the MVP with a short reason and one
+or two alternatives when useful, then ask me to confirm the recommendation or explicitly authorize
+you to choose conservative defaults. Do not treat silence or a generic "proceed" prompt as stack
+approval.
+For any path, apply External Knowledge and Domain Pattern Readiness when the first slice depends on
+external systems, external docs, organization workflows, or domain-pattern assumptions. If facts are
+missing, ask for docs/examples/access details or ask whether to proceed with an explicit mock or
+fake-adapter boundary. When the domain has mature patterns, you may recommend a domain-informed mock
+boundary, but keep it conservative, explain which pattern you are using, and carry the rest as Open
+Questions or non-goals.
 Do not create business source files in the project root merely because the stack is still unclear;
 record the stack-appropriate source and test layout in design.md before development.
 When the context is enough for a testable first OpenSpec change, ask me to confirm propose.
@@ -270,6 +287,13 @@ integrations, basic UI direction, local verification, and deployment when releva
 projects, state whether the change follows existing technical, source layout, and UI conventions or
 list the specific conventions it
 changes.
+Before review can pass, required greenfield stack/runtime, source layout, and local verification
+choices must be confirmed or explicitly delegated to you, and design.md must record the selected
+choice and rationale.
+For any path, if the change depends on external knowledge, design.md must record whether it is known,
+provisional, or blocking. Known dependencies should reference docs, adapters, schemas, fixtures, or
+contract tests. Provisional dependencies must record the mock boundary, assumptions, non-goals,
+replacement trigger, and any domain-pattern assumptions.
 Do not implement.
 ```
 
@@ -286,6 +310,11 @@ are still TBD and not explicitly delegated to the agent. For existing projects, 
 inherited stack or UI choices unless the change affects architecture, data, security, deployment,
 source layout, local verification, shared UI conventions, or user workflow conventions.
 If unclear, return to grill and update the relevant files. Do not code.
+If stack/runtime is missing for a greenfield project, the next gate is a technical readiness
+question with a recommended stack, not a development confirmation.
+If required external knowledge is blocking, the next gate is an integration readiness question: ask
+for docs/examples/access details, identify the existing project contract to inherit, or ask whether
+to proceed with a provisional mock boundary and documented assumptions.
 When reporting the review result, summarize validation and the next gate naturally in the project
 language. Keep command names, change names, and file names such as openspec validate, tasks.md, and
 design.md unchanged.
