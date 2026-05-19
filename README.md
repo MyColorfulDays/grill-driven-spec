@@ -1,15 +1,18 @@
 # Grill Driven Spec
 
-Answer the questions. Let your AI agent drive the spec.
+Grill Driven Development for AI coding agents.
 
-Grill Driven Spec turns your coding agent into a low-friction SDD driver: it grills unclear
-intent, captures the answers as project context and OpenSpec changes, then carries the work through
-review, implementation, and verification.
+Answer focused questions, clarify what should be built, then let development follow SDD.
+
+Grill Driven Spec turns a vague idea or requested change into a disciplined development path. The
+agent asks only the questions needed to make intent real, records the answers as project context,
+then uses OpenSpec proposals, review gates, implementation tasks, and verification to keep coding
+aligned with the clarified decision.
 
 ```text
 You:    /grill-driven-spec I want to build...
-Agent:  Let's grill the idea first.
-        I'll ask the questions, write down the decisions, and drive the spec before code.
+Agent:  Let's clarify the first slice before coding.
+        I'll ask focused questions, write down decisions, and drive the SDD flow.
 ```
 
 ## What It Does
@@ -145,10 +148,26 @@ The workflow is the stable core. Tool-specific files belong in `agents/` as adap
 - **Existing project adoption:** the agent inventories current product reality, creates or
   refreshes baseline docs, then uses that baseline for future OpenSpec changes.
 - **Existing project change:** the agent clarifies the desired behavior, checks whether existing
-  conventions are affected, then prepares an OpenSpec proposal before coding.
+  conventions or external-system contracts are affected, then prepares an OpenSpec proposal before coding.
 
 The agent should not ask visual companion, stack, design, or product questions before the minimal
 skeleton exists. It should not overwrite an existing product with a new 0-to-1 skeleton.
+
+## Readiness Gates
+
+Before development, the agent checks whether the first slice has enough implementation context.
+
+For greenfield projects, it confirms or recommends stack/runtime, source layout, and local
+verification instead of silently choosing them.
+
+For any project path, external knowledge is classified before review passes:
+
+- `known`: documented by project docs, adapters, schemas, fixtures, contract tests, examples, or user-provided materials.
+- `provisional`: explicitly approved as a mock, fixture, fake adapter, or guessed contract with assumptions recorded in `design.md`.
+- `blocking`: missing facts that affect correctness, data shape, integration behavior, verification, or the confirmed goal.
+
+When a mature domain pattern can help, the agent may suggest a conservative domain-informed mock,
+but it keeps assumptions visible and does not treat them as confirmed external-system facts.
 
 ## Workflow
 
