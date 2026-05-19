@@ -216,9 +216,11 @@ docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for ha
 Do not continue grilling for non-blocking UI or implementation details such as screen layout,
 button labels, component structure, CSS framework, or copy. Put those in design.md or tasks.md later.
 For greenfield projects, ask or record one compact technical/experience readiness question when
-stack, runtime, persistence, security/data handling, integrations, broad UI direction, local
+stack, runtime, source layout, persistence, security/data handling, integrations, broad UI direction, local
 verification, or deployment target would block safe implementation. For existing projects, inherit
-current architecture, stack, UI, test, and deployment conventions unless the change affects them.
+current architecture, stack, source layout, UI, test, and deployment conventions unless the change affects them.
+Do not create business source files in the project root merely because the stack is still unclear;
+record the stack-appropriate source and test layout in design.md before development.
 When the context is enough for a testable first OpenSpec change, ask me to confirm propose.
 
 Do not write code or create a change until I confirm propose.
@@ -253,9 +255,10 @@ Create the first OpenSpec change from PRD.md, CONTEXT.md, docs/, and the grill r
 Write proposal.md, specs/, design.md, and tasks.md.
 Include implementation, tests, docs, CI, TDD, and lightweight DDD tasks where relevant.
 In design.md, include Technical Approach with confirmed choices, proposed defaults awaiting approval,
-and technical open questions for stack/runtime, persistence, sensitive-data handling, integrations,
-basic UI direction, local verification, and deployment when relevant. For existing projects, state
-whether the change follows existing technical and UI conventions or list the specific conventions it
+and technical open questions for stack/runtime, source layout, persistence, sensitive-data handling,
+integrations, basic UI direction, local verification, and deployment when relevant. For existing
+projects, state whether the change follows existing technical, source layout, and UI conventions or
+list the specific conventions it
 changes.
 Do not implement.
 ```
@@ -268,10 +271,10 @@ Review the current OpenSpec change before development.
 Check proposal vs PRD.md, testability of specs, unconfirmed assumptions in design,
 technical readiness for implementation, task size and order, and missing tests/docs/CI.
 For greenfield projects, review must fail if required stack/runtime, persistence, security/data
-handling, broad UI direction, integrations, local verification, or deployment choices are still TBD
-and not explicitly delegated to the agent. For existing projects, do not fail review on inherited
-stack or UI choices unless the change affects architecture, data, security, deployment, local
-verification, shared UI conventions, or user workflow conventions.
+handling, source layout, broad UI direction, integrations, local verification, or deployment choices
+are still TBD and not explicitly delegated to the agent. For existing projects, do not fail review on
+inherited stack or UI choices unless the change affects architecture, data, security, deployment,
+source layout, local verification, shared UI conventions, or user workflow conventions.
 If unclear, return to grill and update the relevant files. Do not code.
 ```
 

@@ -76,13 +76,14 @@ your-project/
 |           |-- design.md        # Technical/product design when the change needs it
 |           |-- tasks.md         # Reviewed implementation checklist
 |           `-- specs/           # Requirement deltas for affected capabilities
-|-- src/                         # Product code, created or changed only after review
-`-- tests/                       # Verification for the implemented behavior
+|-- src/ or stack-native layout   # Product code, created or changed only after review
+`-- tests/ or stack-native tests  # Verification for the implemented behavior
 ```
 
 The exact tree stays project-specific. Grill Driven Spec keeps the important path stable:
 raw intent becomes confirmed context, confirmed context becomes an OpenSpec change, and reviewed
-tasks become code.
+tasks become code. Business source files should not accumulate in the project root unless that is the
+confirmed stack or project convention.
 
 ## Start in 30 Seconds
 

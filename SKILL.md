@@ -728,12 +728,28 @@ to authorize conservative defaults.
 Greenfield readiness can come from:
 
 ```text
-the user confirming stack/runtime, storage, deployment target, integration constraints, and broad UI direction
+the user confirming stack/runtime, source layout, storage, deployment target, integration constraints, and broad UI direction
 an explicit user instruction that the agent may choose conservative defaults
 ```
 
+Source layout is part of technical readiness. Before implementation creates business code, the
+workflow must know where product source and tests belong. Do not place business source files such as
+`app.py`, `main.py`, `index.ts`, or similar entry points in the project root just because the stack is
+not confirmed. Prefer stack-specific conventions and record the chosen layout in the active
+`design.md`.
+
+Default source layout guidance:
+
+```text
+existing implemented project -> inherit current source and test layout
+Go -> prefer Go module conventions such as cmd/, internal/, and package directories; use pkg/ only when it represents a real exported package boundary
+Node/TypeScript, React, Python app/service, Rust app, and most other greenfield application projects -> prefer src/ plus an appropriate tests/ or stack-native test location
+small script/tool project -> use a named package, module directory, or scripts/ when multiple files are expected; root-level scripts are allowed only when that is the confirmed project shape
+documentation-only, spec-only, or skill/plugin projects -> do not invent a src/ directory unless implementation code is actually needed
+```
+
 For existing projects, inherit current architecture, stack, UI patterns, design system, test style,
-and deployment conventions by default. Ask technical or UI questions only when the proposed change
+source layout, and deployment conventions by default. Ask technical or UI questions only when the proposed change
 would affect:
 
 ```text
@@ -785,6 +801,7 @@ for at least:
 
 ```text
 application shape and runtime
+source and test layout
 primary data storage or persistence approach
 authentication, authorization, privacy, or sensitive-data handling when relevant
 external integrations and AI/tool dependencies when relevant
@@ -814,11 +831,11 @@ MVP is not too large
 
 Technical approach is ready only when blocking technical and UI choices are confirmed, inherited from
 an existing project, or explicitly delegated to the agent as conservative defaults. For greenfield
-projects, if stack/runtime, persistence, security/data handling, UI direction, or verification
+projects, if stack/runtime, source layout, persistence, security/data handling, UI direction, or verification
 environment is still TBD and needed for the first implementation slice, review fails and the agent
 must ask one compact readiness question before development. For existing projects, review should not
 fail on inherited stack or UI choices unless the change affects architecture, data, security,
-deployment, local verification, shared UI conventions, or user workflow conventions.
+deployment, source layout, local verification, shared UI conventions, or user workflow conventions.
 
 If anything is unclear, return to grill-me or grill-with-docs, update the relevant files, and review again.
 
