@@ -112,6 +112,8 @@ Use only the documented dependency install sources, and ask the user before subs
 
 Create or refresh only missing or clearly thin guidance files such as AGENTS.md, CONTEXT.md,
 SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and docs/diagrams/README.md.
+Create UBIQUITOUS_LANGUAGE.md only when domain terminology is already complex enough to need a
+dedicated glossary, and link to it from CONTEXT.md.
 
 Use Observed, Confirmed, and Open Questions language where useful.
 After the baseline is in place, ask me one blocking adoption question at a time to separate desired
@@ -191,7 +193,9 @@ docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-t
 
 README.md should contain only a single H1 using the current directory name.
 Keep all other files thin. Use TBD for unknown stack, commands, architecture, or decisions.
-Do not write business code, create business directories, invent features, choose a stack, or create an OpenSpec change.
+Do not write business code, create business directories, invent features, choose a stack, create
+UBIQUITOUS_LANGUAGE.md, or create an OpenSpec change unless the user explicitly asks for
+DDD-oriented documentation.
 
 After the skeleton is in place, start grilling me one question at a time.
 ```
@@ -229,6 +233,9 @@ Invoke grill-with-docs with this contract:
 
 Update PRD.md for product intent, CONTEXT.md for stable domain language,
 docs/architecture.md for long-lived architecture knowledge, and docs/adr/ for hard-to-reverse decisions.
+Keep domain terms in CONTEXT.md while the glossary is small. Create UBIQUITOUS_LANGUAGE.md only when
+terms are numerous, ambiguous, mapped differently across external systems, needed for code/API
+naming, or DDD modeling has begun; then link to it from CONTEXT.md.
 
 Do not continue grilling for non-blocking UI or implementation details such as screen layout,
 button labels, component structure, CSS framework, or copy. Put those in design.md or tasks.md later.

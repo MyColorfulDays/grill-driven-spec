@@ -77,13 +77,50 @@ Follow the project documents before writing code:
 ```markdown
 # Project Context
 
-This file records stable domain language and project context discovered through grill-with-docs.
+This file records stable project context discovered through grill-with-docs.
+
+Keep domain terms here while the glossary is small. When terminology becomes complex, create
+UBIQUITOUS_LANGUAGE.md and link to it from this file.
 
 ## Domain Terms
 
 TBD
 
 ## Business Rules
+
+TBD
+
+## Open Questions
+
+TBD
+```
+
+## UBIQUITOUS_LANGUAGE.md
+
+Create this only when domain language becomes complex enough to need its own file. Do not create it
+during the default Stage 0 skeleton unless the user explicitly asks for DDD-oriented documentation.
+
+```markdown
+# Ubiquitous Language
+
+This file records the shared domain language used by users, documents, code, APIs, and external
+systems.
+
+## Terms
+
+| Term | Meaning | Code Name | External Mapping | Notes |
+|---|---|---|---|---|
+| TBD | TBD | TBD | TBD | TBD |
+
+## Preferred Names
+
+TBD
+
+## Avoided or Ambiguous Terms
+
+TBD
+
+## External System Mappings
 
 TBD
 

@@ -63,7 +63,8 @@ A new or adopted project usually grows toward this shape:
 your-project/
 |-- README.md                    # Human-facing project overview
 |-- PRD.md                       # Raw idea, confirmed requirements, non-goals, MVP direction
-|-- CONTEXT.md                   # Stable domain language, business rules, project facts
+|-- CONTEXT.md                   # Project context, small glossary, business rules, project facts
+|-- UBIQUITOUS_LANGUAGE.md       # Optional dedicated glossary when domain language becomes complex
 |-- AGENTS.md                    # Local instructions that keep agents on the same workflow
 |-- SECURITY.md                  # Security, privacy, auth, data-handling, and abuse constraints
 |-- DESIGN.md                    # Optional UI direction and design decisions when needed

@@ -453,6 +453,9 @@ docs/adr/README.md
 docs/diagrams/README.md
 ```
 
+Do not create `UBIQUITOUS_LANGUAGE.md` during default adoption unless domain terminology is already
+complex enough to need a dedicated glossary. If created, link to it from `CONTEXT.md`.
+
 Keep adoption docs factual and thin. Use `Observed`, `Confirmed`, and `Open Questions` language
 where useful. Put current code facts in observed sections, and only move them to confirmed product
 requirements after user confirmation.
@@ -655,7 +658,7 @@ docs/ai-tools.md
 
 README.md should contain only a single H1 using the current directory name.
 
-Keep all other files thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product scope, product features, technical stack, business rules, architecture, user personas, or implementation directories.
+Keep all other files thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product scope, product features, technical stack, business rules, architecture, user personas, or implementation directories. Do not create `UBIQUITOUS_LANGUAGE.md` during Stage 0 unless the user explicitly asks for DDD-oriented documentation.
 
 For empty or unstructured projects, create basic files first, then immediately enter grilling. Do not ask setup, visual companion, stack, design, or product questions before creating the skeleton.
 
@@ -754,13 +757,20 @@ Update:
 
 ```text
 PRD.md for product intent
-CONTEXT.md for stable domain language
+CONTEXT.md for stable project context and small domain glossaries
+UBIQUITOUS_LANGUAGE.md for dedicated domain terminology when the glossary has outgrown CONTEXT.md
 docs/architecture.md for long-lived architecture knowledge
 docs/adr/ for hard-to-reverse decisions with real tradeoffs
 docs/inbox/ for raw stakeholder materials
 ```
 
 Stage 3 is a context pass, not a full product-design interview. Ask only questions that block a testable first OpenSpec change.
+
+Keep domain terminology in `CONTEXT.md` by default. Create `UBIQUITOUS_LANGUAGE.md` only when it
+materially improves clarity, such as when domain terms are numerous, terms map differently across
+external systems, the same word is used ambiguously, code/API naming needs a stable glossary, or DDD
+modeling has begun. When creating it, move or link detailed terms there and leave `CONTEXT.md` as the
+project context overview.
 
 Examples of blocking Stage 3 questions:
 
