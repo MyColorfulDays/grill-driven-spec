@@ -303,9 +303,11 @@ click when a normal chat reply is enough.
 
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
-## Project Artifact Language
+## Project and Conversation Language
 
-Use one stable primary language for project artifacts created or updated by this workflow.
+Use one stable primary language for project artifacts created or updated by this workflow, and use
+the same language for the conversation around the workflow unless the user explicitly asks otherwise.
+The goal is a natural project-local experience, not word-for-word translation of template text.
 
 Default rules:
 
@@ -317,17 +319,28 @@ do not switch artifact language just because a later chat message uses a differe
 keep file names, commands, code identifiers, dependency names, and workflow/tool names such as grill-me, grill-with-docs, OpenSpec, Lore, Stage, gate, proposal.md, design.md, tasks.md, Observed, Confirmed, and Open Questions in their established form
 preserve raw source materials in their original language
 write summaries, confirmed requirements, specs, design notes, and tasks in the project artifact language unless quoting source material
+write user-visible phase transitions, gate prompts, validation summaries, status updates, and confirmation questions in the project language
+apply this conversation-language rule throughout Stage 0 through Stage 8, including development progress, verification handoff, and archive reporting
+do not paste English gate prompt templates verbatim when the project language is not English; translate or adapt the prompt while preserving command names and file names
+do not let English CLI output, OpenSpec output, tool labels, or prompt templates change the reply language; summarize tool results in the project language while preserving exact commands, file names, and error identifiers
+prefer natural wording in the project language over rigid literal translation; keep the gate meaning and decision point clear
 ```
 
 Do not rewrite unrelated existing docs just to normalize language. Keep language consistent within
-the files and OpenSpec change touched by the current workflow.
+the files, OpenSpec change, and user-visible workflow messages touched by the current workflow.
+
+English examples and gate prompts in this skill are semantic templates, not required output text.
+Before showing them to the user, translate or adapt them to the project language. Keep established
+workflow identifiers such as `Driving`, `OpenSpec`, `proposal.md`, `design.md`, `tasks.md`, and
+command names unchanged when translating them would reduce precision. Surrounding explanation should
+read naturally in the project language.
 
 ## Driving Transition Output
 
 When entering a new workflow phase, make the transition visually obvious to the user with a large
 Markdown heading before doing phase work.
 
-Use this format:
+Use this semantic shape, adapting labels to the project language:
 
 ```markdown
 # Driving: <short phase or focus>
@@ -338,6 +351,10 @@ Current gate: <one sentence describing what must happen before moving on>.
 Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
 verification, and archive. Do not rely on numbered Stage headings, `Adoption:` headings, or
 `Change:` headings in user-facing transition output.
+
+When the project language is not English, keep `Driving` as the stable workflow label, but translate
+or adapt labels such as `Current gate` and the descriptive text so the transition does not feel like
+an English template pasted into the conversation.
 
 Tool-generated labels such as `Implementing: <change-name>` may appear, but they do not replace the
 `Driving` heading and current gate.
@@ -846,6 +863,10 @@ Review passed. Specs are testable and tasks are executable.
 I recommend entering development and test. I will follow tasks.md and pause if design or requirements conflict with reality.
 ```
 
+Translate or adapt this gate prompt to the project language before showing it to the user. Keep
+command output, change names, and file names such as `openspec validate`, `tasks.md`, and `design.md`
+unchanged.
+
 ### 6. Implement and Test
 
 Implement only after user confirmation.
@@ -893,6 +914,10 @@ test/lint/build status
 known limitations
 ```
 
+Use the project language for the verification handoff, including instructions, test status, known
+limitations, and any request for the user to manually verify a flow. Preserve exact commands, URLs,
+file names, and error identifiers.
+
 If verification fails, classify the issue as bug, unclear spec, PRD change, or documentation drift before editing.
 
 If the user reports that manual verification passed, update `tasks.md` or the relevant change artifact to mark that verification complete, then re-check validation before recommending archive.
@@ -916,6 +941,10 @@ no blocking open questions or ADRs remain
 Then sync specs and archive the change.
 
 If the archive tool generates an archive directory name with a date that differs from the current session date, do not rename it manually. Report both dates clearly, keep the tool-generated name, and verify the archived change and synced specs using the tool.
+
+Use the project language for archive readiness summaries, archive results, remaining gaps, and any
+follow-up confirmation question. Preserve generated archive names, command names, spec paths, and
+dates exactly.
 
 ## Hard Rules
 

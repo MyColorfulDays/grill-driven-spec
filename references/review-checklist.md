@@ -47,3 +47,6 @@ If greenfield review fails because technical or experience readiness is missing,
 readiness question before development. If existing-project review follows existing conventions, do
 not block on stack or UI questions. If review fails for product or domain reasons, name the single
 most important blocking question and return to grill-me or grill-with-docs.
+
+Report the review decision, validation summary, and confirmation question in the resolved project
+language. Preserve exact commands, change names, file names, and error identifiers.

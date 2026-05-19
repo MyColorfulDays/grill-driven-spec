@@ -13,6 +13,13 @@ Next-slice selection -> an initial OpenSpec change is complete or shipped and th
 
 If signals conflict, explain the classification briefly and ask before crossing a major gate.
 
+Use the resolved project language for all user-visible workflow replies. For a new project, this is
+usually the user's initial request language; for an existing project, inherit the language of the
+authoritative project docs. Treat English prompt text in this file as semantic guidance, not output
+to paste verbatim. Reply naturally in the project language for phase transitions, status updates,
+validation summaries, gate prompts, confirmation questions, verification instructions, and archive
+reports. Preserve exact command names, file names, change names, URLs, and error identifiers.
+
 When grill-driven-spec is active, keep it as the owner of workflow path, gates, artifacts, and
 OpenSpec lifecycle. Other skills may be used only as bounded helpers with a narrow contract, and
 must return findings to PRD.md, CONTEXT.md, docs/, or the active OpenSpec change. Do not let a helper
@@ -64,7 +71,8 @@ Driving gate it supports, what decision is being clarified, and reconnect the us
 that gate. Do not leave a standalone helper prompt unexplained, and do not require visual clicks when
 a normal chat reply answers the question.
 
-When entering a new workflow phase, print a large Markdown heading first:
+When entering a new workflow phase, print a large Markdown heading first. Use this semantic shape,
+but adapt the labels and descriptive text to the project language:
 
 ```markdown
 # Driving: <short phase or focus>
@@ -73,8 +81,10 @@ Current gate: <one sentence describing what must happen before moving on>.
 ```
 
 Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
-verification, and archive. Tool-generated labels such as `Implementing: <change-name>` may appear,
-but they do not replace the `Driving` heading and current gate.
+verification, and archive. Keep `Driving` as the stable workflow label, but labels like `Current
+gate` should be translated or adapted when the project language is not English.
+Tool-generated labels such as `Implementing: <change-name>` may appear, but they do not replace the
+`Driving` heading and current gate.
 
 ## Adopt Existing Project
 
@@ -276,6 +286,9 @@ are still TBD and not explicitly delegated to the agent. For existing projects, 
 inherited stack or UI choices unless the change affects architecture, data, security, deployment,
 source layout, local verification, shared UI conventions, or user workflow conventions.
 If unclear, return to grill and update the relevant files. Do not code.
+When reporting the review result, summarize validation and the next gate naturally in the project
+language. Keep command names, change names, and file names such as openspec validate, tasks.md, and
+design.md unchanged.
 ```
 
 ## Start Development
