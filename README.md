@@ -145,7 +145,8 @@ The workflow is the stable core. Tool-specific files belong in `agents/` as adap
 ## What Happens Next
 
 - **New project:** the agent runs preflight, initializes git if needed, preserves raw notes,
-  creates the minimal project documents, then starts grilling one question at a time.
+  creates the minimal project documents, creates an initial baseline commit when git is available,
+  then starts grilling one question at a time.
 - **Existing project adoption:** the agent inventories current product reality, creates or
   refreshes baseline docs, then uses that baseline for future OpenSpec changes.
 - **Existing project change:** the agent clarifies the desired behavior, checks whether existing
@@ -181,6 +182,7 @@ but it keeps assumptions visible and does not treat them as confirmed external-s
 7. Implement and test after confirmation.
 8. Ask the user to verify.
 9. Sync and archive after verification passes.
+10. Handle the commit gate with a Lore commit, normal git commit, user handoff, or explicit skip.
 
 Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
 
@@ -247,6 +249,12 @@ The workflow must not:
 ## Lore Commits
 
 This repository uses Lore-enriched commits for decision context.
+
+Use a lightweight normal git commit for the initial Stage 0 baseline when Lore is unavailable. Use
+Lore for post-archive commits when available, because those commits should preserve requirement,
+design, implementation, verification, and archive context. If Lore is missing after archive, handle
+the commit gate with a normal git commit, user handoff, or explicit skip instead of silently moving
+to the next feature.
 
 Recommended flow:
 

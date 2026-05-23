@@ -59,6 +59,12 @@ Or create two unfinished feature threads:
 - If multiple active changes exist, the agent lists them with detected gate or phase and asks which one to continue.
 - If a feature idea is not ready for OpenSpec, the agent records it as a lightweight candidate instead of relying on chat memory.
 - If the user switches feature focus in the same session, the agent records the previous focus state before continuing.
+- If the user asks a related side question, the agent answers it, captures durable requirements or risks when needed, and steers back to the current gate.
+- If two consecutive turns do not advance, revise, or explicitly defer the current gate, the agent gives a compact checkpoint with active focus, current gate, what changed, and one next question.
+- If the user questions the workflow itself, the agent explains the current gate's purpose, adjusts the pace if appropriate, and offers a smaller next step.
+- If the user introduces a new feature while another change is active, the agent asks whether to switch focus, record it as a Candidate Change, or return to the current gate.
+- After archive and spec sync, the agent checks git status and handles the commit gate before calling the workflow fully complete.
+- If the user manually applied, verified, and archived the change, the agent detects an archived-but-uncommitted state on resume and asks whether to create a Lore commit, create a normal git commit, mark it user-handled, or skip it.
 - The agent does not implement until review passes and the user confirms development.
 
 ## Regression Risks
@@ -76,6 +82,12 @@ Or create two unfinished feature threads:
 - Ignoring an unfinished active change and recommending a new next slice.
 - Mixing context between multiple unfinished features.
 - Losing a half-discussed feature because it was never recorded as a candidate or active change.
+- Letting side questions accumulate until the active gate is no longer visible.
+- Ending workflow replies with vague invitations instead of a concrete steering move.
+- Treating a workflow/process concern as normal product input instead of pausing to explain or adjust the gate.
+- Silently switching focus when the user mentions a different feature.
+- Recommending the next feature after archive while related archive/spec/docs/implementation changes are still uncommitted and the commit gate is not handled.
+- Treating missing Lore as a reason to ignore the post-archive commit gate instead of offering normal git commit or user handoff.
 - Treating one session as unable to switch feature focus when the user explicitly changes topic.
 - Treating observed legacy behavior as confirmed desired behavior.
 - Letting a data, security, deployment, or shared UI convention change pass review without one focused impact question.

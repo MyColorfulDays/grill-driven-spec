@@ -221,14 +221,15 @@ This project uses AGENTS.md as the shared project-level agent guide.
 
 ## Tools
 
-- Git is required for repository initialization and commits.
+- Git is required for repository initialization and commits, including the initial Stage 0 baseline commit when available.
 - grill-me is required before Stage 1 product clarification.
 - grill-with-docs is required before Stage 3 project context alignment.
 - OpenSpec is required before creating or updating OpenSpec changes.
-- Lore is recommended for commits that should preserve decision context.
+- Lore is recommended for commits that should preserve decision context, especially post-archive workflow commits.
 
 Missing OpenSpec or Lore should not block initial project skeleton creation or requirement grilling.
 Missing grill-me blocks Stage 1. Missing grill-with-docs blocks Stage 3.
+Missing Lore should not block the initial baseline commit when normal git commit is available.
 
 ## Dependency Identity
 

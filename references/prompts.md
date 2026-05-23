@@ -26,6 +26,26 @@ must return findings to PRD.md, CONTEXT.md, docs/, or the active OpenSpec change
 skill start its own end-to-end workflow, introduce unrelated gates, or create parallel specs unless I
 explicitly ask for that separate workflow.
 
+Route every user turn before answering. Treat the route as one of:
+
+```text
+gate-answer -> absorb the answer, update or prepare artifacts, and reassess the gate
+gate-clarification -> explain the gate, simplify the choice, and ask one clearer version
+productive-tangent -> answer briefly, capture durable facts when needed, then steer back
+new-focus -> ask whether to switch focus, record as Candidate Change, or return to the current gate
+meta-process -> explain or adjust the workflow, then offer the smallest useful next step
+```
+
+Use a coach/project-manager style: allow useful detours, but do not let them erase the active focus.
+Any tangent must end by returning to the current gate, recording a candidate, asking for focus-switch
+confirmation, updating artifacts and reassessing the gate, or pausing by explicit user request.
+
+If two consecutive turns do not advance, revise, or explicitly defer the active gate, give a compact
+checkpoint: active focus, current gate, what the side discussion changed, and the single next
+question. Also checkpoint when I say continue/next, when the thread has become long, when I raise a
+new direction without choosing a focus action, before crossing a major gate, or after interruption or
+context compaction. End workflow replies with a concrete steering move instead of a vague invitation.
+
 When resuming a previous workflow, inspect current artifacts before choosing a stage:
 
 ```text
@@ -34,9 +54,11 @@ read PRD.md, CONTEXT.md, SECURITY.md, docs/, and docs/ai-tools.md when present
 check raw sources already recorded in PRD.md
 inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
 inspect active change proposal.md, specs/, design.md, and tasks.md when present
+check recent commits when deciding whether a baseline or archived change has already been committed
 use active changes in openspec/changes/ as the primary change-state signal
 if multiple active changes exist, list them with detected gate or phase and ask me which one to continue
 also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
+if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and ask whether to create a Lore commit, create a normal git commit, mark it user-handled, or skip it
 continue from the earliest incomplete gate
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
 ```
@@ -179,6 +201,7 @@ Run preflight first:
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
 - initialize git if available and this is not already a git repository
+- after creating the Stage 0 skeleton, create an initial baseline commit for generated workflow files when git is available
 - do not let missing OpenSpec or Lore block the initial skeleton and grill phase
 - do not pretend to invoke missing grill-me, grill-with-docs, or OpenSpec dependencies
 - do not guess package names or install similarly named tools when a dependency is missing
@@ -196,6 +219,10 @@ Keep all other files thin. Use TBD for unknown stack, commands, architecture, or
 Do not write business code, create business directories, invent features, or choose a stack.
 Do not create UBIQUITOUS_LANGUAGE.md unless the user explicitly asks for DDD-oriented documentation.
 Do not create an OpenSpec change.
+For the initial baseline commit, commit only generated or refreshed workflow skeleton files unless I
+ask you to include raw source materials. Do not proactively add raw source materials, and do not
+unstage or alter raw materials that were already tracked or intentionally staged. Use Lore only if it
+is already available and appropriate; missing Lore must not block Stage 0.
 
 After the skeleton is in place, start grilling me one question at a time.
 ```
@@ -357,4 +384,9 @@ and unresolved open questions or ADRs.
 
 If checks pass and user verification passed, sync specs and archive the change.
 If the archive tool creates a date-stamped directory that differs from the session date, report it and keep the tool-generated name.
+After archive verification, check git status and handle the commit gate before calling the workflow
+fully complete. If relevant changes are uncommitted, recommend a Lore commit; if Lore is missing,
+offer a normal git commit or record user handoff. Treat the gate as handled only when a Lore commit
+is created, a normal git commit is created, I explicitly say I will handle it, or I intentionally
+skip it.
 ```

@@ -118,6 +118,89 @@ For Existing Project Adoption, Existing Project Change, or Next-slice selection,
 plan that matches the chosen path and starts at the earliest incomplete gate. Keep the user-facing
 `Driving` heading as the phase label in chat, and use the progress plan as the side-channel status.
 
+## Conversation Steering
+
+Drive the workflow like a coach and project manager, not like a rigid form. The user may ask side
+questions, explore doubts, change their mind, or raise new feature ideas. Answer useful detours, but
+route every turn back into the active workflow state.
+
+Before responding to each user turn, classify it:
+
+```text
+gate-answer -> the user answered the current blocking question or confirmed a gate transition
+gate-clarification -> the user asks what the current question means, why it matters, or how to choose
+productive-tangent -> the user asks a related side question that may reveal requirements, risks, constraints, terminology, or implementation context
+new-focus -> the user introduces a different feature, product direction, or change request
+meta-process -> the user questions the workflow, pace, gates, or whether this process is working
+```
+
+Then respond according to the route:
+
+```text
+gate-answer:
+  absorb the answer, update or prepare the relevant artifact, and reassess whether the current gate can advance
+
+gate-clarification:
+  explain the question briefly, reduce the decision to an easier shape, and ask one clearer version of the current gate question
+
+productive-tangent:
+  answer the tangent, record any durable requirement/risk/constraint/term/open question/candidate in the right artifact when file edits are in scope, then steer back to the active gate
+
+new-focus:
+  do not silently switch; ask whether to switch focus now, record it as a Candidate Change, or return to the current gate
+
+meta-process:
+  pause forward motion, explain the purpose of the current gate, adjust the pace if needed, then offer the smallest useful next step
+```
+
+A tangent must end in one of these explicit steering outcomes:
+
+```text
+return to current gate
+record as Candidate Change
+switch-focus confirmation
+update artifact and reassess gate
+pause workflow by explicit user request
+```
+
+Do not let the last line of a workflow reply be vague when the active gate is still open. Prefer a
+concrete steering move:
+
+```text
+Good:
+"I will record that as a Candidate Change. Back to the current gate: for the MVP first slice, should the user complete A or B first?"
+
+Bad:
+"Anything else?"
+"What else should we discuss?"
+"We can continue."
+```
+
+Use checkpoint recovery when drift accumulates. If two consecutive user turns do not advance,
+revise, or explicitly defer the active gate, the next assistant reply must include a short
+checkpoint:
+
+```text
+active focus
+current gate
+what the side discussion changed or clarified
+the single next question or confirmation needed
+```
+
+Also checkpoint when:
+
+```text
+the user says continue, next, then what, or similar
+the conversation has become long enough that the current gate may be unclear
+the user raises a new direction without saying whether to switch focus
+the assistant is about to cross a major gate
+the assistant resumes after interruption or context compaction
+```
+
+Checkpoints should be compact and natural in the project language. They do not always require a
+large `Driving` heading, but major phase transitions still require the `Driving` heading described
+below.
+
 ## Project State Detection
 
 Before choosing a workflow path, classify the current folder and user intent using both file signals
@@ -163,6 +246,7 @@ Resume preflight should check:
 
 ```text
 git status and current branch
+recent commits when deciding whether a baseline or archived change has already been committed
 PRD.md, CONTEXT.md, SECURITY.md, and docs/
 raw sources already recorded in PRD.md
 openspec/, openspec/specs/, openspec/changes/, and archived changes
@@ -183,6 +267,7 @@ if proposal.md, specs/, design.md, and tasks.md exist but review has not passed,
 if review passed and development was confirmed, continue Stage 6 from the first incomplete task
 if implementation is complete but user verification is not recorded, continue Stage 7
 if user verification passed but the change is not archived, continue Stage 8
+if the change appears archived and synced but related changes are uncommitted, continue the Stage 8 commit gate before recommending a new feature
 ```
 
 If multiple active changes exist, do not guess the current focus. List each active change with the
@@ -197,6 +282,20 @@ Resume from the earliest incomplete gate. Do not repeat completed stages unless 
 missing, inconsistent, or the user explicitly asks to revisit them. Do not reclassify raw materials
 as confirmed requirements. Do not create a new OpenSpec change while an unfinished active change is
 present unless the user explicitly chooses to abandon, archive, or defer it.
+
+When archive appears complete after manual user work, do not assume the commit gate is handled.
+Treat it as pending when all of these are true:
+
+```text
+an archived change artifact exists or the archive tool result is visible
+the relevant specs or docs appear synced
+user verification is recorded in the conversation or change artifacts
+git status shows related uncommitted workflow, docs, spec, archive, or implementation changes
+recent commits do not clearly cover the archive
+```
+
+Checkpoint the completed archive, then ask whether to create a Lore commit, create a normal git
+commit, mark it as user-handled, or skip this commit intentionally.
 
 ## Change Focus and Candidates
 
@@ -604,6 +703,20 @@ Lore is recommended before committing workflow, docs, or spec decisions, but it 
 ```
 
 If `git` is available and the current directory is not a git repository, initialize it with `git init`.
+After the Stage 0 skeleton is created, make an initial baseline commit for the generated workflow
+files when git is available. The initial commit exists to make the thin project baseline
+recoverable and comparable; it is not a heavy decision-context gate.
+
+Initial baseline commit rules:
+
+```text
+commit the generated or refreshed skeleton files such as README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, and docs/
+do not proactively add raw source materials to the initial commit unless the user asks
+do not unstage, remove, or rewrite raw source materials that were already tracked or intentionally staged by the user
+prefer a simple commit message such as "Initialize Grill Driven Spec baseline"
+use Lore if it is already available and appropriate, but do not install or block Stage 0 solely to use Lore for this commit
+if Lore is missing, use a normal git commit or record that the baseline commit was not created because commits are unavailable
+```
 
 If `git` is missing, tell the user it must be installed before repository initialization or commits, then continue only with file work if the environment allows it.
 
@@ -1036,6 +1149,19 @@ Then sync specs and archive the change.
 
 If the archive tool generates an archive directory name with a date that differs from the current session date, do not rename it manually. Report both dates clearly, keep the tool-generated name, and verify the archived change and synced specs using the tool.
 
+After archive verification, handle the commit gate before calling the workflow fully complete.
+
+Commit gate rules:
+
+```text
+check git status after archive and spec sync
+if there are relevant uncommitted changes, recommend a Lore commit to preserve requirement, design, implementation, verification, and archive context
+use Lore when it is available and appropriate
+if Lore is missing, offer a normal git commit or record a user handoff instead of blocking archive completion forever
+do not treat the commit gate as handled until a Lore commit is created, a normal git commit is created, the user explicitly says they will handle it, or the user intentionally skips the commit
+if the user manually applied, verified, or archived the change, resume should still detect this gate and prompt for the commit decision before moving to the next feature
+```
+
 Use the project language for archive readiness summaries, archive results, remaining gaps, and any
 follow-up confirmation question. Preserve generated archive names, command names, spec paths, and
 dates exactly.
@@ -1047,6 +1173,11 @@ dates exactly.
 - Do not implement immediately after propose; review first.
 - Do not put unconfirmed assumptions into specs as facts.
 - Do not archive before user verification.
+- Do not call a new-project Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off.
+- Do not call an archived change fully complete until the commit gate has been handled by commit, user handoff, or explicit skip.
+- Do not answer side questions in a way that loses the active gate; classify the turn, capture durable facts when needed, and steer to an explicit outcome.
+- Do not silently switch focus when the user mentions another feature or direction; ask whether to switch, record a candidate, or return to the current gate.
+- Do not end workflow replies with vague invitations while a gate is open; ask the single next question or name the next confirmation.
 - Keep documentation alive throughout the work, not only at the end.
 
 ## References
