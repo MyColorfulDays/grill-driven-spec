@@ -27,6 +27,7 @@ Then run:
 - The agent does not delete, move, rename, overwrite, or destructively summarize raw source files.
 - The agent initializes git when available and creates the thin Stage 0 skeleton.
 - After creating the Stage 0 skeleton, the agent creates an initial baseline commit for generated workflow files when git is available.
+- Before creating the initial baseline commit, the agent resolves author and committer identity from repository-local config or asks the user when no project identity exists.
 - The initial baseline commit does not proactively add raw source materials unless the user asks, and it does not disturb raw materials that were already tracked or intentionally staged.
 - Missing Lore does not block Stage 0; the initial baseline commit may use normal git when Lore is unavailable.
 - `PRD.md` records raw source paths under `Raw Sources`.
@@ -47,6 +48,7 @@ Then run:
 - Treating raw notes as confirmed product requirements.
 - Asking product, stack, or design questions before creating the skeleton.
 - Treating `git init` alone as a complete project initialization when git is available.
+- Creating the initial baseline commit with an unconfirmed machine-global git identity.
 - Blocking Stage 0 because Lore is unavailable for the initial baseline commit.
 - Adding raw notes, screenshots, exports, or drafts to the initial commit without user intent.
 - Moving raw files into `docs/inbox/` without explicit approval.

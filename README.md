@@ -184,6 +184,10 @@ but it keeps assumptions visible and does not treat them as confirmed external-s
 9. Sync and archive after verification passes.
 10. Handle the commit gate with a Lore commit, normal git commit, user handoff, or explicit skip.
 
+Before creating any commit, the agent checks repository-local git identity and recent commit
+authors/committers. It should not silently use the machine's global git identity when it differs
+from the project history.
+
 Existing project adoption uses a separate entry path: inventory the current code and docs, establish a baseline context, clarify desired behavior, initialize or verify OpenSpec, then create changes only after the baseline is understood.
 
 Existing project changes use a lighter entry path when the project already has enough baseline context: clarify the desired behavior, check whether the change affects architecture, data, security, deployment, shared UI, or workflow conventions, then proceed to OpenSpec review without re-adopting the whole project.
@@ -255,6 +259,10 @@ Lore for post-archive commits when available, because those commits should prese
 design, implementation, verification, and archive context. If Lore is missing after archive, handle
 the commit gate with a normal git commit, user handoff, or explicit skip instead of silently moving
 to the next feature.
+
+Lore still relies on git's author and committer identity. Before either Lore or normal git commits,
+verify the project identity from repository-local config and recent commits, then override or ask
+when the current machine identity does not match.
 
 Recommended flow:
 

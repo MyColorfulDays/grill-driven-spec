@@ -201,6 +201,44 @@ Checkpoints should be compact and natural in the project language. They do not a
 large `Driving` heading, but major phase transitions still require the `Driving` heading described
 below.
 
+## Commit Identity
+
+Before creating any git or Lore commit, resolve the intended author and committer identity. Do not
+silently use the machine's global git identity in an existing project.
+
+Commit identity preflight:
+
+```text
+check repository-local git config user.name and user.email
+inspect recent commits with author and committer fields
+compare the configured identity with recent project commits
+if the repository-local config is missing or differs from recent project commits, use the recent project identity or ask the user before committing
+if multiple recent identities are legitimate and the correct one is unclear, ask the user
+when using Lore, remember that it still shells out to git commit and inherits git author/committer identity unless explicitly overridden
+```
+
+Identity selection rules:
+
+```text
+new project with no commits:
+  use repository-local git config when present; otherwise ask the user before the first commit or set the identity only when the user has provided it
+
+existing project with consistent recent commits:
+  use the recent project author/committer identity unless repository-local git config explicitly matches a different confirmed project identity
+
+existing project with mixed recent commit identities:
+  ask which identity to use before committing
+
+automated or bot commits:
+  use a bot identity only when the project already uses that bot identity for comparable commits or the user explicitly requests it
+```
+
+When the selected identity differs from current git config, pass the identity explicitly through
+`--author` and the relevant `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` environment variables, or
+set repository-local config only with user approval. If a commit was created with the wrong
+identity, amend only the affected commit when it is safe to rewrite local history, and tell the user
+the old and new commit hashes.
+
 ## Project State Detection
 
 Before choosing a workflow path, classify the current folder and user intent using both file signals
@@ -246,6 +284,7 @@ Resume preflight should check:
 
 ```text
 git status and current branch
+repository-local git author/committer config and recent commit identities when commits may be needed
 recent commits when deciding whether a baseline or archived change has already been committed
 PRD.md, CONTEXT.md, SECURITY.md, and docs/
 raw sources already recorded in PRD.md
@@ -711,6 +750,7 @@ Initial baseline commit rules:
 
 ```text
 commit the generated or refreshed skeleton files such as README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, and docs/
+run Commit Identity preflight before committing
 do not proactively add raw source materials to the initial commit unless the user asks
 do not unstage, remove, or rewrite raw source materials that were already tracked or intentionally staged by the user
 prefer a simple commit message such as "Initialize Grill Driven Spec baseline"
@@ -1155,6 +1195,7 @@ Commit gate rules:
 
 ```text
 check git status after archive and spec sync
+run Commit Identity preflight before creating any Lore or normal git commit
 if there are relevant uncommitted changes, recommend a Lore commit to preserve requirement, design, implementation, verification, and archive context
 use Lore when it is available and appropriate
 if Lore is missing, offer a normal git commit or record a user handoff instead of blocking archive completion forever
@@ -1173,6 +1214,7 @@ dates exactly.
 - Do not implement immediately after propose; review first.
 - Do not put unconfirmed assumptions into specs as facts.
 - Do not archive before user verification.
+- Do not create git or Lore commits before resolving the intended author and committer identity.
 - Do not call a new-project Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off.
 - Do not call an archived change fully complete until the commit gate has been handled by commit, user handoff, or explicit skip.
 - Do not answer side questions in a way that loses the active gate; classify the turn, capture durable facts when needed, and steer to an explicit outcome.

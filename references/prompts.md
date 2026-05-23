@@ -46,10 +46,18 @@ question. Also checkpoint when I say continue/next, when the thread has become l
 new direction without choosing a focus action, before crossing a major gate, or after interruption or
 context compaction. End workflow replies with a concrete steering move instead of a vague invitation.
 
+Before creating any git or Lore commit, resolve the intended author and committer identity. Check
+repository-local `user.name` / `user.email`, inspect recent commit authors and committers, and do
+not silently use the machine's global git identity in an existing project. If the local config is
+missing or differs from the recent project identity, use the recent project identity explicitly or
+ask me before committing. If the project has mixed legitimate identities, ask which one to use.
+Remember that Lore still inherits git author/committer identity unless overridden.
+
 When resuming a previous workflow, inspect current artifacts before choosing a stage:
 
 ```text
 check git status and current branch
+check repository-local git author/committer config and recent commit identities when commits may be needed
 read PRD.md, CONTEXT.md, SECURITY.md, docs/, and docs/ai-tools.md when present
 check raw sources already recorded in PRD.md
 inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
@@ -202,6 +210,7 @@ Run preflight first:
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
 - initialize git if available and this is not already a git repository
 - after creating the Stage 0 skeleton, create an initial baseline commit for generated workflow files when git is available
+- resolve commit author and committer identity before creating the initial baseline commit
 - do not let missing OpenSpec or Lore block the initial skeleton and grill phase
 - do not pretend to invoke missing grill-me, grill-with-docs, or OpenSpec dependencies
 - do not guess package names or install similarly named tools when a dependency is missing
@@ -222,7 +231,8 @@ Do not create an OpenSpec change.
 For the initial baseline commit, commit only generated or refreshed workflow skeleton files unless I
 ask you to include raw source materials. Do not proactively add raw source materials, and do not
 unstage or alter raw materials that were already tracked or intentionally staged. Use Lore only if it
-is already available and appropriate; missing Lore must not block Stage 0.
+is already available and appropriate; missing Lore must not block Stage 0. For a new project with no
+commits and no repository-local git identity, ask me for the commit identity before the first commit.
 
 After the skeleton is in place, start grilling me one question at a time.
 ```
@@ -388,5 +398,5 @@ After archive verification, check git status and handle the commit gate before c
 fully complete. If relevant changes are uncommitted, recommend a Lore commit; if Lore is missing,
 offer a normal git commit or record user handoff. Treat the gate as handled only when a Lore commit
 is created, a normal git commit is created, I explicitly say I will handle it, or I intentionally
-skip it.
+skip it. Resolve author and committer identity before creating either Lore or normal git commits.
 ```
