@@ -351,6 +351,13 @@ README.md, PRD.md, CONTEXT.md, docs, specs, and unresolved open questions or ADR
 verification, handle the commit gate with a Lore commit, normal git commit, user handoff, or
 explicit skip.
 
+For post-archive commits, prefer Lore when it is available and appropriate because the commit should
+preserve requirement, design, implementation, verification, and archive context. Use a normal git
+commit only when Lore is unavailable, inappropriate for the current environment, or explicitly
+requested by the user. In all cases, resolve author and committer from allowed evidence before
+running a commit command. Do not infer or fabricate identity; if the user only says `commit` and the
+identity is missing or ambiguous, ask for the complete `Name <email>` pair.
+
 If the archive tool creates a date-stamped directory with a date that differs from the current
 session date, do not rename it manually. Report both dates clearly, keep the tool-generated name,
 and verify the archived change and synced specs using the tool.

@@ -259,6 +259,11 @@ Before creating a git or Lore commit, resolve author and committer identity. Do 
 machine's global git identity in an existing project. Use `references/state-machine.md` for the full
 commit identity preflight and selection rules.
 
+A user saying only `commit` after archive means "handle the Stage 8 commit gate"; it is not approval
+to invent author data, use a partial identity, use machine-global git config, or downgrade from Lore
+to a normal git commit when Lore is available and appropriate. If no allowed source gives one
+complete `Name <email>` identity, ask the user before committing.
+
 ## Progressive Maturity
 
 Start lightweight, then add maturity helpers only when the project shows that need.
@@ -320,9 +325,17 @@ Helper skills and visual companions may run their own lightweight interaction fl
 the user's thinking. Treat that flow as a bounded handoff, not a replacement for Grill Driven Spec.
 Before yielding to a helper-specific prompt, keep the current `Driving` gate visible and say what
 decision the helper is helping with. If the helper requires a standalone invitation, browser consent,
-or other waiting step, the next assistant turn must resume from the user's reply and reconnect it to
-the current gate. Do not leave the user with an unexplained helper prompt, and do not require a visual
-click when a normal chat reply is enough.
+or other waiting step, the same assistant turn must still include a normal chat response with the
+active focus, current gate, and one concrete text-answerable question. The helper invitation may be
+offered as an option, but it must not be the only visible next step. The next assistant turn must
+resume from the user's reply and reconnect it to the current gate. Do not leave the user with an
+unexplained helper prompt, and do not require a visual click when a normal chat reply is enough.
+
+When a user asks to improve UI or interactions in an existing project, treat it as a Design Maturity
+existing-project change unless project-state signals say otherwise. The first stopping point after
+preflight should ask for the narrow design outcome to optimize, for example visual polish,
+workflow friction, accessibility/responsiveness, or a specific screen. Offer screenshots or browser
+review only as optional support after the `Driving` gate and text-answerable question are visible.
 
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
@@ -538,11 +551,13 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 - Do not put unconfirmed assumptions into specs as facts.
 - Do not archive before user verification.
 - Do not create git or Lore commits before resolving the intended author and committer identity.
+- Do not fabricate commit author or committer identity from usernames, project names, remote owners, package metadata, chat names, or placeholder emails.
 - Do not call a new-project Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off.
 - Do not call an archived change fully complete until the commit gate has been handled by commit, user handoff, or explicit skip.
 - Do not answer side questions in a way that loses the active gate; classify the turn, capture durable facts when needed, and steer to an explicit outcome.
 - Do not silently switch focus when the user mentions another feature or direction; ask whether to switch, record a candidate, or return to the current gate.
 - Do not end workflow replies with vague invitations while a gate is open; ask the single next question or name the next confirmation.
+- Do not end a workflow turn after tool use, preflight, helper handoff, or browser/visual-companion invitation without a normal visible chat response that includes the current `Driving` gate and one text-answerable next question.
 - Keep documentation alive throughout the work, not only at the end.
 
 ## References

@@ -96,6 +96,12 @@ supporting, and reconnect the user's next reply to that gate. A standalone visua
 browser consent step is allowed, but it must not become an unexplained stop in the main workflow.
 Accept ordinary chat replies as valid decisions unless the user explicitly chose a visual-only flow.
 
+For requests such as "optimize the current project's UI and interactions", the visible workflow
+reply after preflight must stand on its own even if screenshots, browser review, or a visual board
+would help. Ask one text-answerable design-focus question, such as which outcome matters most:
+visual polish, workflow friction, accessibility/responsiveness, or a specific screen. Mention any
+browser or visual companion as optional support, not as the blocking gate.
+
 ## Architecture Maturity Helper
 
 Use when a change affects:

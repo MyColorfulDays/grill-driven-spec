@@ -219,6 +219,12 @@ Lore still relies on git's author and committer identity. Before either Lore or 
 verify the project identity from repository-local config and recent commits, then override or ask
 when the current machine identity does not match.
 
+The agent must not invent commit identity. Valid identity evidence is limited to a user-provided
+`Name <email>`, a complete repository-local identity confirmed by project history or the user, or a
+single clear recent project identity. If the user says only `commit` after archive and identity is
+missing or ambiguous, the agent should stop and ask for the author/committer instead of guessing or
+falling back to machine-global git config.
+
 Recommended flow:
 
 ```powershell

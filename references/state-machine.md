@@ -121,6 +121,27 @@ if multiple recent identities are legitimate and the correct one is unclear, ask
 remember Lore still shells out to git commit and inherits git identity unless overridden
 ```
 
+Allowed identity sources:
+
+```text
+explicit user-provided name and email for this commit/session
+complete repository-local user.name and user.email that match the project history or are confirmed by the user
+a single clear recent project identity from commit history when repository-local config is missing or clearly machine-global
+```
+
+Forbidden identity sources:
+
+```text
+OS username, home directory, machine account, agent profile, repository owner, remote URL owner, package author, README maintainer, chat display name, or guessed email domain
+partial identity with only a name or only an email
+fabricated fallback such as Codex, AI, Assistant, unknown@example.com, noreply@example.com, or a transliterated user/project name
+```
+
+If no allowed source yields exactly one complete `Name <email>` pair for author and committer, stop
+at the commit gate and ask the user for the identity. A bare user reply like `commit` confirms that
+the commit gate should be handled; it does not confirm an author, a committer, a Lore downgrade, or a
+machine-global identity.
+
 When the selected identity differs from current git config, pass identity explicitly through
 `--author` and the relevant `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` environment variables, or
 set repository-local config only with user approval.

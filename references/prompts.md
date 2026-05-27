@@ -53,6 +53,15 @@ missing or differs from the recent project identity, use the recent project iden
 ask me before committing. If the project has mixed legitimate identities, ask which one to use.
 Remember that Lore still inherits git author/committer identity unless overridden.
 
+Allowed commit identities are only: an explicit user-provided `Name <email>`, a complete
+repository-local identity that matches project history or that I confirmed, or a single clear recent
+project identity from commit history. Never invent identity from OS username, home directory, agent
+profile, remote URL owner, package metadata, README maintainer, chat display name, or guessed email
+domain. Never use placeholder identities such as Codex, AI, Assistant, unknown@example.com, or
+noreply@example.com unless that exact identity is confirmed by project history or me. If the identity
+is missing, partial, conflicting, or ambiguous, stop and ask me for the author/committer before
+running any commit command.
+
 When resuming a previous workflow, inspect current artifacts before choosing a stage:
 
 ```text
@@ -100,6 +109,25 @@ handoffs when they genuinely improve the conversation. Keep the handoff bounded:
 Driving gate it supports, what decision is being clarified, and reconnect the user's next reply to
 that gate. Do not leave a standalone helper prompt unexplained, and do not require visual clicks when
 a normal chat reply answers the question.
+
+If the current turn pauses for helper consent, browser consent, screenshot setup, or a visual board,
+still send a normal workflow reply first or in the same turn. It must include the active focus, the
+current Driving gate, and one concrete question the user can answer in chat. The visual/browser
+choice can be offered as optional support, but it is not a substitute for the next gate question.
+
+For a UI/interaction optimization request in an existing project, prefer this stopping shape after
+preflight:
+
+```markdown
+# Driving: UI and interaction optimization
+
+Current gate: decide which user-facing outcome this change should optimize before creating an OpenSpec proposal.
+
+I found this is a design-maturity change in an existing project, so I will inherit the current stack
+and UI conventions unless you want to change them. Which outcome should this first slice target:
+visual polish, workflow friction, accessibility/responsiveness, or one specific screen? Screenshots
+or a browser review can help, but a normal text answer is enough.
+```
 
 When entering a new workflow phase, print a large Markdown heading first. Use this semantic shape,
 but adapt the labels and descriptive text to the project language:
@@ -405,4 +433,9 @@ fully complete. If relevant changes are uncommitted, recommend a Lore commit; if
 offer a normal git commit or record user handoff. Treat the gate as handled only when a Lore commit
 is created, a normal git commit is created, I explicitly say I will handle it, or I intentionally
 skip it. Resolve author and committer identity before creating either Lore or normal git commits.
+If I say only `commit` after archive, treat that as confirmation to handle the commit gate, not as
+approval to invent identity or use a normal git commit when Lore is available and appropriate. Prefer
+Lore for post-archive commits when available. Use normal git only when Lore is unavailable,
+inappropriate for the environment, or I explicitly request a normal git commit. If using normal git,
+pass the resolved author and committer explicitly instead of relying on global config.
 ```

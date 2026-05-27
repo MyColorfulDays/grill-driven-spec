@@ -8,7 +8,7 @@
     "baseline context is enough to orient the requested change, or only a minimal adoption baseline is needed",
     "user asks to add, change, fix, continue, improve, or choose the next product slice"
   ],
-  "prompt": "/grill-driven-spec add <small feature> to this existing project",
+  "prompt": "/grill-driven-spec I want to optimize the current project's UI and interactions",
   "expectedActions": [
     "classify the work as Existing Project Change, not 0-to-1 or full adoption",
     "make the first assistant response title-friendly by restating the requested change focus, not only the command name",
@@ -21,8 +21,14 @@
     "resume active OpenSpec changes before recommending a new one",
     "list multiple active changes with detected gate or phase and ask which one to continue",
     "record not-yet-ready feature ideas as lightweight candidates",
+    "treat UI and interaction optimization as a design-maturity existing-project change when project-state signals support it",
+    "ask one text-answerable design-focus question after preflight, such as whether to optimize visual polish, workflow friction, accessibility/responsiveness, or a specific screen",
+    "offer screenshots, browser review, mockups, or a visual companion only as optional support after the Driving gate is visible",
     "handle the post-archive commit gate before calling the workflow complete",
-    "resolve commit identity before Lore or normal git commits"
+    "treat a bare commit request after archive as permission to handle the commit gate, not as permission to invent author or committer identity",
+    "prefer Lore for post-archive commits when Lore is available and appropriate",
+    "use normal git for post-archive commits only when Lore is unavailable, inappropriate for the environment, or explicitly requested",
+    "resolve commit identity before Lore or normal git commits from explicit user input, confirmed repository-local config, or a single clear recent project identity"
   ],
   "forbiddenActions": [
     "run the 0-to-1 skeleton flow in an implemented project",
@@ -30,17 +36,22 @@
     "label next-slice selection as Adoption when the baseline is already understood",
     "invoke a visual companion, mockup flow, or broad brainstorming flow before next-slice selection",
     "let a helper skill take over gates, artifact routing, or the OpenSpec lifecycle",
+    "end the turn with only a browser, visual companion, screenshot, or local URL invitation and no normal workflow reply",
     "ask stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions",
     "ignore an unfinished active change and recommend a new next slice",
     "mix context between multiple unfinished features",
     "silently switch focus when the user mentions another feature",
     "recommend the next feature after archive while related uncommitted changes still need a commit decision",
     "create a post-archive commit with a machine-global git identity that differs from project history",
+    "create a post-archive commit with a fabricated author or committer inferred from OS username, remote owner, package metadata, README maintainer, chat name, project name, or placeholder email",
+    "treat a bare commit request as approval to use a guessed, partial, ambiguous, or machine-global identity",
+    "use normal git for a post-archive commit when Lore is available and appropriate and the user did not request normal git",
     "let a convention-impacting change pass review without a focused impact question"
   ],
   "completionSignals": [
     "the current change has a clear active gate",
     "desired behavior and convention impact are known or the single blocking question is named",
+    "the visible reply includes a Driving heading, the current gate, and one question the user can answer in chat",
     "the agent asks for proposal confirmation, development confirmation after review, or the next focus decision as appropriate"
   ]
 }
