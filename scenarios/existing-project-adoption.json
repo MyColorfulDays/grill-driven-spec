@@ -1,0 +1,38 @@
+{
+  "id": "existing-project-adoption",
+  "title": "Adopt an existing implemented project",
+  "sourceExample": "examples/existing-project-adoption.md",
+  "intent": "Protect the adoption path from overwriting existing docs, inventing desired behavior, or starting implementation.",
+  "setupSignals": [
+    "folder has meaningful implementation artifacts such as src/, tests/, package.json, README.md, or CI config",
+    "baseline Grill Driven Spec docs or OpenSpec context are missing or too thin",
+    "the requested work is adoption or understanding, not a specific product change"
+  ],
+  "prompt": "/grill-driven-spec adopt this existing project",
+  "expectedActions": [
+    "classify the folder as Existing Project Adoption, not 0-to-1",
+    "make the first assistant response title-friendly by restating the adoption focus, not only the command name",
+    "show a Driving transition heading for adoption",
+    "inventory source, tests, configs, docs, scripts, and product surfaces before asking product questions",
+    "preserve existing docs and refresh only missing, clearly thin, or explicitly requested guidance files",
+    "label current code behavior as observed until the user confirms it is desired behavior",
+    "ask one blocking alignment question at a time after the baseline is understood",
+    "answer adoption side questions, record durable facts or open questions, and return to the active adoption gate",
+    "initialize or verify OpenSpec only after the baseline is clear enough to avoid encoding accidental behavior as desired behavior"
+  ],
+  "forbiddenActions": [
+    "run the 0-to-1 skeleton flow",
+    "overwrite existing README.md, AGENTS.md, CONTEXT.md, or docs/ with starter skeletons",
+    "treat current code behavior as product intent without confirmation",
+    "refactor, redesign, migrate, implement, or create a new OpenSpec change during adoption",
+    "ask broad product-vision questions before inventorying the current system",
+    "silently turn adoption discussion into a feature proposal",
+    "end adoption replies without a clear next alignment question or focus choice",
+    "block later small changes with stack or UI questions when existing conventions already apply"
+  ],
+  "completionSignals": [
+    "baseline docs separate Observed, Confirmed, and Open Questions where useful",
+    "the agent identifies the smallest first change worth proposing or records that there is no immediate change",
+    "remaining unknowns are carried as Open Questions rather than blocking adoption forever"
+  ]
+}

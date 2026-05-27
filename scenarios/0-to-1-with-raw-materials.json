@@ -1,0 +1,43 @@
+{
+  "id": "0-to-1-with-raw-materials",
+  "title": "0-to-1 project with raw source materials",
+  "sourceExample": "examples/0-to-1-with-raw-materials.md",
+  "intent": "Protect the new-project path when the folder contains raw notes but no implemented product.",
+  "setupSignals": [
+    "folder has no meaningful implementation artifacts",
+    "folder has raw source files such as idea-notes.md, meeting-notes.md, screenshots/, or exports/",
+    "no coherent PRD.md, CONTEXT.md, or OpenSpec baseline exists"
+  ],
+  "prompt": "/grill-driven-spec I want to build <project idea>",
+  "expectedActions": [
+    "classify the folder as 0-to-1, not Existing Project Adoption",
+    "make the first assistant response title-friendly by restating the actual project focus, not only the command name",
+    "show a Driving transition heading before phase work",
+    "inspect raw source materials without moving, deleting, or overwriting them",
+    "create the thin Stage 0 skeleton before product, stack, design, or visual companion questions",
+    "record raw source paths in PRD.md under Raw Sources",
+    "keep Confirmed Requirements empty until the user confirms requirements during grill-me",
+    "initialize git when available and create an initial baseline commit for generated workflow files when identity is resolved",
+    "resolve author and committer identity before the initial baseline commit",
+    "allow a normal git commit when Lore is missing",
+    "enter grill-me after the skeleton exists with the PRD/OpenSpec convergence contract",
+    "ask a compact greenfield readiness question before development if technical choices are still blocking"
+  ],
+  "forbiddenActions": [
+    "treat raw notes as confirmed product requirements",
+    "ask product, stack, design, or visual companion questions before creating the skeleton",
+    "treat git init alone as complete initialization when git commits are available",
+    "commit with an unconfirmed machine-global git identity",
+    "block Stage 0 because Lore is unavailable",
+    "add raw notes, screenshots, exports, or drafts to the initial commit without user intent",
+    "move raw files into docs/inbox/ without explicit approval",
+    "summarize large raw source materials destructively during Stage 0",
+    "pass review while stack, runtime, source layout, persistence, data handling, or verification choices are still blocking",
+    "treat domain-pattern assumptions as confirmed external-system facts"
+  ],
+  "completionSignals": [
+    "README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, and docs/ skeleton files exist or are refreshed",
+    "PRD.md lists raw source paths without confirming inferred requirements",
+    "the agent asks the next grill-me question or explains the blocker preventing Stage 1"
+  ]
+}

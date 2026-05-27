@@ -1,0 +1,46 @@
+{
+  "id": "existing-project-change",
+  "title": "Prepare a change in an existing project",
+  "sourceExample": "examples/existing-project-change.md",
+  "intent": "Protect change-scoped workflows from full re-adoption, premature implementation, and focus drift.",
+  "setupSignals": [
+    "folder has meaningful implementation artifacts such as src/, tests/, package.json, README.md, docs/, or openspec/",
+    "baseline context is enough to orient the requested change, or only a minimal adoption baseline is needed",
+    "user asks to add, change, fix, continue, improve, or choose the next product slice"
+  ],
+  "prompt": "/grill-driven-spec add <small feature> to this existing project",
+  "expectedActions": [
+    "classify the work as Existing Project Change, not 0-to-1 or full adoption",
+    "make the first assistant response title-friendly by restating the requested change focus, not only the command name",
+    "label the phase as Change when the baseline itself is not the work",
+    "run lightweight change preflight to find relevant source, tests, docs, and OpenSpec artifacts",
+    "inherit existing architecture, stack, UI, test, deployment, and workflow conventions for small changes",
+    "ask one focused impact question when the change affects architecture, data, security, deployment, shared UI, or workflow conventions",
+    "create or refresh only a minimum adoption baseline if docs are too thin to judge desired behavior",
+    "create an OpenSpec proposal only after desired behavior and convention impact are clear",
+    "resume active OpenSpec changes before recommending a new one",
+    "list multiple active changes with detected gate or phase and ask which one to continue",
+    "record not-yet-ready feature ideas as lightweight candidates",
+    "handle the post-archive commit gate before calling the workflow complete",
+    "resolve commit identity before Lore or normal git commits"
+  ],
+  "forbiddenActions": [
+    "run the 0-to-1 skeleton flow in an implemented project",
+    "re-adopt the whole project for a small change with clear existing conventions",
+    "label next-slice selection as Adoption when the baseline is already understood",
+    "invoke a visual companion, mockup flow, or broad brainstorming flow before next-slice selection",
+    "let a helper skill take over gates, artifact routing, or the OpenSpec lifecycle",
+    "ask stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions",
+    "ignore an unfinished active change and recommend a new next slice",
+    "mix context between multiple unfinished features",
+    "silently switch focus when the user mentions another feature",
+    "recommend the next feature after archive while related uncommitted changes still need a commit decision",
+    "create a post-archive commit with a machine-global git identity that differs from project history",
+    "let a convention-impacting change pass review without a focused impact question"
+  ],
+  "completionSignals": [
+    "the current change has a clear active gate",
+    "desired behavior and convention impact are known or the single blocking question is named",
+    "the agent asks for proposal confirmation, development confirmation after review, or the next focus decision as appropriate"
+  ]
+}

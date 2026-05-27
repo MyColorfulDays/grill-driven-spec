@@ -104,6 +104,12 @@ a normal chat reply answers the question.
 When entering a new workflow phase, print a large Markdown heading first. Use this semantic shape,
 but adapt the labels and descriptive text to the project language:
 
+For the first assistant response in a new conversation, make the heading and first sentence
+title-friendly. If my message starts with a command such as `/grill-driven-spec`, restate the actual
+project, adoption, next-slice, or change focus in natural language before asking the first gate
+question. Do not use only a generic tool name, stage number, or command echo as the first visible
+topic.
+
 ```markdown
 # Driving: <short phase or focus>
 
