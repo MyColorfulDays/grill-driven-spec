@@ -128,11 +128,16 @@ implementation.
 Stage 0 must run before any optional companion, mockup, brainstorming, stack-selection,
 product-clarification, or design question.
 
+Stage 0 is the bootstrap boundary. Do not enter `grill-me`, OpenSpec initialization, stack
+selection, or design work until the thin skeleton exists or a filesystem blocker has been reported.
+If the user's first message includes a product idea, copy it into the starter `PRD.md` as seed input
+or clearly stated facts only. Do not ask a follow-up product question until Stage 0 has completed.
+
 Preflight:
 
 ```text
 current directory name
-whether the directory is already a git repository
+whether the directory is already a git repository or inside a parent git worktree
 whether README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, or openspec/ already exist
 raw source materials such as notes, drafts, meeting summaries, exports, screenshots, PDFs, or docs
 signals that this is already an implemented project rather than a 0-to-1 folder
@@ -142,6 +147,12 @@ git, grill-me, grill-with-docs, OpenSpec, and Lore availability when relevant
 
 If the folder contains meaningful implementation artifacts, pause and recommend Existing Project
 Adoption instead of overwriting the project with a new skeleton.
+
+If git is available and this 0-to-1 folder is not already inside a git worktree, initialize git
+before the baseline commit gate. If a parent git worktree already owns the folder, use that
+repository and do not create a nested repository. If git is unavailable, continue with skeleton
+creation when the filesystem is writable, record the limitation in `docs/ai-tools.md`, and mark the
+baseline commit as unavailable or user-handled.
 
 Treat raw materials as inbox sources:
 
@@ -173,9 +184,13 @@ README.md should contain only a single H1 using the current directory name. Keep
 thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product
 scope, features, stack, business rules, architecture, personas, or implementation directories.
 
-After the Stage 0 skeleton is created, create an initial baseline commit for generated workflow
-files when git is available. Run commit identity preflight first. Missing Lore must not block Stage
-0 or Stage 1.
+After the Stage 0 skeleton is created, create an initial baseline commit for generated or refreshed
+workflow skeleton files when git is available and an allowed author/committer identity is available.
+Run commit identity preflight first. Missing Lore must not block Stage 0 or Stage 1.
+
+If no allowed author/committer identity is available, do not commit and do not invent one. Stop at
+the commit identity gate after creating the skeleton, ask for a complete `Name <email>` pair or an
+explicit user handoff, and keep product grilling blocked only if `grill-me` is unavailable.
 
 Recommended gate prompt:
 
@@ -186,7 +201,9 @@ Next I recommend grill-me: I will ask one question at a time and update PRD.md a
 
 ## Product Clarification
 
-Invoke `grill-me` for product clarification.
+Delegate to `grill-me` for product clarification. Preserve its native behavior: interview one branch
+at a time, ask one question at a time, and provide the recommended answer for each question. Do not
+replace missing `grill-me` with ordinary questioning while claiming the delegated stage is running.
 
 Contract:
 
@@ -232,7 +249,10 @@ not work until it is fixed.
 
 ## Project Context
 
-Invoke `grill-with-docs` when PRD is clear but project/domain context is not ready for a proposal.
+Delegate to `grill-with-docs` when PRD is clear but project/domain context is not ready for a
+proposal. Preserve its native behavior: grill against docs, domain language, and code; ask one
+question at a time; provide the recommended answer for each question; update `CONTEXT.md` inline
+when domain terms are resolved.
 
 Contract:
 

@@ -22,6 +22,7 @@ baseline is already sufficient for a specific requested change.
 
 | Stage | Entry Evidence | Exit Evidence | Blocks On |
 |---|---|---|---|
+| First-run bootstrap | New agent environment, new project, or unknown dependency state. | Dependency status is known enough to identify blocked and unblocked stages. | User approval for installs, unavailable required helper for the next stage, filesystem access. |
 | Preflight and skeleton | New or unstructured project; no reliable baseline docs. | Thin project skeleton exists; raw sources are listed without being treated as requirements; baseline commit is created or explicitly unavailable. | Data-loss risk, meaningful existing implementation, missing git for requested repository/commit work. |
 | Product clarification | PRD is too thin for a testable first change. | MVP boundary, non-goals, and core behavior are testable. | Missing `grill-me`; product intent still vague. |
 | OpenSpec initialization | Product direction is clear enough to track changes. | `openspec/`, `openspec/specs/`, and `openspec/changes/` exist; CLI or adapter limitation is verified and recorded. | Missing or failed OpenSpec setup when a change must be created. |

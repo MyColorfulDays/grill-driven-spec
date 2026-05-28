@@ -234,7 +234,7 @@ Missing Lore should not block the initial baseline commit when normal git commit
 ## Dependency Identity
 
 - Git means the system Git CLI, verified with `git --version`.
-- grill-me and grill-with-docs mean AI agent workflow skills from `https://github.com/mattpocock/skills`, not arbitrary packages with similar names.
+- grill-me and grill-with-docs mean AI agent workflow skills from `https://github.com/mattpocock/skills`, not arbitrary packages with similar names and not shell commands checked with `which`.
 - OpenSpec means the intended OpenSpec workflow/CLI from `https://github.com/Fission-AI/OpenSpec` and selected tool adapter for this project.
 - Lore means the Lore commit tool/CLI from `https://github.com/Ian-stetsenko/lore-protocol`, verified with `lore --version` or `lore help`.
 
@@ -248,6 +248,8 @@ Lore: npm install -g lore-protocol
 
 Do not guess package-manager names for missing workflow skills or tools. If these commands are not
 appropriate for the current agent or environment, ask the user before substituting another source.
+Do not claim delegated grill stages are running when the current agent has not loaded the required
+skill; stop at that stage and record the missing helper.
 
 ## Tool Status
 

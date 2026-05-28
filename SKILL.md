@@ -50,6 +50,7 @@ A delegated helper must:
 
 ```text
 receive a narrow contract
+preserve the helper's native interaction style and core behavior
 write findings back to grill-driven-spec artifacts such as PRD.md, CONTEXT.md, docs/, or the active OpenSpec change
 avoid introducing its own unrelated major gates
 avoid redirecting to its own unrelated artifact structure
@@ -79,9 +80,82 @@ If these commands are not appropriate for the current agent or environment, stop
 before substituting another source. Do not guess package-manager names for workflow skills or CLIs.
 Prefer enabling already-installed local skills over installing new global packages.
 
+### First-run Bootstrap
+
+Run a lightweight bootstrap before crossing the first workflow gate in a new project or a new agent
+environment. Bootstrap is not a separate product stage; it is the dependency and workspace sanity
+check that lets the stage gates run predictably.
+
+Classify each dependency by what it blocks:
+
+```text
+git -> required for repository initialization and commits; missing git does not block creating the Stage 0 skeleton
+grill-me -> required before Stage 1 product clarification; missing grill-me blocks native product grilling
+OpenSpec -> required before Stage 2 initialization and any formal OpenSpec change; missing OpenSpec does not block Stage 0 or Stage 1
+grill-with-docs -> required before Stage 3 project/domain context grilling; missing grill-with-docs blocks that delegated stage
+Lore -> recommended for context-rich workflow commits; missing Lore does not block Stage 0, Stage 1, normal git commits, or implementation
+```
+
+Skill dependencies such as `grill-me` and `grill-with-docs` are agent skills, not shell commands.
+Do not check them with `which` or install similarly named CLI packages. If the current agent cannot
+prove that a required skill is loaded, say which stage is blocked, show the verified install or
+enablement source, and ask the user whether to install, enable, or stop at that gate.
+
+Do not silently install global tools, write global prompt/config files, or substitute package names.
+When a dependency is missing, report:
+
+```text
+dependency name
+verified identity/source
+current status: available, unavailable, unknown, or skipped
+first stage it blocks
+recommended next action
+```
+
+Record durable setup limitations in `docs/ai-tools.md` once the project skeleton exists. Before the
+skeleton exists, keep the bootstrap report in chat and continue only with stages not blocked by the
+missing dependency.
+
 ## Stage Gates
 
 Follow these gates in order unless the project already has later-stage artifacts.
+
+### Stage 0 Invariants
+
+For a `0-to-1` entry, Stage 0 is mandatory and must happen before product, stack, design, visual
+companion, or OpenSpec proposal questions.
+
+When the first user message already contains a product idea, capture it only as seed input for
+`PRD.md`. Do not ask any follow-up question about that idea until Stage 0 has either completed or
+hit a filesystem/dependency blocker. The first visible `0-to-1` response should say that the project
+is being bootstrapped and then perform or report Stage 0 actions, not start product grilling.
+
+Stage 0 must:
+
+```text
+classify the folder as empty, raw-material-only, unstructured, meaningful implementation, or existing repository worktree
+detect whether the current folder is already inside a git repository before running git init
+run git init when git is available, the folder is not already inside a repository, and the folder is classified as 0-to-1
+create the thin skeleton files listed in references/file-skeletons.md
+preserve raw source materials in place and list their paths in PRD.md without treating them as confirmed requirements
+record missing or skipped tools in docs/ai-tools.md after that file exists
+create an initial baseline commit containing only generated or refreshed workflow skeleton files when git is available and an allowed author/committer identity is available
+stop at the commit identity gate before any baseline commit when no allowed author/committer identity is available
+```
+
+Stage 0 must not:
+
+```text
+run inside a folder with meaningful implementation artifacts; switch to Existing Project Adoption instead
+create a nested git repository when a parent repository already owns the worktree
+delete, move, rename, summarize destructively, overwrite, stage, or commit raw source materials without explicit user approval
+choose a stack, create business source directories, write business code, create an OpenSpec change, or start design work
+call Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off
+```
+
+If git is unavailable, create the skeleton when the filesystem is writable, record git as unavailable,
+and mark the baseline commit as unavailable or user-handled. Missing OpenSpec or Lore never blocks
+Stage 0. Missing `grill-me` does not block Stage 0, but it blocks entering Stage 1.
 
 Use progressive disclosure:
 
@@ -477,9 +551,32 @@ Before doing 0-to-1 work, read `references/path-guides.md#0-to-1-project` and
 
 ### 1. Clarify Product Intent With grill-me
 
-Invoke `grill-me` only for product clarification needed to make the first change testable. Update
-`PRD.md` after important answers. Do not create an OpenSpec change, choose a stack, or write
-business code in this stage.
+Delegate to `grill-me` for product clarification needed to make the first change testable. This is
+a native helper handoff, not a local reimplementation of grill-style questions.
+
+The delegation contract must preserve `grill-me` behavior:
+
+```text
+interview the user relentlessly until shared understanding is reached
+walk the design tree one branch at a time
+ask one question at a time
+provide the recommended answer for each question
+explore the codebase instead of asking when the answer is already discoverable
+```
+
+Bound that native behavior to this workflow:
+
+```text
+goal: clarify enough product intent for the first OpenSpec change
+primary write target: PRD.md
+stop condition: MVP boundary, non-goals, and testable core behavior are clear
+constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
+return control to grill-driven-spec when the stop condition is met or a blocking dependency/question appears
+```
+
+Update `PRD.md` after important answers. If `grill-me` is unavailable or cannot be invoked by the
+current agent, do not pretend to run it or silently replace it with ordinary questioning. Stop at
+Stage 1, report the missing helper, and offer the verified install/enablement path.
 
 Before Stage 1 work, read `references/path-guides.md#product-clarification`.
 
@@ -493,10 +590,34 @@ Before Stage 2 work, read `references/path-guides.md#openspec-initialization`.
 
 ### 3. Fill Project Context With grill-with-docs
 
-Invoke `grill-with-docs` when PRD is clear but project/domain/technical context is not ready for a
-proposal. Ask only questions that block a testable first OpenSpec change. For greenfield projects,
-required technical readiness must be confirmed or explicitly delegated before review can pass. For
-existing projects, inherit conventions unless the change affects them.
+Delegate to `grill-with-docs` when PRD is clear but project/domain/technical context is not ready
+for a proposal. This is a native helper handoff for grilling against docs, domain language, and code.
+
+The delegation contract must preserve `grill-with-docs` behavior:
+
+```text
+interview against the existing glossary, docs, and code
+sharpen fuzzy or conflicting terminology
+ask one question at a time and provide the recommended answer for each question
+update CONTEXT.md inline when domain terms are resolved
+offer ADRs only for hard-to-reverse, surprising, real tradeoff decisions
+```
+
+Bound that native behavior to this workflow:
+
+```text
+goal: fill only the context needed for the first OpenSpec proposal
+inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
+write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
+question focus: only questions that block a testable first OpenSpec change
+constraints: do not write business code, do not create a change until the user confirms propose, and do not start a separate end-to-end docs workflow
+return control to grill-driven-spec when enough context exists to propose
+```
+
+For greenfield projects, required technical readiness must be confirmed or explicitly delegated
+before review can pass. For existing projects, inherit conventions unless the change affects them.
+If `grill-with-docs` is unavailable, stop at Stage 3, report the missing helper, and offer the
+verified install/enablement path.
 
 Before Stage 3 work, read `references/path-guides.md#project-context`.
 
@@ -546,6 +667,12 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 ## Hard Rules
 
 - Do not cross a major stage gate without telling the user what you are about to do.
+- Do not skip First-run Bootstrap when dependencies or agent skill availability are unknown.
+- Do not ask product, stack, design, visual companion, or OpenSpec proposal questions before Stage 0 skeleton exists for a 0-to-1 project.
+- Do not treat a product idea in the first user message as permission to grill before Stage 0; capture it as seed input and bootstrap first.
+- Do not create a nested git repository when the current folder is already inside a parent git worktree.
+- Do not replace unavailable `grill-me` or `grill-with-docs` with ordinary questioning while claiming the delegated grill stage is running.
+- Do not drop the delegated grill requirement to provide a recommended answer for each grill question.
 - Do not create an OpenSpec change from vague intent.
 - Do not implement immediately after propose; review first.
 - Do not put unconfirmed assumptions into specs as facts.

@@ -13,6 +13,20 @@ Next-slice selection -> an initial OpenSpec change is complete or shipped and th
 
 If signals conflict, explain the classification briefly and ask before crossing a major gate.
 
+On first use in a new agent environment, run bootstrap before crossing the first workflow gate.
+Report dependency status only as much as needed to explain blockers:
+
+```text
+git -> blocks repository initialization and commits only; missing git does not block skeleton creation
+grill-me -> blocks Stage 1 native product grilling
+OpenSpec -> blocks Stage 2 initialization and formal changes
+grill-with-docs -> blocks Stage 3 native docs/domain grilling
+Lore -> recommended for context-rich commits, not required for early workflow
+```
+
+Do not silently install, substitute package names, or claim a delegated helper is running when the
+agent cannot load it.
+
 Use the resolved project language for all user-visible workflow replies. For a new project, this is
 usually the user's initial request language; for an existing project, inherit the language of the
 authoritative project docs. Treat English prompt text in this file as semantic guidance, not output
@@ -237,13 +251,16 @@ Idea: <describe idea here>
 
 Run preflight first:
 - check whether this directory is already a git repository
+- check whether this directory is inside a parent git worktree before running git init
 - scan for existing raw source materials such as notes, drafts, PDFs, docs, screenshots, exports, or meeting summaries
 - check whether this looks like an empty or unstructured 0-to-1 folder, not an already implemented project
 - use the primary language of my initial project request for generated artifacts unless I specify another language
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
-- initialize git if available and this is not already a git repository
-- after creating the Stage 0 skeleton, create an initial baseline commit for generated workflow files when git is available
+- initialize git if available, this is a 0-to-1 folder, and this directory is not already inside a git repository
+- do not create a nested git repository inside a parent worktree
+- treat the initial idea as seed input for PRD.md, not as permission to ask product questions before Stage 0
+- after creating the Stage 0 skeleton, create an initial baseline commit for generated workflow files when git is available and author/committer identity is allowed
 - resolve commit author and committer identity before creating the initial baseline commit
 - do not let missing OpenSpec or Lore block the initial skeleton and grill phase
 - do not pretend to invoke missing grill-me, grill-with-docs, or OpenSpec dependencies
@@ -252,7 +269,7 @@ Run preflight first:
 - do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
 - if raw source materials exist, list their paths in PRD.md under Raw Sources before grilling
 - only copy clearly stated facts into PRD.md; put interpretations, conflicts, or suspected requirements under Open Questions
-- do not ask visual companion, stack, design, or product questions before the skeleton is in place
+- do not ask visual companion, stack, design, grill, or product follow-up questions before the skeleton is in place
 
 Create README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/inbox/README.md,
 docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-tools.md.
@@ -277,6 +294,7 @@ After the skeleton is in place, start grilling me one question at a time.
 Use grill-me to clarify PRD.md.
 
 Invoke grill-me with this contract:
+- preserve grill-me native behavior: interview relentlessly, walk the design tree one branch at a time, ask one question at a time, and provide your recommended answer for each question
 - goal: clarify enough product intent for the first OpenSpec change
 - primary write target: PRD.md
 - stop condition: MVP boundary, non-goals, and testable core behavior are clear
@@ -286,6 +304,7 @@ Invoke grill-me with this contract:
 After each important answer, update PRD.md.
 Put uncertain content under open questions. Put confirmed exclusions under non-goals.
 Do not write code or create an OpenSpec change.
+If grill-me is unavailable, stop at Stage 1 and ask me whether to install or enable the verified skill.
 ```
 
 ## grill-with-docs
@@ -294,6 +313,7 @@ Do not write code or create an OpenSpec change.
 Use grill-with-docs to review PRD.md, AGENTS.md, CONTEXT.md, docs/, and openspec/.
 
 Invoke grill-with-docs with this contract:
+- preserve grill-with-docs native behavior: grill against docs, glossary, and code; ask one question at a time; provide your recommended answer for each question; update CONTEXT.md inline when terms are resolved
 - goal: fill only the context needed for the first OpenSpec proposal
 - inputs: PRD.md, AGENTS.md, CONTEXT.md, docs/, openspec/
 - write targets: PRD.md, CONTEXT.md, docs/architecture.md, docs/adr/, docs/inbox/
@@ -329,6 +349,7 @@ record the stack-appropriate source and test layout in design.md before developm
 When the context is enough for a testable first OpenSpec change, ask me to confirm propose.
 
 Do not write code or create a change until I confirm propose.
+If grill-with-docs is unavailable, stop at Stage 3 and ask me whether to install or enable the verified skill.
 ```
 
 ## Initialize OpenSpec
