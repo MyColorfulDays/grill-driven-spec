@@ -55,12 +55,12 @@ Idea or requested change
   -> review before development
   -> implement after confirmation
   -> user verifies
-  -> sync, archive, and handle commit gate
+  -> sync, archive, and handle commit gate with Lore-first policy
 ```
 
 The workflow supports three common starts:
 
-- **0-to-1:** create a thin project skeleton, preserve raw notes, clarify the MVP, then propose the first OpenSpec change.
+- **0-to-1:** create a thin project skeleton, preserve raw notes, choose throwaway prototype or product-track build, clarify the first slice, then propose the first OpenSpec change.
 - **Existing project adoption:** inventory current reality, separate observed behavior from desired behavior, and establish enough docs for future changes.
 - **Existing project change:** clarify one requested change while inheriting current architecture, UI, test, deployment, and workflow conventions unless the change affects them.
 
@@ -71,7 +71,7 @@ A new or adopted project usually grows toward this shape:
 ```text
 your-project/
 |-- README.md                    # Human-facing project overview
-|-- PRD.md                       # Raw idea, confirmed requirements, non-goals, MVP direction
+|-- PRD.md                       # Raw idea, build track, confirmed requirements, non-goals, first-slice direction
 |-- CONTEXT.md                   # Project context, small glossary, business rules, project facts
 |-- UBIQUITOUS_LANGUAGE.md       # Optional dedicated glossary when domain language becomes complex
 |-- AGENTS.md                    # Local instructions that keep agents on the same workflow
@@ -109,12 +109,17 @@ The full flow has explicit gates:
 7. Implement and test after user confirmation.
 8. Ask the user to verify the core flow.
 9. Sync specs and archive after verification passes.
-10. Handle the commit gate with a Lore commit, normal git commit, user handoff, or explicit skip.
+10. Handle the commit gate with Lore-first policy, normal git only when Lore is unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
 
 Before development, the agent checks whether the first slice has enough implementation context. For
 greenfield projects, stack/runtime, source layout, persistence, sensitive-data handling, broad UI
 direction, local verification, and deployment expectations must be confirmed, inherited, or
 explicitly delegated as conservative defaults when they affect the first slice.
+
+For 0-to-1 work, the agent records whether the build is a throwaway prototype or a product-track
+build in `PRD.md`. Product-track builds default to DDD-lite boundaries and TDD-first behavior tasks.
+Throwaway prototypes may use shortcuts when those shortcuts are recorded as limitations. MVP trims
+scope; it does not trim engineering discipline.
 
 For external systems or mature domain patterns, required knowledge is classified before review:
 
@@ -132,6 +137,7 @@ The workflow must not:
 - turn unconfirmed assumptions into requirements
 - overwrite existing product docs with starter skeletons
 - silently use a machine-global git identity when it differs from project history
+- treat post-archive bare commit intent as ordinary git commit when Lore is available and appropriate
 - let documentation drift away from product or implementation reality
 
 ## Dependencies
@@ -211,9 +217,10 @@ This repository uses Lore-enriched commits for decision context.
 
 Use a lightweight normal git commit for the initial Stage 0 baseline when Lore is unavailable. Use
 Lore for post-archive commits when available, because those commits should preserve requirement,
-design, implementation, verification, and archive context. If Lore is missing after archive, handle
-the commit gate with a normal git commit, user handoff, or explicit skip instead of silently moving
-to the next feature.
+design, implementation, verification, and archive context. Bare commit intent after archive means
+handle the workflow commit gate with Lore-first policy, not ordinary git commit by default. If Lore
+is missing after archive, handle the commit gate with a normal git commit, user handoff, or explicit
+skip instead of silently moving to the next feature.
 
 Lore still relies on git's author and committer identity. Before either Lore or normal git commits,
 verify the project identity from repository-local config and recent commits, then override or ask

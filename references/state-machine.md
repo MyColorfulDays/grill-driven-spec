@@ -24,11 +24,11 @@ baseline is already sufficient for a specific requested change.
 |---|---|---|---|
 | First-run bootstrap | New agent environment, new project, or unknown dependency state. | Dependency status is known enough to identify blocked and unblocked stages. | User approval for installs, unavailable required helper for the next stage, filesystem access. |
 | Preflight and skeleton | New or unstructured project; no reliable baseline docs. | Thin project skeleton exists; raw sources are listed without being treated as requirements; baseline commit is created or explicitly unavailable. | Data-loss risk, meaningful existing implementation, missing git for requested repository/commit work. |
-| Product clarification | PRD is too thin for a testable first change. | MVP boundary, non-goals, and core behavior are testable. | Missing `grill-me`; product intent still vague. |
+| Product clarification | PRD is too thin for a testable first change. | Build track, first-slice boundary, non-goals, and core behavior are testable. | Missing `grill-me`; product intent still vague. |
 | OpenSpec initialization | Product direction is clear enough to track changes. | `openspec/`, `openspec/specs/`, and `openspec/changes/` exist; CLI or adapter limitation is verified and recorded. | Missing or failed OpenSpec setup when a change must be created. |
 | Project context | PRD is clear but project/domain/technical context is not enough for review. | Context is sufficient to propose the first change. | Missing `grill-with-docs`; blocking architecture, security, data, integration, or source-layout questions. |
 | Proposal | User confirmed propose. | `proposal.md`, `specs/`, `design.md`, and `tasks.md` exist for the active change. | Desired behavior or convention impact is unclear. |
-| Review | Proposal artifacts exist. | Specs are testable; design assumptions are classified; tasks are executable; user is asked to confirm development. | Blocking TBDs, unconfirmed technical choices, blocking external knowledge, oversized MVP. |
+| Review | Proposal artifacts exist. | Specs are testable; design assumptions are classified; tasks are executable; user is asked to confirm development. | Unknown build track, blocking TBDs, unconfirmed technical choices, missing product-track DDD/TDD gates, blocking external knowledge, oversized first slice. |
 | Implementation | Review passed and user confirmed development. | Tasks complete; tests/lint/build pass or gaps are explained. | Requirement/design conflict, failing verification, missing runtime/tooling. |
 | User verification | Agent-side work is complete. | User has verified the core flow or explicitly reports verification result. | Manual/browser verification not actually performed or reported. |
 | Sync and archive | User verification passed. | Specs are synced; change is archived; commit gate is handled. | Incomplete tasks, stale docs/specs, unresolved blocking questions, unhandled commit decision. |
@@ -105,6 +105,7 @@ Before responding to a workflow turn, classify it:
 | `productive-tangent` | Related side question reveals requirements, risks, constraints, terminology, or implementation context. | Answer, capture durable facts when in scope, then steer back to the active gate. |
 | `new-focus` | User introduces a different feature, product direction, or change request. | Ask whether to switch focus, record a candidate, or return to the current gate. |
 | `meta-process` | User questions the workflow, pace, gates, or whether the process is working. | Pause forward motion, explain or adjust the gate, and offer the smallest useful next step. |
+| `commit-request` | User expresses bare commit intent while workflow changes may need committing, without specifying tool, message, file scope, handoff, or skip. | Treat it as confirmation to handle the commit gate using the workflow commit policy: resolve identity, check Lore, use Lore-first for context-rich commits, and fall back to normal git only when Lore is unavailable, inappropriate, or explicitly requested. |
 
 If two consecutive user turns do not advance, revise, or explicitly defer the active gate, give a
 compact checkpoint: active focus, current gate, what changed, and the single next question.
@@ -139,9 +140,10 @@ fabricated fallback such as Codex, AI, Assistant, unknown@example.com, noreply@e
 ```
 
 If no allowed source yields exactly one complete `Name <email>` pair for author and committer, stop
-at the commit gate and ask the user for the identity. A bare user reply like `commit` confirms that
-the commit gate should be handled; it does not confirm an author, a committer, a Lore downgrade, or a
-machine-global identity.
+at the commit gate and ask the user for the identity. Bare commit intent confirms that the commit
+gate should be handled; it does not confirm an author, a committer, a Lore downgrade, or a
+machine-global identity. For context-rich workflow commits, especially post-archive commits, use
+Lore-first when Lore is available and appropriate.
 
 When the selected identity differs from current git config, pass identity explicitly through
 `--author` and the relevant `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` environment variables, or

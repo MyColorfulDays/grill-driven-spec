@@ -22,8 +22,12 @@ Use after an OpenSpec change is created and before development begins.
 
 - Does `design.md` depend on unconfirmed product assumptions?
 - Are technical constraints and risks explicit?
+- For greenfield projects, is the build track recorded as throwaway prototype or product-track build?
 - For greenfield projects, are stack, runtime, source layout, persistence, sensitive-data handling, integrations, broad UI direction, local verification, and deployment decisions confirmed or explicitly delegated to the agent as conservative defaults?
 - For greenfield projects, if stack/runtime was delegated to the agent, does `design.md` record the selected stack, source layout, verification commands, and rationale rather than leaving them as proposed defaults?
+- For greenfield product-track builds, does `design.md` record DDD-lite boundaries for the first slice, including how domain/application/infrastructure/UI responsibilities stay separated?
+- For greenfield product-track builds, are core domain terms and confirmed business rules recorded in `CONTEXT.md`?
+- For greenfield product-track builds, does the design keep business behavior out of UI, route handlers, persistence adapters, and framework glue?
 - For any change, if external knowledge is required, does `design.md` classify it as known, provisional, or blocking?
 - For known external knowledge, does `design.md` reference the source of truth such as docs, adapters, schemas, fixtures, contract tests, runbooks, or authoritative project docs?
 - For provisional external knowledge, does `design.md` record the mock boundary, assumptions, non-goals, replacement trigger, and what must change when real facts arrive?
@@ -39,7 +43,8 @@ Use after an OpenSpec change is created and before development begins.
 
 - Are tasks small enough to execute and verify?
 - Are tasks ordered sensibly?
-- Do test tasks appear before related implementation tasks when TDD is expected?
+- For product-track builds, do core behavior test tasks appear before related implementation tasks?
+- If TDD-first is skipped or deferred, is the reason explicit in `tasks.md` or `design.md`?
 - Are docs updates included?
 - Is CI included or explicitly deferred?
 - Are PRD, CONTEXT, architecture, or ADR updates included when relevant?
@@ -48,13 +53,20 @@ Use after an OpenSpec change is created and before development begins.
 
 If review passes, ask user to confirm development.
 
-If greenfield review fails because technical or experience readiness is missing, ask one compact
-readiness question before development. If the missing readiness is stack/runtime, recommend a
-specific MVP stack with brief rationale and ask the user to confirm it or explicitly authorize
-conservative defaults; do not ask for development confirmation yet. If existing-project review
-follows existing conventions, do not block on stack or UI questions. If review fails for product or
-domain reasons, name the single most important blocking question and return to grill-me or
-grill-with-docs.
+If greenfield review fails because the build track is missing, ask whether this is a throwaway
+prototype or product-track build and record the answer in `PRD.md`. If greenfield review fails
+because technical or experience readiness is missing, ask one compact readiness question before
+development. If the missing readiness is stack/runtime, recommend a specific first-slice stack with
+brief rationale and ask the user to confirm it or explicitly authorize conservative defaults; do not
+ask for development confirmation yet. If existing-project review follows existing conventions, do
+not block on stack or UI questions. If review fails for product or domain reasons, name the single
+most important blocking question and return to grill-me or grill-with-docs.
+
+For greenfield product-track builds, fail review when core domain terms or business rules are
+missing, business behavior is designed only inside UI/API/persistence code, core behavior test tasks
+do not precede implementation tasks, or TDD-first is skipped without an explicit reason. For
+throwaway prototypes, do not fail review on missing DDD-lite or TDD-first structure, but ensure the
+shortcut is visible as a limitation.
 
 If review fails because required external knowledge is blocking, ask one integration readiness
 question: request the missing docs/examples/access details, identify the existing project contract to

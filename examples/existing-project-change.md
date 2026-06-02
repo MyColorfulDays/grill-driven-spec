@@ -47,10 +47,16 @@ Or create two unfinished feature threads:
 /grill-driven-spec start JD matching, but pause before proposal
 ```
 
-Or after a change has been verified and archived:
+Or after a change has been verified and archived, express a bare commit intent, for example:
 
 ```text
 commit
+```
+
+Or:
+
+```text
+提交吧
 ```
 
 ## Expected Behavior
@@ -67,6 +73,7 @@ commit
 - If screenshots, browser review, mockups, or a visual companion would help, the agent presents them as optional support after the `Driving` gate and a normal text-answerable question are visible.
 - For small changes, the agent inherits existing architecture, stack, UI, test, deployment, and workflow conventions.
 - For convention-impacting changes, the agent asks one blocking impact question about the affected area.
+- If the user explicitly asks for productization, DDD/TDD migration, maintainability refactoring, or product-grade architecture, the agent treats that as a scoped product-track refactoring change instead of silently applying it to unrelated small changes.
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
 - The agent creates an OpenSpec proposal only after desired behavior and convention impact are clear.
 - If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
@@ -79,9 +86,9 @@ commit
 - If the user introduces a new feature while another change is active, the agent asks whether to switch focus, record it as a Candidate Change, or return to the current gate.
 - After archive and spec sync, the agent checks git status and handles the commit gate before calling the workflow fully complete.
 - Before creating Lore or normal git commits, the agent compares repository-local git identity with recent commit authors/committers and uses only an allowed complete identity source or asks the user.
-- If the user manually applied, verified, and archived the change, the agent detects an archived-but-uncommitted state on resume and asks whether to create a Lore commit, create a normal git commit, mark it user-handled, or skip it.
-- When the user says only `commit` after archive, the agent treats that as permission to handle the commit gate, not as permission to invent author/committer identity or to use a normal git commit when Lore is available and appropriate.
-- For post-archive commits, the agent prefers Lore when available and appropriate; normal git is used only when Lore is unavailable, inappropriate, or explicitly requested.
+- If the user manually applied, verified, and archived the change, the agent detects an archived-but-uncommitted state on resume and handles the commit gate with Lore-first policy; normal git is offered only when Lore is unavailable, inappropriate, or explicitly requested.
+- When the user expresses bare commit intent after archive, the agent treats that as permission to handle the commit gate with Lore-first policy, not as permission to invent author/committer identity or to use a normal git commit when Lore is available and appropriate.
+- For post-archive commits, the agent uses Lore when available and appropriate; normal git is used only when Lore is unavailable, inappropriate, or explicitly requested.
 - If no complete `Name <email>` identity can be resolved from explicit user input, repository-local config confirmed by history, or a single clear recent project identity, the agent asks the user before committing.
 - The agent does not implement until review passes and the user confirms development.
 
@@ -89,6 +96,7 @@ commit
 
 - Running the 0-to-1 skeleton flow in an implemented project.
 - Re-adopting the whole project for a small change with clear existing conventions.
+- Turning a small existing-project change into a DDD/TDD migration without explicit user intent.
 - Labeling next-slice selection as Adoption when the project baseline is already understood.
 - Invoking a visual companion, mockup flow, or broad brainstorming flow before the next product slice is selected.
 - Invoking a separate brainstorming flow after the user has already selected the next slice.
@@ -108,7 +116,8 @@ commit
 - Recommending the next feature after archive while related archive/spec/docs/implementation changes are still uncommitted and the commit gate is not handled.
 - Creating a post-archive commit with the machine-global git identity when it differs from the project history.
 - Creating a post-archive commit with a fabricated author or committer inferred from OS username, remote owner, package metadata, README, chat name, project name, or placeholder email.
-- Treating `commit` as approval to use a guessed, partial, ambiguous, or machine-global identity.
+- Treating bare commit intent as approval to use a guessed, partial, ambiguous, or machine-global identity.
+- Treating bare commit intent as a request for ordinary git commit when Lore is available and appropriate.
 - Using normal git for a post-archive commit when Lore is available and appropriate and the user did not request normal git.
 - Treating missing Lore as a reason to ignore the post-archive commit gate instead of offering normal git commit or user handoff.
 - Treating one session as unable to switch feature focus when the user explicitly changes topic.

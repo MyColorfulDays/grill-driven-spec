@@ -1,6 +1,6 @@
 ---
 name: grill-driven-spec
-description: Use when turning vague product ideas, existing-project adoption, or specific feature/change requests into clarified PRD/context docs and OpenSpec-ready proposals before coding. Triggers on grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, 0-to-1 project setup, existing project adoption, next-slice selection, or requests to clarify requirements before implementation.
+description: Use when turning vague product ideas, existing-project adoption, or specific feature/change requests into clarified PRD/context docs and OpenSpec-ready proposals before coding; also use when resuming Grill Driven Spec/OpenSpec work, handling archived-but-uncommitted changes, commit gates, or Lore-first workflow commits. Triggers on grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, 0-to-1 project setup, existing project adoption, next-slice selection, requests to clarify requirements before implementation, OpenSpec archive follow-up, and bare commit intent after workflow/archive work.
 ---
 
 # Grill Driven Spec
@@ -14,6 +14,25 @@ grill first, spec second, code last
 ```
 
 The user expresses ideas and confirms phase transitions. You ask focused questions, update project documents, decide whether the current phase is ready to advance, and explicitly ask for confirmation before crossing major gates.
+
+## Post-Archive Commit Policy
+
+When Grill Driven Spec or OpenSpec work has been synced, archived, or appears archived but related
+changes are still uncommitted, a bare commit intent means "handle the workflow commit gate." It does
+not mean ordinary `git commit` by default.
+
+For context-rich workflow commits, especially post-archive commits, use Lore-first policy:
+
+```text
+resolve author and committer identity
+verify Lore availability
+run lore commit when Lore is available and appropriate
+use normal git only when Lore is unavailable, inappropriate for the environment, or explicitly requested by the user
+```
+
+This policy does not require Lore for the initial Stage 0 baseline commit. Missing Lore must not
+block skeleton creation, requirement grilling, or early normal git commits that do not need workflow
+decision context.
 
 ## Skill Composition
 
@@ -93,7 +112,7 @@ git -> required for repository initialization and commits; missing git does not 
 grill-me -> required before Stage 1 product clarification; missing grill-me blocks native product grilling
 OpenSpec -> required before Stage 2 initialization and any formal OpenSpec change; missing OpenSpec does not block Stage 0 or Stage 1
 grill-with-docs -> required before Stage 3 project/domain context grilling; missing grill-with-docs blocks that delegated stage
-Lore -> recommended for context-rich workflow commits; missing Lore does not block Stage 0, Stage 1, normal git commits, or implementation
+Lore -> default for context-rich workflow commits; missing Lore does not block Stage 0, Stage 1, normal git commits, or implementation
 ```
 
 Skill dependencies such as `grill-me` and `grill-with-docs` are agent skills, not shell commands.
@@ -257,7 +276,7 @@ concrete steering move:
 
 ```text
 Good:
-"I will record that as a Candidate Change. Back to the current gate: for the MVP first slice, should the user complete A or B first?"
+"I will record that as a Candidate Change. Back to the current gate: for the first slice, should the user complete A or B first?"
 
 Bad:
 "Anything else?"
@@ -333,10 +352,14 @@ Before creating a git or Lore commit, resolve author and committer identity. Do 
 machine's global git identity in an existing project. Use `references/state-machine.md` for the full
 commit identity preflight and selection rules.
 
-A user saying only `commit` after archive means "handle the Stage 8 commit gate"; it is not approval
-to invent author data, use a partial identity, use machine-global git config, or downgrade from Lore
-to a normal git commit when Lore is available and appropriate. If no allowed source gives one
-complete `Name <email>` identity, ask the user before committing.
+A bare commit intent means the user is asking the workflow to handle the current commit gate without
+specifying a commit tool, message, file scope, handoff, or skip decision. It is not approval to
+invent author data, use a partial identity, use machine-global git config, or downgrade from Lore to
+a normal git commit when Lore is available and appropriate. For context-rich workflow commits,
+especially post-archive commits, the default command path is Lore-first: check Lore availability and
+use `lore commit` unless Lore is unavailable, inappropriate for the environment, or the user
+explicitly asks for a normal git commit. If no allowed source gives one complete `Name <email>`
+identity, ask the user before committing.
 
 ## Progressive Maturity
 
@@ -346,8 +369,8 @@ Use this progression:
 
 ```text
 Fast Path:
-- default for 0-to-1 and early MVP work
-- seed thin artifacts, clarify enough, create the first OpenSpec slice, implement, and verify
+- default for 0-to-1 and first-slice work
+- seed thin artifacts, choose the build track, clarify enough, create the first OpenSpec slice, implement, and verify
 - do not introduce PM, design, or architecture helper work just because it is available
 
 Product Maturity:
@@ -367,8 +390,15 @@ Architecture Maturity:
 ```
 
 Do not invoke maturity helpers just because they exist. Use them when the current user goal,
-project state, or OpenSpec review reveals that maturity dimension. Keep the first working slice fast;
-let product, design, and architecture maturity deepen over later iterations.
+project state, or OpenSpec review reveals that maturity dimension. Keep the first working slice
+focused; let product, design, and architecture maturity deepen over later iterations.
+
+For 0-to-1 work, distinguish a throwaway prototype from a product-track build before deciding
+engineering discipline. Record the selected track in `PRD.md`. Product-track builds default to
+DDD-lite boundaries and TDD-first behavior tasks; throwaway prototypes may use pragmatic shortcuts
+when those shortcuts are recorded as limitations. MVP controls scope, not engineering discipline.
+Prefer `first slice`, `first product slice`, or `first testable slice` in workflow language; use
+`MVP` when the user uses that term or when discussing scope trimming.
 
 ### Maturity Helper Invocation Contract
 
@@ -569,7 +599,7 @@ Bound that native behavior to this workflow:
 ```text
 goal: clarify enough product intent for the first OpenSpec change
 primary write target: PRD.md
-stop condition: MVP boundary, non-goals, and testable core behavior are clear
+stop condition: build track, first-slice boundary, non-goals, and testable core behavior are clear
 constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
 return control to grill-driven-spec when the stop condition is met or a blocking dependency/question appears
 ```
@@ -625,7 +655,8 @@ Before Stage 3 work, read `references/path-guides.md#project-context`.
 
 Create OpenSpec change artifacts only after user confirmation. Specs describe testable behavior;
 design records technical approach, constraints, risks, and classified assumptions; tasks include
-implementation, tests, docs, CI, and TDD where relevant. Do not implement after proposing.
+implementation, tests, docs, CI, and TDD/DDD tasks required by the selected build track. Do not
+implement after proposing.
 
 Before Stage 4 work, read `references/path-guides.md#openspec-proposal`.
 
@@ -650,8 +681,8 @@ Before Stage 6 work, read `references/path-guides.md#implement-verify-sync-and-a
 ### 7. Ask the User to Verify
 
 After implementation and tests, do not archive immediately. Ask the user to verify the core flow,
-provide run commands, MVP behaviors, non-goals, test status, and known limitations, and never claim
-manual or browser verification passed unless it actually ran and passed.
+provide run commands, first-slice behaviors, non-goals, test status, and known limitations, and
+never claim manual or browser verification passed unless it actually ran and passed.
 
 Before Stage 7 work, read `references/path-guides.md#implement-verify-sync-and-archive`.
 

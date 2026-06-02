@@ -17,11 +17,15 @@
     "create the thin Stage 0 skeleton before product, stack, design, or visual companion questions",
     "record raw source paths in PRD.md under Raw Sources",
     "keep Confirmed Requirements empty until the user confirms requirements during grill-me",
+    "ask whether the build is a throwaway prototype or product-track build after Stage 0 unless already explicit",
+    "record the selected build track in PRD.md",
     "initialize git when available and create an initial baseline commit for generated workflow files when identity is resolved",
     "resolve author and committer identity before the initial baseline commit",
     "allow a normal git commit when Lore is missing",
     "enter grill-me after the skeleton exists with the PRD/OpenSpec convergence contract",
-    "ask a compact greenfield readiness question before development if technical choices are still blocking"
+    "ask a compact greenfield readiness question before development if technical choices are still blocking",
+    "for product-track builds, require DDD-lite boundaries and TDD-first core behavior tasks before review passes",
+    "for throwaway prototypes, record skipped DDD-lite or TDD-first gates as limitations"
   ],
   "forbiddenActions": [
     "treat raw notes as confirmed product requirements",
@@ -32,12 +36,15 @@
     "add raw notes, screenshots, exports, or drafts to the initial commit without user intent",
     "move raw files into docs/inbox/ without explicit approval",
     "summarize large raw source materials destructively during Stage 0",
+    "start product or technical grilling without recording the build track in PRD.md",
     "pass review while stack, runtime, source layout, persistence, data handling, or verification choices are still blocking",
+    "pass product-track review while domain terms, business rules, DDD-lite boundaries, or TDD-first task order are missing",
     "treat domain-pattern assumptions as confirmed external-system facts"
   ],
   "completionSignals": [
     "README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, and docs/ skeleton files exist or are refreshed",
     "PRD.md lists raw source paths without confirming inferred requirements",
+    "PRD.md records the build track before product-track or prototype-specific gates are applied",
     "the agent asks the next grill-me question or explains the blocker preventing Stage 1"
   ]
 }

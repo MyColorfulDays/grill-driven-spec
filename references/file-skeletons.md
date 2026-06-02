@@ -41,7 +41,11 @@ None yet.
 
 None yet.
 
-## MVP Direction
+## Build Track
+
+TBD
+
+## First-Slice Direction
 
 TBD
 ```
@@ -70,6 +74,9 @@ Follow the project documents before writing code:
 - Do not invent product scope, stack, architecture, or business rules.
 - Keep unknowns explicit as TBD or Open Questions.
 - Before changing security-sensitive behavior, read SECURITY.md and keep unknown security decisions explicit.
+- After Grill Driven Spec or OpenSpec work is synced or archived, bare commit intent means handle the workflow commit gate, not ordinary git commit by default.
+- For context-rich workflow commits, especially post-archive commits, use Lore first when available and appropriate; use normal git only when Lore is unavailable, inappropriate for the environment, or explicitly requested.
+- Before creating either Lore or normal git commits, resolve author and committer identity from explicit user input, confirmed repository-local config, or a single clear recent project identity; do not guess or silently use a mismatched machine-global identity.
 
 ## Documentation Sync
 
@@ -83,6 +90,7 @@ Use this project's established docs first. If this project follows the Grill Dri
 route updates like this:
 
 - Product intent or requirements -> PRD.md
+- Build track, such as throwaway prototype or product-track build -> PRD.md
 - Domain language or business rules -> CONTEXT.md
 - Security, privacy, or data-handling constraints -> SECURITY.md
 - Architecture knowledge -> docs/architecture.md
@@ -225,11 +233,13 @@ This project uses AGENTS.md as the shared project-level agent guide.
 - grill-me is required before Stage 1 product clarification.
 - grill-with-docs is required before Stage 3 project context alignment.
 - OpenSpec is required before creating or updating OpenSpec changes.
-- Lore is recommended for commits that should preserve decision context, especially post-archive workflow commits.
+- Lore is the default for commits that should preserve decision context, especially post-archive workflow commits.
 
 Missing OpenSpec or Lore should not block initial project skeleton creation or requirement grilling.
 Missing grill-me blocks Stage 1. Missing grill-with-docs blocks Stage 3.
 Missing Lore should not block the initial baseline commit when normal git commit is available.
+After OpenSpec archive, missing Lore should be recorded as the reason for falling back to normal git,
+user handoff, or explicit skip.
 
 ## Dependency Identity
 

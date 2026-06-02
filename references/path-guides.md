@@ -92,6 +92,7 @@ Branch the flow:
 if baseline context is missing or too thin to judge desired behavior -> do a minimal adoption baseline first
 if the change fits existing architecture, UI, test, deployment, and workflow conventions -> inherit them by default
 if the change affects architecture, data, security, deployment, shared UI, or workflow conventions -> ask one blocking impact question before proposing
+if the user explicitly asks for productization, DDD/TDD migration, maintainability refactoring, or product-grade architecture -> treat it as a scoped product-track refactoring change
 if the change adds or changes external knowledge -> classify it as known, provisional, or blocking
 if product intent is vague -> invoke grill-me with a change-scoped contract
 if project/domain context is the blocker -> invoke grill-with-docs with a change-scoped contract
@@ -112,6 +113,12 @@ external knowledge: inherit known external-system contracts from existing code/d
 stop condition: the change can be proposed as testable behavior and its convention impact is known
 constraints: do not re-adopt the whole project, choose a new stack, redesign shared UI, migrate data, or implement before review unless the user explicitly asks for that scope
 ```
+
+For existing projects, inherit current architecture, source layout, and test conventions by default.
+Do not turn a small change into a DDD/TDD migration. When the user explicitly requests
+productization, DDD/TDD migration, maintainability refactoring, or product-grade architecture, make
+that refactor its own existing-project change with scoped behavior, compatibility, migration, and
+test strategy.
 
 Recommended gate prompt:
 
@@ -192,11 +199,30 @@ If no allowed author/committer identity is available, do not commit and do not i
 the commit identity gate after creating the skeleton, ask for a complete `Name <email>` pair or an
 explicit user handoff, and keep product grilling blocked only if `grill-me` is unavailable.
 
+After Stage 0, choose the 0-to-1 build track before product, stack, or implementation clarification
+unless the user's intent is already explicit. Ask one compact question:
+
+```text
+Is this first build a throwaway prototype or a product-track build?
+```
+
+Use product-track as the recommended default unless the user explicitly says the work is disposable,
+a spike, a mockup, or a demo that will not be maintained. Record the selected track in `PRD.md`
+because it is product intent. When an OpenSpec change is created, copy the engineering consequences
+into `design.md`.
+
+Track behavior:
+
+```text
+throwaway prototype -> keep the first slice fast, record shortcuts as limitations, do not block on DDD-lite or TDD-first task order
+product-track build -> default to DDD-lite boundaries, TDD-first behavior tasks, and source/test layout that can grow
+```
+
 Recommended gate prompt:
 
 ```text
 Initial files are in place. The PRD is still too thin for an OpenSpec change.
-Next I recommend grill-me: I will ask one question at a time and update PRD.md after each important answer.
+Next I recommend choosing the build track, then using grill-me to clarify the first testable slice.
 ```
 
 ## Product Clarification
@@ -210,13 +236,14 @@ Contract:
 ```text
 goal: clarify enough product intent for the first OpenSpec change
 primary write target: PRD.md
-preferred question focus: MVP boundary, first users, success criteria, non-goals, and testable core behavior
+preferred question focus: build track, first users, success criteria, first-slice boundary, non-goals, and testable core behavior
 external knowledge: when external systems or mature domain patterns appear, classify them lightly using External Knowledge and Domain Pattern Readiness
-stop condition: MVP boundary, non-goals, and core behavior can become testable requirements
+stop condition: build track, first-slice boundary, non-goals, and core behavior can become testable requirements
 constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
 ```
 
-Advance only when MVP boundary is clear, non-goals are recorded, core behavior can become testable
+Advance only when the build track is recorded in `PRD.md`, first-slice boundary is clear,
+non-goals are recorded, core behavior can become testable
 requirements, and remaining unknowns do not block the first change.
 
 ## OpenSpec Initialization
@@ -272,13 +299,18 @@ deployment target are confirmed, inherited, or explicitly delegated as conservat
 they affect the first slice.
 
 When stack/runtime is not confirmed for a greenfield implementation, ask one compact technical
-readiness question before review can pass. Recommend a specific MVP stack with a short reason, then
+readiness question before review can pass. Recommend a specific first-slice stack with a short reason, then
 ask the user to confirm it or explicitly authorize conservative defaults. Do not treat silence or a
 generic "proceed" as stack approval.
 
 Source layout is part of technical readiness. Do not place business source files such as `app.py`,
 `main.py`, or `index.ts` in the project root just because the stack is unclear. Prefer
 stack-specific conventions and record the chosen layout in the active `design.md`.
+
+For greenfield product-track builds, project context must include enough DDD-lite material for the
+first slice: core domain terms, confirmed business rules, and any candidate entities, value objects,
+aggregates, policies, or domain services that clarify the first slice. Keep this in `CONTEXT.md`
+while the glossary is small. Do not perform broad up-front domain modeling.
 
 For existing projects, inherit current architecture, stack, source layout, UI, test, and deployment
 conventions unless the change affects them.
@@ -300,14 +332,19 @@ openspec/changes/<change-name>/tasks.md
 
 `proposal.md` explains why, what, and non-goals. `specs/` describe testable behavior, not
 implementation details. `design.md` records technical approach, constraints, risks, and open
-questions. `tasks.md` includes implementation, tests, docs, CI, TDD, and lightweight DDD tasks when
-relevant.
+questions. `tasks.md` includes implementation, tests, docs, CI, and DDD/TDD tasks required by the
+selected build track.
 
 For greenfield projects, `design.md` must include a Technical Approach section before review. It
 must record confirmed choices, proposed defaults awaiting approval, and technical open questions for
 application shape/runtime, source and test layout, persistence, sensitive-data handling,
 integrations, basic UI direction when relevant, local verification, and deployment when it affects
 the first slice.
+
+For greenfield product-track builds, `design.md` must also record how the first slice keeps
+domain/application/infrastructure/UI boundaries, where core behavior tests live, and whether any
+TDD-first behavior work is explicitly deferred. `tasks.md` must place core behavior tests before the
+related implementation tasks unless a deferral reason is recorded.
 
 Before review passes, any proposed default required for implementation must be confirmed by the user
 or converted into an explicit agent-selected default under user authorization. Do not leave required
@@ -337,14 +374,20 @@ design does not depend on unconfirmed assumptions
 technical approach is ready for implementation
 tasks are executable and ordered
 tests, docs, and CI are represented
-MVP is not too large
+first slice is not too large
 external knowledge is known or explicitly provisional
 ```
 
-For greenfield projects, review fails if required stack/runtime, persistence, sensitive-data
-handling, source layout, broad UI direction, integrations, local verification, or deployment choices
-are still TBD and not explicitly delegated. If stack/runtime is missing, ask a technical readiness
-question with a recommended stack instead of asking for development confirmation.
+For greenfield projects, review fails if the build track is unknown or required stack/runtime,
+persistence, sensitive-data handling, source layout, broad UI direction, integrations, local
+verification, or deployment choices are still TBD and not explicitly delegated. If stack/runtime is
+missing, ask a technical readiness question with a recommended stack instead of asking for
+development confirmation.
+
+For greenfield product-track builds, review also fails if core domain terms and business rules are
+not recorded, business behavior is designed only inside UI/API/persistence code, core behavior tasks
+do not include tests before implementation, or TDD is skipped without an explicit reason. MVP may
+trim scope; it must not trim engineering discipline.
 
 For existing projects, do not fail review on inherited stack or UI choices unless the change affects
 architecture, data, security, deployment, source layout, local verification, shared UI conventions,
@@ -359,24 +402,26 @@ passes, ask the user to confirm development.
 
 ## Implement, Verify, Sync, and Archive
 
-Implement only after user confirmation. Follow `tasks.md` in order, prefer TDD for behavior
-changes, and update `tasks.md` as work completes.
+Implement only after user confirmation. Follow `tasks.md` in order. For product-track builds, use
+TDD-first for behavior changes by default; for throwaway prototypes, record any skipped testing or
+boundary shortcuts as limitations. Update `tasks.md` as work completes.
 
-After implementation and tests, ask the user to verify. Include startup commands, core flows, MVP
-behaviors, explicit non-goals, test status, and known limitations. Do not claim manual or browser
-verification passed unless it actually ran and passed.
+After implementation and tests, ask the user to verify. Include startup commands, core flows,
+first-slice behaviors, explicit non-goals, test status, and known limitations. Do not claim manual
+or browser verification passed unless it actually ran and passed.
 
 Archive only after user verification passes. Before archiving, check tasks, tests/lint/build,
 README.md, PRD.md, CONTEXT.md, docs, specs, and unresolved open questions or ADRs. After archive
-verification, handle the commit gate with a Lore commit, normal git commit, user handoff, or
-explicit skip.
+verification, handle the commit gate with Lore-first policy, normal git only when Lore is
+unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
 
-For post-archive commits, prefer Lore when it is available and appropriate because the commit should
+For post-archive commits, use Lore when it is available and appropriate because the commit should
 preserve requirement, design, implementation, verification, and archive context. Use a normal git
 commit only when Lore is unavailable, inappropriate for the current environment, or explicitly
-requested by the user. In all cases, resolve author and committer from allowed evidence before
-running a commit command. Do not infer or fabricate identity; if the user only says `commit` and the
-identity is missing or ambiguous, ask for the complete `Name <email>` pair.
+requested by the user. Bare commit intent is enough to handle the commit gate, but not enough to
+downgrade from Lore to normal git. In all cases, resolve author and committer from allowed evidence
+before running a commit command. Do not infer or fabricate identity; if the identity is missing or
+ambiguous, ask for the complete `Name <email>` pair.
 
 If the archive tool creates a date-stamped directory with a date that differs from the current
 session date, do not rename it manually. Report both dates clearly, keep the tool-generated name,

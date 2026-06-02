@@ -21,7 +21,7 @@ git -> blocks repository initialization and commits only; missing git does not b
 grill-me -> blocks Stage 1 native product grilling
 OpenSpec -> blocks Stage 2 initialization and formal changes
 grill-with-docs -> blocks Stage 3 native docs/domain grilling
-Lore -> recommended for context-rich commits, not required for early workflow
+Lore -> default for context-rich workflow commits, not required for early workflow
 ```
 
 Do not silently install, substitute package names, or claim a delegated helper is running when the
@@ -48,6 +48,7 @@ gate-clarification -> explain the gate, simplify the choice, and ask one clearer
 productive-tangent -> answer briefly, capture durable facts when needed, then steer back
 new-focus -> ask whether to switch focus, record as Candidate Change, or return to the current gate
 meta-process -> explain or adjust the workflow, then offer the smallest useful next step
+commit-request -> bare commit intent means handle the commit gate with Lore-first policy
 ```
 
 Use a coach/project-manager style: allow useful detours, but do not let them erase the active focus.
@@ -66,6 +67,13 @@ not silently use the machine's global git identity in an existing project. If th
 missing or differs from the recent project identity, use the recent project identity explicitly or
 ask me before committing. If the project has mixed legitimate identities, ask which one to use.
 Remember that Lore still inherits git author/committer identity unless overridden.
+
+When I express bare commit intent without specifying a commit tool, message, file scope, handoff, or
+skip decision, treat that as confirmation to handle the current commit gate using this workflow's
+commit policy, not as a request for ordinary `git commit`. For context-rich workflow commits,
+especially after OpenSpec archive, check Lore availability and use `lore commit` by default. Use
+normal git only when Lore is unavailable, inappropriate for the current environment, or I explicitly
+request a normal git commit.
 
 Allowed commit identities are only: an explicit user-provided `Name <email>`, a complete
 repository-local identity that matches project history or that I confirmed, or a single clear recent
@@ -89,7 +97,7 @@ check recent commits when deciding whether a baseline or archived change has alr
 use active changes in openspec/changes/ as the primary change-state signal
 if multiple active changes exist, list them with detected gate or phase and ask me which one to continue
 also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
-if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and ask whether to create a Lore commit, create a normal git commit, mark it user-handled, or skip it
+if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and handle the commit gate with Lore-first policy; offer normal git only when Lore is unavailable, inappropriate, or explicitly requested
 continue from the earliest incomplete gate
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
 ```
@@ -104,10 +112,16 @@ active, deferred, abandoned, or promoted to an OpenSpec change. Then name the ne
 carry unresolved assumptions across features.
 
 Use Progressive Maturity lightly:
-- Fast Path for 0-to-1 and early MVP work.
+- Fast Path for 0-to-1 and first-slice work.
 - Product maturity helpers only when direction, prioritization, journey, roadmap, or metrics are the problem.
 - Design maturity helpers only when visual quality, usability, consistency, or DESIGN.md is the problem.
 - Architecture maturity helpers only when architecture, data, security, integrations, performance, deployment, technology choice, refactoring, or release risk is the problem.
+
+For 0-to-1 work, choose the build track before deciding engineering discipline:
+throwaway prototype or product-track build. Record the selected track in PRD.md. Product-track builds
+default to DDD-lite boundaries and TDD-first behavior tasks. Throwaway prototypes may skip those
+gates when shortcuts are recorded as limitations. Prefer first slice / first product slice / first
+testable slice language; use MVP when I use that term or when discussing scope trimming.
 
 Before using a maturity helper, state its trigger, narrow question, writeback target, stop condition,
 and fallback. If the helper/tool/site/private skill is unavailable, record the limitation and fall
@@ -286,6 +300,8 @@ is already available and appropriate; missing Lore must not block Stage 0. For a
 commits and no repository-local git identity, ask me for the commit identity before the first commit.
 
 After the skeleton is in place, start grilling me one question at a time.
+First ask whether this build is a throwaway prototype or product-track build unless my intent is
+already explicit. Record the selected track in PRD.md.
 ```
 
 ## grill-me
@@ -297,7 +313,7 @@ Invoke grill-me with this contract:
 - preserve grill-me native behavior: interview relentlessly, walk the design tree one branch at a time, ask one question at a time, and provide your recommended answer for each question
 - goal: clarify enough product intent for the first OpenSpec change
 - primary write target: PRD.md
-- stop condition: MVP boundary, non-goals, and testable core behavior are clear
+- stop condition: build track, first-slice boundary, non-goals, and testable core behavior are clear
 - constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
 - domain pattern awareness: when a mature domain or external system is mentioned, briefly name the likely pattern only if it helps the first slice, ask at most one blocking question, and record unconfirmed pattern assumptions as Open Questions rather than confirmed requirements
 
@@ -334,10 +350,14 @@ For greenfield projects, ask or record one compact technical/experience readines
 stack, runtime, source layout, persistence, security/data handling, integrations, broad UI direction,
 local verification, or deployment target would block safe implementation. For existing projects, inherit
 current architecture, stack, source layout, UI, test, and deployment conventions unless the change affects them.
-If stack/runtime is not confirmed, recommend a default stack for the MVP with a short reason and one
+If stack/runtime is not confirmed, recommend a default stack for the first slice with a short reason and one
 or two alternatives when useful, then ask me to confirm the recommendation or explicitly authorize
 you to choose conservative defaults. Do not treat silence or a generic "proceed" prompt as stack
 approval.
+For greenfield product-track builds, ensure CONTEXT.md records the core domain terms and confirmed
+business rules needed for the first slice. Name candidate entities, value objects, aggregates,
+policies, or domain services only when they clarify that slice. Do not expand into broad up-front
+domain modeling.
 For any path, apply External Knowledge and Domain Pattern Readiness when the first slice depends on
 external systems, external docs, organization workflows, or domain-pattern assumptions. If facts are
 missing, ask for docs/examples/access details or ask whether to proceed with an explicit mock or
@@ -379,13 +399,17 @@ Confirmed: enter OpenSpec propose.
 
 Create the first OpenSpec change from PRD.md, CONTEXT.md, docs/, and the grill results.
 Write proposal.md, specs/, design.md, and tasks.md.
-Include implementation, tests, docs, CI, TDD, and lightweight DDD tasks where relevant.
+Include implementation, tests, docs, CI, and DDD/TDD tasks required by the selected build track.
 In design.md, include Technical Approach with confirmed choices, proposed defaults awaiting approval,
 and technical open questions for stack/runtime, source layout, persistence, sensitive-data handling,
 integrations, basic UI direction, local verification, and deployment when relevant. For existing
 projects, state whether the change follows existing technical, source layout, and UI conventions or
 list the specific conventions it
 changes.
+For greenfield product-track builds, design.md must record how the first slice keeps
+domain/application/infrastructure/UI boundaries, where core behavior tests live, and any explicit
+reason for deferring TDD-first behavior work. tasks.md must place core behavior tests before related
+implementation tasks unless the deferral is recorded.
 Before review can pass, required greenfield stack/runtime, source layout, and local verification
 choices must be confirmed or explicitly delegated to you, and design.md must record the selected
 choice and rationale.
@@ -403,11 +427,15 @@ Review the current OpenSpec change before development.
 
 Check proposal vs PRD.md, testability of specs, unconfirmed assumptions in design,
 technical readiness for implementation, task size and order, and missing tests/docs/CI.
-For greenfield projects, review must fail if required stack/runtime, persistence, security/data
-handling, source layout, broad UI direction, integrations, local verification, or deployment choices
-are still TBD and not explicitly delegated to the agent. For existing projects, do not fail review on
-inherited stack or UI choices unless the change affects architecture, data, security, deployment,
-source layout, local verification, shared UI conventions, or user workflow conventions.
+For greenfield projects, review must fail if the build track is unknown or required stack/runtime,
+persistence, security/data handling, source layout, broad UI direction, integrations, local
+verification, or deployment choices are still TBD and not explicitly delegated to the agent. For
+greenfield product-track builds, review must also fail if core domain terms and business rules are
+missing, business behavior is designed only inside UI/API/persistence code, core behavior tests do
+not appear before implementation tasks, or TDD is skipped without an explicit reason. For existing
+projects, do not fail review on inherited stack or UI choices unless the change affects architecture,
+data, security, deployment, source layout, local verification, shared UI conventions, or user
+workflow conventions.
 If unclear, return to grill and update the relevant files. Do not code.
 If stack/runtime is missing for a greenfield project, the next gate is a technical readiness
 question with a recommended stack, not a development confirmation.
@@ -425,6 +453,8 @@ design.md unchanged.
 Confirmed: begin development.
 
 Follow tasks.md in order. Prefer TDD for behavior changes.
+For product-track builds, use TDD-first for behavior changes by default. For throwaway prototypes,
+record skipped testing or boundary shortcuts as known limitations.
 Update tasks.md as work completes.
 If resuming after an interruption, first read tasks.md, test/lint/build status, dev server state, git status, and known blockers.
 Continue from the first incomplete or failed task instead of restarting completed work.
@@ -434,9 +464,9 @@ If requirements or design conflict with reality, pause and update PRD.md, design
 ## Verification
 
 ```text
-Tell me how to verify the MVP.
+Tell me how to verify the first slice.
 
-Include startup commands, core flows, MVP behaviors, explicit non-goals, test status, and known limitations.
+Include startup commands, core flows, first-slice behaviors, explicit non-goals, test status, and known limitations.
 Do not claim browser or manual verification passed unless it actually ran and passed.
 If local browser automation, network, sandbox, or server issues block verification, leave the task unchecked and ask me to verify the listed flows.
 ```
@@ -450,13 +480,12 @@ and unresolved open questions or ADRs.
 If checks pass and user verification passed, sync specs and archive the change.
 If the archive tool creates a date-stamped directory that differs from the session date, report it and keep the tool-generated name.
 After archive verification, check git status and handle the commit gate before calling the workflow
-fully complete. If relevant changes are uncommitted, recommend a Lore commit; if Lore is missing,
-offer a normal git commit or record user handoff. Treat the gate as handled only when a Lore commit
-is created, a normal git commit is created, I explicitly say I will handle it, or I intentionally
-skip it. Resolve author and committer identity before creating either Lore or normal git commits.
-If I say only `commit` after archive, treat that as confirmation to handle the commit gate, not as
-approval to invent identity or use a normal git commit when Lore is available and appropriate. Prefer
-Lore for post-archive commits when available. Use normal git only when Lore is unavailable,
-inappropriate for the environment, or I explicitly request a normal git commit. If using normal git,
+fully complete. If relevant changes are uncommitted, check Lore and create a Lore commit when Lore is
+available and appropriate. Treat the gate as handled only when a Lore commit is created, a normal git
+commit is created because Lore is unavailable/inappropriate or explicitly requested, I explicitly say
+I will handle it, or I intentionally skip it. Resolve author and committer identity before creating
+either Lore or normal git commits. If I express bare commit intent after archive, treat that as
+confirmation to handle the commit gate with the Lore-first policy, not as approval to invent
+identity or use a normal git commit when Lore is available and appropriate. If using normal git,
 pass the resolved author and committer explicitly instead of relying on global config.
 ```
