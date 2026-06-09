@@ -66,6 +66,9 @@ Or:
 - The agent uses file signals such as implementation artifacts, PRD/CONTEXT, OpenSpec artifacts, and archived changes to classify the project state.
 - The agent does not force full adoption when baseline context is already sufficient.
 - The agent runs a lightweight change preflight to find relevant source, tests, docs, and OpenSpec artifacts.
+- The agent checks recent planning artifact changes and Candidate Changes for future-facing content not linked to an active OpenSpec change.
+- If planning artifacts contain next-spec or future-facing change content, the agent asks whether to promote it into an OpenSpec proposal, keep it as a Candidate Change, commit/archive it as docs-only housekeeping, or treat it as background context before implementing.
+- If the active change covers future-facing durable docs content, the agent adds a `tasks.md` item for the Durable Docs Closure Audit before archive.
 - When asked what to build next, the agent recommends a few small product slices and asks one selection question.
 - After the user selects a recommended slice, the agent continues change-scoped clarification instead of invoking a separate brainstorming flow.
 - If another skill is useful, the agent invokes it only as a bounded helper and returns findings to Grill Driven Spec artifacts.
@@ -85,6 +88,7 @@ Or:
 - If the user questions the workflow itself, the agent explains the current gate's purpose, adjusts the pace if appropriate, and offers a smaller next step.
 - If the user introduces a new feature while another change is active, the agent asks whether to switch focus, record it as a Candidate Change, or return to the current gate.
 - After archive and spec sync, the agent checks git status and handles the commit gate before calling the workflow fully complete.
+- Before archive, the agent runs the Durable Docs Closure Audit and resolves only relevant future-facing durable-doc content: completed work becomes current state, unfinished work remains backlog/candidate, historical/background material stays non-requirement, and unclear relevant items are asked about.
 - Before creating Lore or normal git commits, the agent compares repository-local git identity with recent commit authors/committers and uses only an allowed complete identity source or asks the user.
 - If the user manually applied, verified, and archived the change, the agent detects an archived-but-uncommitted state on resume and handles the commit gate with Lore-first policy; normal git is offered only when Lore is unavailable, inappropriate, or explicitly requested.
 - When the user expresses bare commit intent after archive, the agent treats that as permission to handle the commit gate with Lore-first policy, not as permission to invent author/committer identity or to use a normal git commit when Lore is available and appropriate.
@@ -106,6 +110,10 @@ Or:
 - Depending on a visual click without accepting a normal text reply as the workflow decision.
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
+- Implementing directly from planning artifact changes that were intended for the next spec without asking the Planning Artifact Promotion question.
+- Treating future-facing planning artifact edits as ordinary documentation sync when they affect implementation.
+- Archiving while durable docs still describe completed current-change work as the recommended next step.
+- Blocking archive on unrelated keyword matches, untouched historical ADR prose, or clearly deferred backlog.
 - Ignoring an unfinished active change and recommending a new next slice.
 - Mixing context between multiple unfinished features.
 - Losing a half-discussed feature because it was never recorded as a candidate or active change.

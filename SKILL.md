@@ -346,6 +346,15 @@ One active focus is allowed per session. Do not mix PRD, design, tasks, or revie
 features. Do not promote a candidate into `openspec/changes/` until desired behavior and convention
 impact are clear enough for review.
 
+If planning artifacts contain future-facing requirements, next-slice notes, first-slice direction,
+design direction, architecture/security decisions, product-track decisions, or Candidate Changes
+that are not linked to an active OpenSpec change, treat that as a Planning Artifact Promotion gate.
+Planning artifacts include `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
+`docs/architecture.md`, `docs/adr/`, `docs/proposals/`, and Candidate Changes. Do not implement from
+unpromoted planning content. Ask whether to promote it into an OpenSpec proposal, keep/defer it as a
+Candidate Change, commit/archive it as docs-only housekeeping, or treat it as background context for
+the current work.
+
 ## Commit Identity
 
 Before creating a git or Lore commit, resolve author and committer identity. Do not silently use the
@@ -655,8 +664,8 @@ Before Stage 3 work, read `references/path-guides.md#project-context`.
 
 Create OpenSpec change artifacts only after user confirmation. Specs describe testable behavior;
 design records technical approach, constraints, risks, and classified assumptions; tasks include
-implementation, tests, docs, CI, and TDD/DDD tasks required by the selected build track. Do not
-implement after proposing.
+implementation, tests, docs, CI, durable docs closure work when relevant, and TDD/DDD tasks required
+by the selected build track. Do not implement after proposing.
 
 Before Stage 4 work, read `references/path-guides.md#openspec-proposal`.
 
@@ -689,8 +698,8 @@ Before Stage 7 work, read `references/path-guides.md#implement-verify-sync-and-a
 ### 8. Sync and Archive
 
 Archive only after user verification passes. Before archiving, re-check tasks, tests/lint/build,
-README, PRD, CONTEXT, docs, specs, and blocking open questions. After archive verification, handle
-the commit gate before calling the workflow complete.
+README, PRD, CONTEXT, docs, specs, blocking open questions, and the Durable Docs Closure Audit.
+After archive verification, handle the commit gate before calling the workflow complete.
 
 Before Stage 8 work, read `references/path-guides.md#implement-verify-sync-and-archive` and the
 commit identity rules in `references/state-machine.md#commit-identity-state`.
@@ -706,8 +715,10 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 - Do not drop the delegated grill requirement to provide a recommended answer for each grill question.
 - Do not create an OpenSpec change from vague intent.
 - Do not implement immediately after propose; review first.
+- Do not implement from future-facing planning artifact changes before the user chooses whether to promote them to OpenSpec, keep/defer them as Candidate Changes, commit/archive them as docs-only housekeeping, or treat them as background context.
 - Do not put unconfirmed assumptions into specs as facts.
 - Do not archive before user verification.
+- Do not archive until the Durable Docs Closure Audit has been run; block archive only on future-facing durable-doc content that is relevant to the current change and still unresolved.
 - Do not create git or Lore commits before resolving the intended author and committer identity.
 - Do not fabricate commit author or committer identity from usernames, project names, remote owners, package metadata, chat names, or placeholder emails.
 - Do not call a new-project Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off.

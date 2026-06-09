@@ -27,11 +27,12 @@ baseline is already sufficient for a specific requested change.
 | Product clarification | PRD is too thin for a testable first change. | Build track, first-slice boundary, non-goals, and core behavior are testable. | Missing `grill-me`; product intent still vague. |
 | OpenSpec initialization | Product direction is clear enough to track changes. | `openspec/`, `openspec/specs/`, and `openspec/changes/` exist; CLI or adapter limitation is verified and recorded. | Missing or failed OpenSpec setup when a change must be created. |
 | Project context | PRD is clear but project/domain/technical context is not enough for review. | Context is sufficient to propose the first change. | Missing `grill-with-docs`; blocking architecture, security, data, integration, or source-layout questions. |
+| Planning artifact promotion | Planning artifacts contain uncommitted or unpromoted future-facing requirements, next-slice notes, design direction, architecture/security decisions, product-track decisions, or Candidate Changes not linked to an active OpenSpec change. | User chooses to promote to OpenSpec, record/defer as Candidate Change, commit/archive as docs-only housekeeping, or leave as background context. | Unclear whether planning artifact changes should drive implementation. |
 | Proposal | User confirmed propose. | `proposal.md`, `specs/`, `design.md`, and `tasks.md` exist for the active change. | Desired behavior or convention impact is unclear. |
 | Review | Proposal artifacts exist. | Specs are testable; design assumptions are classified; tasks are executable; user is asked to confirm development. | Unknown build track, blocking TBDs, unconfirmed technical choices, missing product-track DDD/TDD gates, blocking external knowledge, oversized first slice. |
 | Implementation | Review passed and user confirmed development. | Tasks complete; tests/lint/build pass or gaps are explained. | Requirement/design conflict, failing verification, missing runtime/tooling. |
 | User verification | Agent-side work is complete. | User has verified the core flow or explicitly reports verification result. | Manual/browser verification not actually performed or reported. |
-| Sync and archive | User verification passed. | Specs are synced; change is archived; commit gate is handled. | Incomplete tasks, stale docs/specs, unresolved blocking questions, unhandled commit decision. |
+| Sync and archive | User verification passed. | Specs are synced; Durable Docs Closure Audit passed; change is archived; commit gate is handled. | Incomplete tasks, stale docs/specs, unresolved relevant future-facing durable-doc content, unresolved blocking questions, unhandled commit decision. |
 
 ## Resume Rules
 
@@ -43,7 +44,8 @@ Check:
 git status and current branch
 repository-local git author/committer config and recent commit identities when commits may be needed
 recent commits when deciding whether a baseline or archived change has already been committed
-PRD.md, CONTEXT.md, SECURITY.md, docs/, and docs/ai-tools.md when present
+PRD.md, CONTEXT.md, SECURITY.md, DESIGN.md, docs/, docs/proposals/, docs/ai-tools.md, and docs/adr/ when present
+recent planning artifact changes from git diff or recent commits when they may describe the next spec
 raw sources already recorded in PRD.md
 openspec/, openspec/specs/, openspec/changes/, and archived changes
 active OpenSpec change artifacts: proposal.md, specs/, design.md, tasks.md
@@ -52,11 +54,30 @@ recent test/lint/build status if implementation has started
 known blockers, Open Questions, and tool setup limitations
 ```
 
+Treat future-facing planning artifact content as a primary change-state signal after archive,
+commit, or resume. Planning artifacts include `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
+`docs/architecture.md`, `docs/adr/`, `docs/proposals/`, and Candidate Changes. If these artifacts
+have uncommitted or unpromoted changes that may describe the next requirement, design direction,
+architecture/security decision, next slice, or product-track decision, and those changes are not
+linked to an active OpenSpec change, stop before implementation and ask whether to:
+
+```text
+promote the planning content into an OpenSpec proposal
+record or keep it as a Candidate Change for later
+commit/archive it as docs-only housekeeping
+leave it as background context for the current work
+```
+
+Do not implement directly from unpromoted planning artifact content unless the user explicitly says
+it is documentation-only housekeeping or confirms that it is only background context for the current
+change.
+
 Use OpenSpec as the primary change-state signal when it exists:
 
 | File State | Resume Gate |
 |---|---|
 | `openspec/` missing | Initialize OpenSpec before creating changes. |
+| Planning artifacts have uncommitted or unpromoted future-facing change content | Ask whether to promote to OpenSpec, keep as Candidate Change, commit/archive as docs-only housekeeping, or treat as background context. |
 | Active change has only `proposal.md` | Complete Stage 4 artifacts. |
 | Proposal, specs, design, and tasks exist but review has not passed | Continue Stage 5 review. |
 | Review passed and development was confirmed | Continue Stage 6 from the first incomplete task. |
@@ -103,6 +124,7 @@ Before responding to a workflow turn, classify it:
 | `gate-answer` | User answered the current blocking question or confirmed a gate transition. | Absorb the answer, update or prepare artifacts, and reassess the gate. |
 | `gate-clarification` | User asks what the current question means or how to choose. | Explain briefly, simplify the decision, and ask one clearer version. |
 | `productive-tangent` | Related side question reveals requirements, risks, constraints, terminology, or implementation context. | Answer, capture durable facts when in scope, then steer back to the active gate. |
+| `planning-artifact-spec-intent` | User mentions PRD/docs/design/architecture/security edits, next spec, future requirements, candidate changes, or planning content that should drive implementation before an active OpenSpec change exists. | Pause implementation and ask whether to promote the planning content into OpenSpec, keep/defer it as Candidate Change, commit/archive it as docs-only housekeeping, or leave it as background context. |
 | `new-focus` | User introduces a different feature, product direction, or change request. | Ask whether to switch focus, record a candidate, or return to the current gate. |
 | `meta-process` | User questions the workflow, pace, gates, or whether the process is working. | Pause forward motion, explain or adjust the gate, and offer the smallest useful next step. |
 | `commit-request` | User expresses bare commit intent while workflow changes may need committing, without specifying tool, message, file scope, handoff, or skip. | Treat it as confirmation to handle the commit gate using the workflow commit policy: resolve identity, check Lore, use Lore-first for context-rich commits, and fall back to normal git only when Lore is unavailable, inappropriate, or explicitly requested. |

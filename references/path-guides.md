@@ -82,6 +82,7 @@ check whether README.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/, and openspec
 identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
 identify relevant external-system adapters, schemas, fixtures, contract tests, docs, and conventions for this change
 identify the primary language of existing authoritative project docs
+check recent planning artifact changes and Candidate Changes for future-facing content not linked to an active OpenSpec change
 check git, OpenSpec, and Lore availability when relevant
 check grill-me and grill-with-docs availability when clarification may be needed
 ```
@@ -93,10 +94,24 @@ if baseline context is missing or too thin to judge desired behavior -> do a min
 if the change fits existing architecture, UI, test, deployment, and workflow conventions -> inherit them by default
 if the change affects architecture, data, security, deployment, shared UI, or workflow conventions -> ask one blocking impact question before proposing
 if the user explicitly asks for productization, DDD/TDD migration, maintainability refactoring, or product-grade architecture -> treat it as a scoped product-track refactoring change
+if planning artifacts contain future-facing change/spec content not linked to an active OpenSpec change -> ask the Planning Artifact Promotion question before implementing
 if the change adds or changes external knowledge -> classify it as known, provisional, or blocking
 if product intent is vague -> invoke grill-me with a change-scoped contract
 if project/domain context is the blocker -> invoke grill-with-docs with a change-scoped contract
 ```
+
+Planning Artifact Promotion question:
+
+```text
+I found planning document changes that look intended for the next spec but are not linked to an active OpenSpec change. Should I promote them into an OpenSpec proposal, keep them as Candidate Changes for later, commit/archive them as docs-only housekeeping, or treat them as background context for the current work?
+```
+
+Use this gate before implementation when `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
+`docs/architecture.md`, `docs/adr/`, `docs/proposals/`, or Candidate Changes describe desired
+behavior, next-slice direction, product-track decisions, design direction, architecture/security
+decisions, non-goals that affect implementation, or candidate changes. Do not treat these planning
+artifact changes as ordinary documentation sync unless the user explicitly says they are background
+context or documentation-only housekeeping.
 
 For next-slice selection, recommend a small number of change candidates and ask the single selection
 question that decides the next OpenSpec proposal. Do not invoke a visual companion, mockup flow, or
@@ -332,8 +347,8 @@ openspec/changes/<change-name>/tasks.md
 
 `proposal.md` explains why, what, and non-goals. `specs/` describe testable behavior, not
 implementation details. `design.md` records technical approach, constraints, risks, and open
-questions. `tasks.md` includes implementation, tests, docs, CI, and DDD/TDD tasks required by the
-selected build track.
+questions. `tasks.md` includes implementation, tests, docs, CI, durable docs closure work when
+relevant, and DDD/TDD tasks required by the selected build track.
 
 For greenfield projects, `design.md` must include a Technical Approach section before review. It
 must record confirmed choices, proposed defaults awaiting approval, and technical open questions for
@@ -360,6 +375,13 @@ fixtures, contract tests, runbooks, or authoritative project docs. Provisional d
 record the mock boundary, assumptions, non-goals, replacement trigger, and any domain-pattern
 assumptions. Specs describe behavior against the agreed boundary; they must not pretend unknown
 external behavior is confirmed.
+
+When a change is promoted from, covers, or is likely to complete future-facing content in durable
+project docs, add an explicit `tasks.md` item to run the Durable Docs Closure Audit before archive.
+Name the likely affected files when known. The task should say to convert completed planning notes
+to current state or completed facts, retain unfinished items as remaining backlog or Candidate
+Changes, and preserve raw-source or historical background without treating it as a current
+requirement.
 
 Do not implement after creating the change.
 
@@ -411,9 +433,29 @@ first-slice behaviors, explicit non-goals, test status, and known limitations. D
 or browser verification passed unless it actually ran and passed.
 
 Archive only after user verification passes. Before archiving, check tasks, tests/lint/build,
-README.md, PRD.md, CONTEXT.md, docs, specs, and unresolved open questions or ADRs. After archive
-verification, handle the commit gate with Lore-first policy, normal git only when Lore is
-unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
+README.md, PRD.md, CONTEXT.md, docs, specs, unresolved open questions or ADRs, and the Durable Docs
+Closure Audit. The audit is mandatory before archive, regardless of whether `tasks.md` included a
+docs task.
+
+Durable Docs Closure Audit:
+
+```text
+scan durable docs and active OpenSpec artifacts for future-facing content
+default command when files exist: rg -n "next|Next|recommended next|future|candidate|TBD|Open Questions|下一步|候选|后续" PRD.md CONTEXT.md SECURITY.md DESIGN.md docs/architecture.md docs/adr openspec/changes/<change-name>
+classify only matches relevant to the current change or touched durable docs
+completed by this change -> update durable docs to current state or completed fact
+still future scope -> explicitly retain as remaining backlog or Candidate Change
+raw source, historical ADR context, or background material -> preserve as historical/background, not a current requirement
+unclear and relevant -> ask the user before archive
+```
+
+Do not block archive on unrelated keyword matches, untouched historical ADR prose, archived change
+history, or clearly deferred backlog. Do block archive when relevant future-facing durable-doc
+content still reads as the next recommended step after the current change completed it, or when its
+status cannot be determined from artifacts.
+
+After archive verification, handle the commit gate with Lore-first policy, normal git only when Lore
+is unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
 
 For post-archive commits, use Lore when it is available and appropriate because the commit should
 preserve requirement, design, implementation, verification, and archive context. Use a normal git

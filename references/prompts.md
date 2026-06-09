@@ -89,7 +89,8 @@ When resuming a previous workflow, inspect current artifacts before choosing a s
 ```text
 check git status and current branch
 check repository-local git author/committer config and recent commit identities when commits may be needed
-read PRD.md, CONTEXT.md, SECURITY.md, docs/, and docs/ai-tools.md when present
+read PRD.md, CONTEXT.md, SECURITY.md, DESIGN.md, docs/, docs/proposals/, docs/ai-tools.md, and docs/adr/ when present
+check recent planning artifact changes from git diff or recent commits when they may describe the next spec
 check raw sources already recorded in PRD.md
 inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
 inspect active change proposal.md, specs/, design.md, and tasks.md when present
@@ -97,6 +98,7 @@ check recent commits when deciding whether a baseline or archived change has alr
 use active changes in openspec/changes/ as the primary change-state signal
 if multiple active changes exist, list them with detected gate or phase and ask me which one to continue
 also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
+if planning artifacts have uncommitted or unpromoted future-facing requirements, next-slice notes, first-slice direction, design direction, architecture/security decisions, product-track decisions, or Candidate Changes not linked to an active OpenSpec change, ask whether to promote them into OpenSpec, keep/defer them as Candidate Changes, commit/archive them as docs-only housekeeping, or treat them as background context before implementing
 if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and handle the commit gate with Lore-first policy; offer normal git only when Lore is unavailable, inappropriate, or explicitly requested
 continue from the earliest incomplete gate
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
@@ -106,6 +108,19 @@ When I discuss a feature idea but it is not ready for a formal OpenSpec change, 
 lightweight candidate in the existing candidate artifact, or in `PRD.md` under `Candidate Changes`.
 Keep only a short label, one-sentence intent, status, blocking question, and OpenSpec change link
 when promoted.
+
+When planning artifacts already contain content that looks intended for the next spec, do not
+implement from it directly. Planning artifacts include `PRD.md`, `CONTEXT.md`, `DESIGN.md`,
+`SECURITY.md`, `docs/architecture.md`, `docs/adr/`, `docs/proposals/`, and Candidate Changes. Ask
+one Planning Artifact Promotion question:
+
+```text
+I found planning document changes that look intended for the next spec but are not linked to an active OpenSpec change. Should I promote them into an OpenSpec proposal, keep them as Candidate Changes for later, commit/archive them as docs-only housekeeping, or treat them as background context for the current work?
+```
+
+Only continue to implementation when the planning content is already represented by the active
+OpenSpec change, the user chooses background/documentation-only housekeeping, or the user explicitly
+confirms a reviewed OpenSpec proposal path.
 
 If I switch feature focus within the same session, record the previous focus state before continuing:
 active, deferred, abandoned, or promoted to an OpenSpec change. Then name the new focus and do not
@@ -228,6 +243,7 @@ Run lightweight change preflight first:
 - identify existing architecture, stack, UI, test, deployment, and workflow conventions relevant to the change
 - identify relevant external-system adapters, schemas, fixtures, contract tests, docs, and conventions for this change
 - identify the primary language of existing authoritative project docs and use it for updated artifacts
+- check recent planning artifact changes and Candidate Changes for future-facing content not linked to an active OpenSpec change
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available when relevant
 
 Do not run the 0-to-1 skeleton flow.
@@ -239,6 +255,9 @@ If baseline context is missing or too thin to judge desired behavior, create or 
 minimum adoption baseline first. If the change follows existing conventions, inherit them and record
 that in design.md. If the change affects architecture, data, security, deployment, shared UI, or
 workflow conventions, ask one blocking impact question before creating an OpenSpec proposal.
+If planning artifacts contain future-facing requirements, next-slice notes, design direction,
+architecture/security decisions, product-track decisions, or Candidate Changes not linked to an
+active OpenSpec change, ask the Planning Artifact Promotion question before implementation.
 If the change adds or changes external knowledge, classify it as known, provisional, or blocking:
 inherit existing adapters/docs/tests when known, ask for docs/examples/access details when blocking,
 or ask whether to proceed with an explicit mock boundary.
@@ -399,7 +418,8 @@ Confirmed: enter OpenSpec propose.
 
 Create the first OpenSpec change from PRD.md, CONTEXT.md, docs/, and the grill results.
 Write proposal.md, specs/, design.md, and tasks.md.
-Include implementation, tests, docs, CI, and DDD/TDD tasks required by the selected build track.
+Include implementation, tests, docs, CI, durable docs closure work when relevant, and DDD/TDD tasks
+required by the selected build track.
 In design.md, include Technical Approach with confirmed choices, proposed defaults awaiting approval,
 and technical open questions for stack/runtime, source layout, persistence, sensitive-data handling,
 integrations, basic UI direction, local verification, and deployment when relevant. For existing
@@ -417,6 +437,9 @@ For any path, if the change depends on external knowledge, design.md must record
 provisional, or blocking. Known dependencies should reference docs, adapters, schemas, fixtures, or
 contract tests. Provisional dependencies must record the mock boundary, assumptions, non-goals,
 replacement trigger, and any domain-pattern assumptions.
+If this change is promoted from or completes future-facing content in durable project docs, add a
+tasks.md item to run the Durable Docs Closure Audit before archive and name likely affected files
+when known.
 Do not implement.
 ```
 
@@ -474,8 +497,15 @@ If local browser automation, network, sandbox, or server issues block verificati
 ## Sync and Archive
 
 ```text
-Before archiving, check tasks, tests/lint/build, README.md, PRD.md, CONTEXT.md, docs/, openspec/specs/,
-and unresolved open questions or ADRs.
+Before archiving, check tasks, tests/lint/build, README.md, PRD.md, CONTEXT.md, docs/,
+openspec/specs/, unresolved open questions or ADRs, and the Durable Docs Closure Audit.
+Run the audit even when tasks.md says docs are updated. Scan durable docs and active OpenSpec
+artifacts for future-facing terms such as next, recommended next, future, candidate, TBD, Open
+Questions, 下一步, 候选, and 后续. Classify only matches relevant to the current change or touched
+durable docs: completed by this change -> current state/completed fact; still future scope ->
+remaining backlog/Candidate Change; raw source or historical/background material -> not a current
+requirement; unclear and relevant -> ask me before archive. Do not block archive on unrelated
+keyword matches.
 
 If checks pass and user verification passed, sync specs and archive the change.
 If the archive tool creates a date-stamped directory that differs from the session date, report it and keep the tool-generated name.

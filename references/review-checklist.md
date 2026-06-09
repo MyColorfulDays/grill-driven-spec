@@ -5,6 +5,7 @@ Use after an OpenSpec change is created and before development begins.
 ## Proposal
 
 - Does `proposal.md` match `PRD.md`?
+- Are future-facing planning artifact changes either represented by this OpenSpec change, recorded/deferred as Candidate Changes, committed/archived as docs-only housekeeping, or explicitly treated as background context?
 - Does it explain why the change exists?
 - Does it clearly say what is in scope?
 - Does it clearly say what is out of scope?
@@ -46,12 +47,22 @@ Use after an OpenSpec change is created and before development begins.
 - For product-track builds, do core behavior test tasks appear before related implementation tasks?
 - If TDD-first is skipped or deferred, is the reason explicit in `tasks.md` or `design.md`?
 - Are docs updates included?
+- If the change covers future-facing content in PRD, CONTEXT, SECURITY, DESIGN, architecture docs, ADRs, or active OpenSpec artifacts, does `tasks.md` include a Durable Docs Closure Audit task before archive?
 - Is CI included or explicitly deferred?
 - Are PRD, CONTEXT, architecture, or ADR updates included when relevant?
 
 ## Decision
 
 If review passes, ask user to confirm development.
+
+If planning artifacts contain future-facing requirements, next-slice notes, first-slice direction,
+design direction, architecture/security decisions, product-track decisions, non-goals that affect
+implementation, or Candidate Changes not linked to an active OpenSpec change, fail review and ask
+the Planning Artifact Promotion question before development.
+
+If planning artifacts are represented by the active OpenSpec change but `tasks.md` does not schedule
+the durable docs closure work needed after implementation, fail review and add that task before
+asking for development confirmation.
 
 If greenfield review fails because the build track is missing, ask whether this is a throwaway
 prototype or product-track build and record the answer in `PRD.md`. If greenfield review fails
