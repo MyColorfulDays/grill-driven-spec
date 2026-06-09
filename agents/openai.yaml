@@ -1,3 +1,3 @@
 display_name: Grill Driven Spec
 short_description: Clarify projects into OpenSpec-ready specs, choose prototype/product-track direction, and handle workflow commits with Lore-first policy.
-default_prompt: Use grill-driven-spec to turn my vague project idea into PRD, docs, a prototype/product-track decision, and an OpenSpec change without jumping into code. When archived workflow changes need committing, use the Lore-first commit gate policy.
+default_prompt: Use grill-driven-spec to turn my vague project idea into PRD, docs, a prototype/product-track decision, and an OpenSpec change without jumping into code. When archived workflow changes need committing, use the Lore-first commit readiness policy.

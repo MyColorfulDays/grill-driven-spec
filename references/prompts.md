@@ -11,9 +11,9 @@ Existing Project Change -> implementation exists, baseline is enough to orient t
 Next-slice selection -> an initial OpenSpec change is complete or shipped and the user asks what to improve next
 ```
 
-If signals conflict, explain the classification briefly and ask before crossing a major gate.
+If signals conflict, explain the classification briefly and ask before entering a major new stage.
 
-On first use in a new agent environment, run bootstrap before crossing the first workflow gate.
+On first use in a new agent environment, run bootstrap before the first workflow readiness check.
 Report dependency status only as much as needed to explain blockers:
 
 ```text
@@ -31,35 +31,38 @@ Use the resolved project language for all user-visible workflow replies. For a n
 usually the user's initial request language; for an existing project, inherit the language of the
 authoritative project docs. Treat English prompt text in this file as semantic guidance, not output
 to paste verbatim. Reply naturally in the project language for phase transitions, status updates,
-validation summaries, gate prompts, confirmation questions, verification instructions, and archive
+validation summaries, readiness prompts, confirmation questions, verification instructions, and archive
 reports. Preserve exact command names, file names, change names, URLs, and error identifiers.
 
-When grill-driven-spec is active, keep it as the owner of workflow path, gates, artifacts, and
+When grill-driven-spec is active, keep it as the owner of workflow path, readiness checks, artifacts, and
 OpenSpec lifecycle. Other skills may be used only as bounded helpers with a narrow contract, and
 must return findings to PRD.md, CONTEXT.md, docs/, or the active OpenSpec change. Do not let a helper
-skill start its own end-to-end workflow, introduce unrelated gates, or create parallel specs unless I
+skill start its own end-to-end workflow, introduce unrelated readiness checks, or create parallel specs unless I
 explicitly ask for that separate workflow.
 
 Route every user turn before answering. Treat the route as one of:
 
 ```text
-gate-answer -> absorb the answer, update or prepare artifacts, and reassess the gate
-gate-clarification -> explain the gate, simplify the choice, and ask one clearer version
+readiness-answer -> absorb the answer, update or prepare artifacts, and reassess readiness
+readiness-clarification -> explain the readiness question, simplify the choice, and ask one clearer version
 productive-tangent -> answer briefly, capture durable facts when needed, then steer back
-new-focus -> ask whether to switch focus, record as Candidate Change, or return to the current gate
+new-focus -> ask whether to switch focus, record as Candidate Change, or return to the current readiness question
 meta-process -> explain or adjust the workflow, then offer the smallest useful next step
-commit-request -> bare commit intent means handle the commit gate with Lore-first policy
+commit-request -> bare commit intent means handle commit readiness with Lore-first policy
 ```
 
 Use a coach/project-manager style: allow useful detours, but do not let them erase the active focus.
-Any tangent must end by returning to the current gate, recording a candidate, asking for focus-switch
-confirmation, updating artifacts and reassessing the gate, or pausing by explicit user request.
+Any tangent must end by returning to the current readiness question, recording a candidate, asking
+for focus-switch confirmation, updating artifacts and reassessing readiness, or pausing by explicit
+user request.
 
-If two consecutive turns do not advance, revise, or explicitly defer the active gate, give a compact
-checkpoint: active focus, current gate, what the side discussion changed, and the single next
+If two consecutive turns do not advance, revise, or explicitly defer the active readiness question,
+give a compact checkpoint: active focus, what needs confirmation before the next stage, what the
+side discussion changed, and the single next
 question. Also checkpoint when I say continue/next, when the thread has become long, when I raise a
-new direction without choosing a focus action, before crossing a major gate, or after interruption or
-context compaction. End workflow replies with a concrete steering move instead of a vague invitation.
+new direction without choosing a focus action, before entering a major new stage, or after
+interruption or context compaction. End workflow replies with a concrete steering move instead of a
+vague invitation.
 
 Before creating any git or Lore commit, resolve the intended author and committer identity. Check
 repository-local `user.name` / `user.email`, inspect recent commit authors and committers, and do
@@ -69,7 +72,7 @@ ask me before committing. If the project has mixed legitimate identities, ask wh
 Remember that Lore still inherits git author/committer identity unless overridden.
 
 When I express bare commit intent without specifying a commit tool, message, file scope, handoff, or
-skip decision, treat that as confirmation to handle the current commit gate using this workflow's
+skip decision, treat that as confirmation to handle current commit readiness using this workflow's
 commit policy, not as a request for ordinary `git commit`. For context-rich workflow commits,
 especially after OpenSpec archive, check Lore availability and use `lore commit` by default. Use
 normal git only when Lore is unavailable, inappropriate for the current environment, or I explicitly
@@ -96,11 +99,11 @@ inspect openspec/, openspec/specs/, openspec/changes/, and archived changes
 inspect active change proposal.md, specs/, design.md, and tasks.md when present
 check recent commits when deciding whether a baseline or archived change has already been committed
 use active changes in openspec/changes/ as the primary change-state signal
-if multiple active changes exist, list them with detected gate or phase and ask me which one to continue
+if multiple active changes exist, list them with detected readiness state or phase and ask me which one to continue
 also list lightweight candidate changes from PRD.md or the existing candidate artifact when present
 if planning artifacts have uncommitted or unpromoted future-facing requirements, next-slice notes, first-slice direction, design direction, architecture/security decisions, product-track decisions, or Candidate Changes not linked to an active OpenSpec change, ask whether to promote them into OpenSpec, keep/defer them as Candidate Changes, commit/archive them as docs-only housekeeping, or treat them as background context before implementing
-if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and handle the commit gate with Lore-first policy; offer normal git only when Lore is unavailable, inappropriate, or explicitly requested
-continue from the earliest incomplete gate
+if a change appears archived and synced but related files are still uncommitted, checkpoint the archive and handle commit readiness with Lore-first policy; offer normal git only when Lore is unavailable, inappropriate, or explicitly requested
+continue from the earliest incomplete readiness check
 do not recommend a new change while an unfinished active change exists unless I explicitly defer or abandon it
 ```
 
@@ -135,28 +138,29 @@ Use Progressive Maturity lightly:
 For 0-to-1 work, choose the build track before deciding engineering discipline:
 throwaway prototype or product-track build. Record the selected track in PRD.md. Product-track builds
 default to DDD-lite boundaries and TDD-first behavior tasks. Throwaway prototypes may skip those
-gates when shortcuts are recorded as limitations. Prefer first slice / first product slice / first
+readiness checks when shortcuts are recorded as limitations. Prefer first slice / first product slice / first
 testable slice language; use MVP when I use that term or when discussing scope trimming.
 
 Before using a maturity helper, state its trigger, narrow question, writeback target, stop condition,
 and fallback. If the helper/tool/site/private skill is unavailable, record the limitation and fall
 back to project artifacts or agent-native reasoning instead of stopping by default.
 For Design Maturity, visual companion tools may be used when they improve UI or interaction
-discussion. Keep the current Driving phase and gate clear, use visuals only for a narrow design
+discussion. Keep the current Driving phase and readiness question clear, use visuals only for a narrow design
 question, accept text replies equally to visual clicks, mirror choices back into chat, and write
 decisions to DESIGN.md or the active OpenSpec design.md. If that does not hold, fall back to chat,
 screenshots, existing UI, or agent-native UI review.
 
 Helper skills may use lightweight helper-specific prompts, browser consent, or visual companion
 handoffs when they genuinely improve the conversation. Keep the handoff bounded: say which current
-Driving gate it supports, what decision is being clarified, and reconnect the user's next reply to
-that gate. Do not leave a standalone helper prompt unexplained, and do not require visual clicks when
-a normal chat reply answers the question.
+Driving phase and readiness question it supports, what decision is being clarified, and reconnect
+the user's next reply to that readiness question. Do not leave a standalone helper prompt
+unexplained, and do not require visual clicks when a normal chat reply answers the question.
 
 If the current turn pauses for helper consent, browser consent, screenshot setup, or a visual board,
 still send a normal workflow reply first or in the same turn. It must include the active focus, the
-current Driving gate, and one concrete question the user can answer in chat. The visual/browser
-choice can be offered as optional support, but it is not a substitute for the next gate question.
+current Driving phase, the readiness question, and one concrete question the user can answer in
+chat. The visual/browser choice can be offered as optional support, but it is not a substitute for
+the next readiness question.
 
 For a UI/interaction optimization request in an existing project, prefer this stopping shape after
 preflight:
@@ -164,7 +168,7 @@ preflight:
 ```markdown
 # Driving: UI and interaction optimization
 
-Current gate: decide which user-facing outcome this change should optimize before creating an OpenSpec proposal.
+Before the next stage: decide which user-facing outcome this change should optimize before creating an OpenSpec proposal.
 
 I found this is a design-maturity change in an existing project, so I will inherit the current stack
 and UI conventions unless you want to change them. Which outcome should this first slice target:
@@ -177,21 +181,21 @@ but adapt the labels and descriptive text to the project language:
 
 For the first assistant response in a new conversation, make the heading and first sentence
 title-friendly. If my message starts with a command such as `/grill-driven-spec`, restate the actual
-project, adoption, next-slice, or change focus in natural language before asking the first gate
+project, adoption, next-slice, or change focus in natural language before asking the first readiness
 question. Do not use only a generic tool name, stage number, or command echo as the first visible
 topic.
 
 ```markdown
 # Driving: <short phase or focus>
 
-Current gate: <one sentence describing what must happen before moving on>.
+Before the next stage: <one sentence describing what must be confirmed before moving on>.
 ```
 
 Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
-verification, and archive. Keep `Driving` as the stable workflow label, but labels like `Current
-gate` should be translated or adapted when the project language is not English.
+verification, and archive. Keep `Driving` as the stable workflow label, but labels like `Before the
+next stage` should be translated or adapted when the project language is not English.
 Tool-generated labels such as `Implementing: <change-name>` may appear, but they do not replace the
-`Driving` heading and current gate.
+`Driving` heading and current readiness question.
 
 ## Adopt Existing Project
 
@@ -222,7 +226,7 @@ SECURITY.md, docs/architecture.md, docs/ai-tools.md, docs/adr/README.md, and doc
 Create UBIQUITOUS_LANGUAGE.md only when domain terminology is already complex enough to need a
 dedicated glossary, and link to it from CONTEXT.md.
 
-Use Observed, Confirmed, and Open Questions language where useful.
+Use localized equivalents of Observed, Confirmed, and Open Questions language where useful.
 After the baseline is in place, ask me one blocking adoption question at a time to separate desired
 behavior from legacy or accidental behavior.
 Stop adoption once baseline docs are sufficient, observed and confirmed behavior are separated, and
@@ -266,7 +270,7 @@ If I ask what to build next, recommend a small number of change candidates and a
 selection question that decides the next OpenSpec proposal. Do not invoke a visual companion,
 mockup flow, or broad brainstorming flow just to choose the next slice.
 After I select a recommended slice, continue with change-scoped clarification and the OpenSpec
-proposal gate. Do not restart into a separate brainstorming flow before proposing.
+proposal readiness check. Do not restart into a separate brainstorming flow before proposing.
 
 If product intent is vague, invoke grill-me with a change-scoped contract. If project/domain context
 is the blocker, invoke grill-with-docs with a change-scoped contract. Ask only questions needed to
@@ -288,6 +292,7 @@ Run preflight first:
 - scan for existing raw source materials such as notes, drafts, PDFs, docs, screenshots, exports, or meeting summaries
 - check whether this looks like an empty or unstructured 0-to-1 folder, not an already implemented project
 - use the primary language of my initial project request for generated artifacts unless I specify another language
+- localize generated document titles, section headings, status labels, placeholders, and explanatory prose; do not copy English skeleton headings such as Raw Idea, Open Questions, None yet, or TBD into non-English projects
 - check whether grill-me, grill-with-docs, OpenSpec, git, and Lore are available
 - verify dependency identity before installing anything: grill-me and grill-with-docs come from https://github.com/mattpocock/skills, OpenSpec comes from https://github.com/Fission-AI/OpenSpec, Lore comes from https://github.com/Ian-stetsenko/lore-protocol, and git is the system Git CLI
 - initialize git if available, this is a 0-to-1 folder, and this directory is not already inside a git repository
@@ -300,15 +305,15 @@ Run preflight first:
 - do not guess package names or install similarly named tools when a dependency is missing
 - use only the documented dependency install sources, and ask the user before substituting another source
 - do not delete, move, rename, overwrite, or treat raw source materials as confirmed requirements without explicit user approval
-- if raw source materials exist, list their paths in PRD.md under Raw Sources before grilling
-- only copy clearly stated facts into PRD.md; put interpretations, conflicts, or suspected requirements under Open Questions
+- if raw source materials exist, list their paths in PRD.md under the localized Raw Sources section before grilling
+- only copy clearly stated facts into PRD.md; put interpretations, conflicts, or suspected requirements under localized open questions
 - do not ask visual companion, stack, design, grill, or product follow-up questions before the skeleton is in place
 
 Create README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, docs/inbox/README.md,
 docs/architecture.md, docs/adr/README.md, docs/diagrams/README.md, and docs/ai-tools.md.
 
 README.md should contain only a single H1 using the current directory name.
-Keep all other files thin. Use TBD for unknown stack, commands, architecture, or decisions.
+Keep all other files thin. Use a localized placeholder such as TBD in English projects or 待定 in Chinese projects for unknown stack, commands, architecture, or decisions.
 Do not write business code, create business directories, invent features, or choose a stack.
 Do not create UBIQUITOUS_LANGUAGE.md unless the user explicitly asks for DDD-oriented documentation.
 Do not create an OpenSpec change.
@@ -334,7 +339,7 @@ Invoke grill-me with this contract:
 - primary write target: PRD.md
 - stop condition: build track, first-slice boundary, non-goals, and testable core behavior are clear
 - constraints: do not create OpenSpec changes, choose a stack, write business code, or turn unconfirmed assumptions into requirements
-- domain pattern awareness: when a mature domain or external system is mentioned, briefly name the likely pattern only if it helps the first slice, ask at most one blocking question, and record unconfirmed pattern assumptions as Open Questions rather than confirmed requirements
+- domain pattern awareness: when a mature domain or external system is mentioned, briefly name the likely pattern only if it helps the first slice, ask at most one blocking question, and record unconfirmed pattern assumptions as localized open questions rather than confirmed requirements
 
 After each important answer, update PRD.md.
 Put uncertain content under open questions. Put confirmed exclusions under non-goals.
@@ -464,14 +469,14 @@ projects, do not fail review on inherited stack or UI choices unless the change 
 data, security, deployment, source layout, local verification, shared UI conventions, or user
 workflow conventions.
 If unclear, return to grill and update the relevant files. Do not code.
-If stack/runtime is missing for a greenfield project, the next gate is a technical readiness
+If stack/runtime is missing for a greenfield project, the next readiness check is a technical readiness
 question with a recommended stack, not a development confirmation.
-If required external knowledge is blocking, the next gate is an integration readiness question: ask
+If required external knowledge is blocking, the next readiness check is an integration readiness question: ask
 for docs/examples/access details, identify the existing project contract to inherit, or ask whether
 to proceed with a provisional mock boundary and documented assumptions.
-If proposal.md, specs, design.md, tasks.md, or user-facing gate text use the wrong language, fix the
+If proposal.md, specs, design.md, tasks.md, or user-facing readiness text use the wrong language, fix the
 touched artifact sections before asking for development confirmation.
-When reporting the review result, summarize validation and the next gate naturally in the project
+When reporting the review result, summarize validation and the next readiness question naturally in the project
 language. Keep command names, change names, and file names such as openspec validate, tasks.md, and
 design.md unchanged.
 ```
@@ -517,13 +522,13 @@ keyword matches.
 
 If checks pass and user verification passed, sync specs and archive the change.
 If the archive tool creates a date-stamped directory that differs from the session date, report it and keep the tool-generated name.
-After archive verification, check git status and handle the commit gate before calling the workflow
+After archive verification, check git status and handle commit readiness before calling the workflow
 fully complete. If relevant changes are uncommitted, check Lore and create a Lore commit when Lore is
-available and appropriate. Treat the gate as handled only when a Lore commit is created, a normal git
+available and appropriate. Treat commit readiness as handled only when a Lore commit is created, a normal git
 commit is created because Lore is unavailable/inappropriate or explicitly requested, I explicitly say
 I will handle it, or I intentionally skip it. Resolve author and committer identity before creating
 either Lore or normal git commits. If I express bare commit intent after archive, treat that as
-confirmation to handle the commit gate with the Lore-first policy, not as approval to invent
+confirmation to handle commit readiness with the Lore-first policy, not as approval to invent
 identity or use a normal git commit when Lore is available and appropriate. If using normal git,
 pass the resolved author and committer explicitly instead of relying on global config.
 ```

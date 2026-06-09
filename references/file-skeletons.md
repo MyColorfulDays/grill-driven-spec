@@ -6,6 +6,38 @@ Write generated artifact content in the project's primary language. For new proj
 primary language of the user's initial request. Keep file names, commands, code identifiers,
 dependency names, and workflow/tool names in their established form.
 
+The Markdown snippets below are semantic templates, not text to copy verbatim. Localize document
+titles, section headings, placeholder words, status labels, and explanatory prose before writing
+files. Do not leave `Raw Idea`, `Open Questions`, `None yet`, or `TBD` in a non-English project
+unless the existing project already uses those labels.
+
+For Simplified Chinese projects, use this default localization unless the project has established
+different terms:
+
+| English template label | Simplified Chinese |
+|---|---|
+| PRD | 产品需求文档 |
+| Raw Idea | 原始想法 |
+| Raw Sources | 原始资料 |
+| One-Sentence Idea | 一句话概述 |
+| Confirmed Requirements | 已确认需求 |
+| Open Questions | 待确认问题 |
+| Non-Goals | 非目标 |
+| Build Track | 构建路线 |
+| First-Slice Direction | 首个切片方向 |
+| None yet. | 暂无。 |
+| TBD | 待定 |
+| Project Context | 项目上下文 |
+| Domain Terms | 领域术语 |
+| Business Rules | 业务规则 |
+| Security | 安全 |
+| Architecture | 架构 |
+| Requirements Inbox | 需求收件箱 |
+| Architecture Decision Records | 架构决策记录 |
+| Diagrams | 图表 |
+| AI Tool Setup | AI 工具设置 |
+| Agent Guide | Agent 指南 |
+
 ## README.md
 
 ```markdown
@@ -74,7 +106,7 @@ Follow the project documents before writing code:
 - Do not invent product scope, stack, architecture, or business rules.
 - Keep unknowns explicit as TBD or Open Questions.
 - Before changing security-sensitive behavior, read SECURITY.md and keep unknown security decisions explicit.
-- After Grill Driven Spec or OpenSpec work is synced or archived, bare commit intent means handle the workflow commit gate, not ordinary git commit by default.
+- After Grill Driven Spec or OpenSpec work is synced or archived, bare commit intent means handle workflow commit readiness, not ordinary git commit by default.
 - For context-rich workflow commits, especially post-archive commits, use Lore first when available and appropriate; use normal git only when Lore is unavailable, inappropriate for the environment, or explicitly requested.
 - Before creating either Lore or normal git commits, resolve author and committer identity from explicit user input, confirmed repository-local config, or a single clear recent project identity; do not guess or silently use a mismatched machine-global identity.
 

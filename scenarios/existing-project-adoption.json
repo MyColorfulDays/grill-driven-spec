@@ -17,7 +17,7 @@
     "preserve existing docs and refresh only missing, clearly thin, or explicitly requested guidance files",
     "label current code behavior as observed until the user confirms it is desired behavior",
     "ask one blocking alignment question at a time after the baseline is understood",
-    "answer adoption side questions, record durable facts or open questions, and return to the active adoption gate",
+    "answer adoption side questions, record durable facts or open questions, and return to the active adoption readiness question",
     "initialize or verify OpenSpec only after the baseline is clear enough to avoid encoding accidental behavior as desired behavior"
   ],
   "forbiddenActions": [

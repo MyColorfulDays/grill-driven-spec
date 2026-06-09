@@ -68,7 +68,7 @@ If planning artifacts are represented by the active OpenSpec change but `tasks.m
 the durable docs closure work needed after implementation, fail review and add that task before
 asking for development confirmation.
 
-If `proposal.md`, specs, `design.md`, `tasks.md`, or user-facing gate text use a different language
+If `proposal.md`, specs, `design.md`, `tasks.md`, or user-facing readiness text use a different language
 from the resolved project artifact language, fail review and fix the touched artifact sections
 before asking for development confirmation. Do not fail review on quoted source material, code
 identifiers, file names, commands, or established workflow terms.

@@ -1,6 +1,6 @@
 # Grill Driven Spec Path Guides
 
-Use this file for path-specific execution details. `SKILL.md` keeps the hard rules and gate order;
+Use this file for path-specific execution details. `SKILL.md` keeps the hard rules and readiness order;
 `references/state-machine.md` decides where the workflow is; this file says what to do inside each
 path.
 
@@ -46,8 +46,8 @@ docs/adr/README.md
 docs/diagrams/README.md
 ```
 
-Use `Observed`, `Confirmed`, and `Open Questions` language. Put current code facts in observed
-sections, and move them to confirmed requirements only after user confirmation.
+Use localized equivalents of Observed, Confirmed, and Open Questions language. Put current code
+facts in observed sections, and move them to confirmed requirements only after user confirmation.
 
 Stop adoption when:
 
@@ -55,10 +55,10 @@ Stop adoption when:
 baseline docs are thin but sufficient to orient future work
 observed behavior and confirmed desired behavior are clearly separated
 the user has confirmed the smallest first change worth proposing, or confirmed there is no immediate change
-remaining unknowns can be carried as Open Questions without blocking future change review
+remaining unknowns can be carried as localized open questions without blocking future change review
 ```
 
-Recommended gate prompt:
+Recommended readiness prompt:
 
 ```text
 I have inventoried the existing project and created or refreshed only thin guidance docs.
@@ -106,7 +106,7 @@ Planning Artifact Promotion question:
 I found planning document changes that look intended for the next spec but are not linked to an active OpenSpec change. Should I promote them into an OpenSpec proposal, keep them as Candidate Changes for later, commit/archive them as docs-only housekeeping, or treat them as background context for the current work?
 ```
 
-Use this gate before implementation when `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
+Use this readiness check before implementation when `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
 `docs/architecture.md`, `docs/adr/`, `docs/proposals/`, or Candidate Changes describe desired
 behavior, next-slice direction, product-track decisions, design direction, architecture/security
 decisions, non-goals that affect implementation, or candidate changes. Do not treat these planning
@@ -135,7 +135,7 @@ productization, DDD/TDD migration, maintainability refactoring, or product-grade
 that refactor its own existing-project change with scoped behavior, compatibility, migration, and
 test strategy.
 
-Recommended gate prompt:
+Recommended readiness prompt:
 
 ```text
 I have checked the existing project context for this change.
@@ -171,7 +171,7 @@ If the folder contains meaningful implementation artifacts, pause and recommend 
 Adoption instead of overwriting the project with a new skeleton.
 
 If git is available and this 0-to-1 folder is not already inside a git worktree, initialize git
-before the baseline commit gate. If a parent git worktree already owns the folder, use that
+before baseline commit readiness. If a parent git worktree already owns the folder, use that
 repository and do not create a nested repository. If git is unavailable, continue with skeleton
 creation when the filesystem is writable, record the limitation in `docs/ai-tools.md`, and mark the
 baseline commit as unavailable or user-handled.
@@ -181,9 +181,9 @@ Treat raw materials as inbox sources:
 ```text
 do not delete, move, rename, summarize destructively, or overwrite user files without explicit approval
 do not treat raw materials as confirmed requirements
-record their paths in PRD.md under Raw Sources, or in Open Questions when relevance is unclear
+record their paths in PRD.md under the localized Raw Sources section, or in localized open questions when relevance is unclear
 distill only clearly stated facts into PRD.md
-keep uncertain interpretations under Open Questions
+keep uncertain interpretations under localized open questions
 ask the user to confirm important requirements before marking them confirmed
 ```
 
@@ -203,7 +203,7 @@ docs/ai-tools.md
 ```
 
 README.md should contain only a single H1 using the current directory name. Keep all other files
-thin. Use `TBD` for unknown commands, stack, architecture, or decisions. Do not invent product
+thin. Use a localized placeholder such as `TBD` in English projects or `待定` in Chinese projects for unknown commands, stack, architecture, or decisions. Do not invent product
 scope, features, stack, business rules, architecture, personas, or implementation directories.
 
 After the Stage 0 skeleton is created, create an initial baseline commit for generated or refreshed
@@ -211,7 +211,7 @@ workflow skeleton files when git is available and an allowed author/committer id
 Run commit identity preflight first. Missing Lore must not block Stage 0 or Stage 1.
 
 If no allowed author/committer identity is available, do not commit and do not invent one. Stop at
-the commit identity gate after creating the skeleton, ask for a complete `Name <email>` pair or an
+commit identity readiness after creating the skeleton, ask for a complete `Name <email>` pair or an
 explicit user handoff, and keep product grilling blocked only if `grill-me` is unavailable.
 
 After Stage 0, choose the 0-to-1 build track before product, stack, or implementation clarification
@@ -233,7 +233,7 @@ throwaway prototype -> keep the first slice fast, record shortcuts as limitation
 product-track build -> default to DDD-lite boundaries, TDD-first behavior tasks, and source/test layout that can grow
 ```
 
-Recommended gate prompt:
+Recommended readiness prompt:
 
 ```text
 Initial files are in place. The PRD is still too thin for an OpenSpec change.
@@ -427,11 +427,11 @@ If required external knowledge is blocking, ask for docs/examples/access details
 existing project contract to inherit, or ask whether to proceed with a provisional mock boundary and
 documented assumptions. Do not ask for development confirmation yet.
 
-If `proposal.md`, `design.md`, `tasks.md`, specs, or user-facing gate text drift into the wrong
+If `proposal.md`, `design.md`, `tasks.md`, specs, or user-facing readiness text drift into the wrong
 language, fail review and fix the touched artifact sections before asking for development
 confirmation. Do not rewrite unrelated historical docs solely to normalize language.
 
-If review fails, return to the relevant grill/context gate and ask one blocking question. If review
+If review fails, return to the relevant grill/context readiness check and ask one blocking question. If review
 passes, ask the user to confirm development.
 
 ## Implement, Verify, Sync, and Archive
@@ -471,13 +471,13 @@ history, or clearly deferred backlog. Do block archive when relevant future-faci
 content still reads as the next recommended step after the current change completed it, or when its
 status cannot be determined from artifacts.
 
-After archive verification, handle the commit gate with Lore-first policy, normal git only when Lore
+After archive verification, handle commit readiness with Lore-first policy, normal git only when Lore
 is unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
 
 For post-archive commits, use Lore when it is available and appropriate because the commit should
 preserve requirement, design, implementation, verification, and archive context. Use a normal git
 commit only when Lore is unavailable, inappropriate for the current environment, or explicitly
-requested by the user. Bare commit intent is enough to handle the commit gate, but not enough to
+requested by the user. Bare commit intent is enough to handle commit readiness, but not enough to
 downgrade from Lore to normal git. In all cases, resolve author and committer from allowed evidence
 before running a commit command. Do not infer or fabricate identity; if the identity is missing or
 ambiguous, ask for the complete `Name <email>` pair.

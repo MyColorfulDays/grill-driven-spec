@@ -19,10 +19,9 @@ Each scenario JSON file uses this shape:
   "prompt": "Representative user request",
   "expectedActions": ["Actions the agent should take"],
   "forbiddenActions": ["Actions the agent must not take"],
-  "completionSignals": ["Evidence that the scenario reached the intended gate"]
+  "completionSignals": ["Evidence that the scenario reached the intended readiness check"]
 }
 ```
 
 Keep scenario entries small and behavior-oriented. Do not encode implementation details unless they
-are part of a gate, safety rule, or artifact contract.
-
+are part of a readiness check, safety rule, or artifact contract.

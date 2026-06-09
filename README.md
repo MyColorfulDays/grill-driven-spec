@@ -55,7 +55,7 @@ Idea or requested change
   -> review before development
   -> implement after confirmation
   -> user verifies
-  -> sync, archive, and handle commit gate with Lore-first policy
+  -> sync, archive, and handle commit readiness with Lore-first policy
 ```
 
 The workflow supports three common starts:
@@ -98,7 +98,7 @@ root unless that is the confirmed stack or project convention.
 
 ## Full Workflow
 
-The full flow has explicit gates:
+The full flow has explicit readiness checks:
 
 1. Run preflight and seed the project skeleton, or inventory the existing project.
 2. Clarify product intent with `grill-me`.
@@ -109,7 +109,7 @@ The full flow has explicit gates:
 7. Implement and test after user confirmation.
 8. Ask the user to verify the core flow.
 9. Sync specs and archive after verification passes.
-10. Handle the commit gate with Lore-first policy, normal git only when Lore is unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
+10. Handle commit readiness with Lore-first policy, normal git only when Lore is unavailable/inappropriate or explicitly requested, user handoff, or explicit skip.
 
 Before development, the agent checks whether the first slice has enough implementation context. For
 greenfield projects, stack/runtime, source layout, persistence, sensitive-data handling, broad UI
@@ -144,7 +144,7 @@ The workflow must not:
 
 Installing this skill does not automatically install every dependency it composes.
 
-Before crossing workflow gates, the agent should verify:
+Before workflow readiness checks, the agent should verify:
 
 - `git`: system Git CLI.
 - `grill-me`: AI agent workflow skill from `https://github.com/mattpocock/skills`.
@@ -168,7 +168,7 @@ not appropriate for the user's agent or environment, ask the user before substit
 `SKILL.md` is the workflow owner, but detailed rules live in references so the skill can be read and
 maintained in layers.
 
-- `SKILL.md`: trigger, delegation boundary, gate order, progressive disclosure map, and hard rules.
+- `SKILL.md`: trigger, delegation boundary, readiness order, progressive disclosure map, and hard rules.
 - `references/state-machine.md`: entry classification, resume rules, focus switching, conversation routing, and commit identity.
 - `references/path-guides.md`: path-specific execution details for 0-to-1, adoption, existing changes, review, implementation, verification, and archive.
 - `references/prompts.md`: reusable prompts for each stage.
@@ -198,10 +198,10 @@ As the project matures, the workflow can delegate bounded helper capabilities:
 
 - **Product maturity:** prioritization, user journey, roadmap, metrics, and candidate-change shaping.
 - **Design maturity:** design references, UI direction, component/style principles, and a project-level `DESIGN.md`.
-- **Architecture maturity:** solution design, architecture review, technology selection, threat modeling, technical debt, and release gating.
+- **Architecture maturity:** solution design, architecture review, technology selection, threat modeling, technical debt, and release readiness.
 
 These helpers are capability slots, not fixed dependencies. Decisions must return to Grill Driven
-Spec artifacts and OpenSpec gates.
+Spec artifacts and OpenSpec readiness checks.
 
 ## Use With Any Agent
 
@@ -218,8 +218,8 @@ This repository uses Lore-enriched commits for decision context.
 Use a lightweight normal git commit for the initial Stage 0 baseline when Lore is unavailable. Use
 Lore for post-archive commits when available, because those commits should preserve requirement,
 design, implementation, verification, and archive context. Bare commit intent after archive means
-handle the workflow commit gate with Lore-first policy, not ordinary git commit by default. If Lore
-is missing after archive, handle the commit gate with a normal git commit, user handoff, or explicit
+handle workflow commit readiness with Lore-first policy, not ordinary git commit by default. If Lore
+is missing after archive, handle commit readiness with a normal git commit, user handoff, or explicit
 skip instead of silently moving to the next feature.
 
 Lore still relies on git's author and committer identity. Before either Lore or normal git commits,

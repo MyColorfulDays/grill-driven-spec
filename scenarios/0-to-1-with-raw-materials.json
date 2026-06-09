@@ -15,6 +15,7 @@
     "show a Driving transition heading before phase work",
     "inspect raw source materials without moving, deleting, or overwriting them",
     "create the thin Stage 0 skeleton before product, stack, design, or visual companion questions",
+    "localize generated skeleton titles, section headings, placeholders, and explanatory prose to the initial request language",
     "record raw source paths in PRD.md under Raw Sources",
     "keep Confirmed Requirements empty until the user confirms requirements during grill-me",
     "ask whether the build is a throwaway prototype or product-track build after Stage 0 unless already explicit",
@@ -25,11 +26,12 @@
     "enter grill-me after the skeleton exists with the PRD/OpenSpec convergence contract",
     "ask a compact greenfield readiness question before development if technical choices are still blocking",
     "for product-track builds, require DDD-lite boundaries and TDD-first core behavior tasks before review passes",
-    "for throwaway prototypes, record skipped DDD-lite or TDD-first gates as limitations"
+    "for throwaway prototypes, record skipped DDD-lite or TDD-first readiness checks as limitations"
   ],
   "forbiddenActions": [
     "treat raw notes as confirmed product requirements",
     "ask product, stack, design, or visual companion questions before creating the skeleton",
+    "copy English skeleton headings such as Raw Idea, Open Questions, None yet, or TBD into a non-English project",
     "treat git init alone as complete initialization when git commits are available",
     "commit with an unconfirmed machine-global git identity",
     "block Stage 0 because Lore is unavailable",
@@ -44,7 +46,7 @@
   "completionSignals": [
     "README.md, PRD.md, AGENTS.md, CONTEXT.md, SECURITY.md, and docs/ skeleton files exist or are refreshed",
     "PRD.md lists raw source paths without confirming inferred requirements",
-    "PRD.md records the build track before product-track or prototype-specific gates are applied",
+    "PRD.md records the build track before product-track or prototype-specific readiness checks are applied",
     "the agent asks the next grill-me question or explains the blocker preventing Stage 1"
   ]
 }

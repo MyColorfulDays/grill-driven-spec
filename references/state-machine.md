@@ -1,21 +1,21 @@
 # Grill Driven Spec State Machine
 
 Use this file when `SKILL.md` asks you to classify project state, resume a workflow, or decide the
-next gate. The main skill owns the workflow; this file makes the state decisions easier to audit.
+next readiness check. The main skill owns the workflow; this file makes the state decisions easier to audit.
 
 ## Entry Classification
 
 Classify the current folder and user intent using both file signals and the user's words.
 
-| Path | File Signals | User Intent | First Gate |
+| Path | File Signals | User Intent | First Readiness Check |
 |---|---|---|---|
 | `0-to-1` | No meaningful implementation artifacts. No coherent PRD, CONTEXT, or OpenSpec baseline. Raw notes may exist. | Start or build a new idea. | Stage 0 skeleton before product, stack, or design questions. |
 | `Existing Project Adoption` | Meaningful implementation exists, but project docs or OpenSpec baseline are missing or too thin. | Adopt, document, understand, or bring an existing project into the workflow. | Inventory current reality before asking product questions. |
 | `Existing Project Change` | Meaningful implementation exists, and baseline docs or OpenSpec artifacts are enough to orient a requested change. | Add, change, fix, continue, improve, or choose a next slice. | Lightweight change preflight. |
 | `Next-slice selection` | Initial OpenSpec change is complete, archived, or clearly shipped. | Ask what to improve next or where to continue. | Recommend a few small candidates, then ask one selection question. |
 
-If signals conflict, explain the classification briefly and ask the user before crossing a major
-gate. Never run the 0-to-1 skeleton flow in an implemented project. Never run full adoption when the
+If signals conflict, explain the classification briefly and ask the user before entering a major
+new stage. Never run the 0-to-1 skeleton flow in an implemented project. Never run full adoption when the
 baseline is already sufficient for a specific requested change.
 
 ## Global Stage Matrix
@@ -29,10 +29,10 @@ baseline is already sufficient for a specific requested change.
 | Project context | PRD is clear but project/domain/technical context is not enough for review. | Context is sufficient to propose the first change. | Missing `grill-with-docs`; blocking architecture, security, data, integration, or source-layout questions. |
 | Planning artifact promotion | Planning artifacts contain uncommitted or unpromoted future-facing requirements, next-slice notes, design direction, architecture/security decisions, product-track decisions, or Candidate Changes not linked to an active OpenSpec change. | User chooses to promote to OpenSpec, record/defer as Candidate Change, commit/archive as docs-only housekeeping, or leave as background context. | Unclear whether planning artifact changes should drive implementation. |
 | Proposal | User confirmed propose. | `proposal.md`, `specs/`, `design.md`, and `tasks.md` exist for the active change. | Desired behavior or convention impact is unclear. |
-| Review | Proposal artifacts exist. | Specs are testable; design assumptions are classified; tasks are executable; user is asked to confirm development. | Unknown build track, blocking TBDs, unconfirmed technical choices, missing product-track DDD/TDD gates, blocking external knowledge, oversized first slice. |
+| Review | Proposal artifacts exist. | Specs are testable; design assumptions are classified; tasks are executable; user is asked to confirm development. | Unknown build track, blocking TBDs, unconfirmed technical choices, missing product-track DDD/TDD readiness checks, blocking external knowledge, oversized first slice. |
 | Implementation | Review passed and user confirmed development. | Tasks complete; tests/lint/build pass or gaps are explained. | Requirement/design conflict, failing verification, missing runtime/tooling. |
 | User verification | Agent-side work is complete. | User has verified the core flow or explicitly reports verification result. | Manual/browser verification not actually performed or reported. |
-| Sync and archive | User verification passed. | Specs are synced; Durable Docs Closure Audit passed; change is archived; commit gate is handled. | Incomplete tasks, stale docs/specs, unresolved relevant future-facing durable-doc content, unresolved blocking questions, unhandled commit decision. |
+| Sync and archive | User verification passed. | Specs are synced; Durable Docs Closure Audit passed; change is archived; commit readiness is handled. | Incomplete tasks, stale docs/specs, unresolved relevant future-facing durable-doc content, unresolved blocking questions, unhandled commit decision. |
 
 ## Resume Rules
 
@@ -75,7 +75,7 @@ change.
 
 Use OpenSpec as the primary change-state signal when it exists:
 
-| File State | Resume Gate |
+| File State | Resume Readiness Check |
 |---|---|
 | `openspec/` missing | Initialize OpenSpec before creating changes. |
 | Planning artifacts have uncommitted or unpromoted future-facing change content | Ask whether to promote to OpenSpec, keep as Candidate Change, commit/archive as docs-only housekeeping, or treat as background context. |
@@ -84,10 +84,10 @@ Use OpenSpec as the primary change-state signal when it exists:
 | Review passed and development was confirmed | Continue Stage 6 from the first incomplete task. |
 | Implementation complete but user verification is not recorded | Continue Stage 7. |
 | User verification passed but change is not archived | Continue Stage 8. |
-| Change appears archived and synced but related changes are uncommitted | Handle the Stage 8 commit gate before recommending a new feature. |
+| Change appears archived and synced but related changes are uncommitted | Handle Stage 8 commit readiness before recommending a new feature. |
 
-If multiple active changes exist, list each one with the detected earliest incomplete gate, then ask
-the user which one to continue. A session should have one active focus at a time.
+If multiple active changes exist, list each one with the detected earliest incomplete readiness
+check, then ask the user which one to continue. A session should have one active focus at a time.
 
 ## Focus Switching
 
@@ -122,16 +122,17 @@ Before responding to a workflow turn, classify it:
 
 | Route | Meaning | Response Shape |
 |---|---|---|
-| `gate-answer` | User answered the current blocking question or confirmed a gate transition. | Absorb the answer, update or prepare artifacts, and reassess the gate. |
-| `gate-clarification` | User asks what the current question means or how to choose. | Explain briefly, simplify the decision, and ask one clearer version. |
-| `productive-tangent` | Related side question reveals requirements, risks, constraints, terminology, or implementation context. | Answer, capture durable facts when in scope, then steer back to the active gate. |
+| `readiness-answer` | User answered the current blocking question or confirmed the next stage. | Absorb the answer, update or prepare artifacts, and reassess readiness. |
+| `readiness-clarification` | User asks what the current question means or how to choose. | Explain briefly, simplify the decision, and ask one clearer version. |
+| `productive-tangent` | Related side question reveals requirements, risks, constraints, terminology, or implementation context. | Answer, capture durable facts when in scope, then steer back to the active readiness question. |
 | `planning-artifact-spec-intent` | User mentions PRD/docs/design/architecture/security edits, next spec, future requirements, candidate changes, or planning content that should drive implementation before an active OpenSpec change exists. | Pause implementation and ask whether to promote the planning content into OpenSpec, keep/defer it as Candidate Change, commit/archive it as docs-only housekeeping, or leave it as background context. |
-| `new-focus` | User introduces a different feature, product direction, or change request. | Ask whether to switch focus, record a candidate, or return to the current gate. |
-| `meta-process` | User questions the workflow, pace, gates, or whether the process is working. | Pause forward motion, explain or adjust the gate, and offer the smallest useful next step. |
-| `commit-request` | User expresses bare commit intent while workflow changes may need committing, without specifying tool, message, file scope, handoff, or skip. | Treat it as confirmation to handle the commit gate using the workflow commit policy: resolve identity, check Lore, use Lore-first for context-rich commits, and fall back to normal git only when Lore is unavailable, inappropriate, or explicitly requested. |
+| `new-focus` | User introduces a different feature, product direction, or change request. | Ask whether to switch focus, record a candidate, or return to the current readiness question. |
+| `meta-process` | User questions the workflow, pace, readiness checks, or whether the process is working. | Pause forward motion, explain or adjust the current confirmation, and offer the smallest useful next step. |
+| `commit-request` | User expresses bare commit intent while workflow changes may need committing, without specifying tool, message, file scope, handoff, or skip. | Treat it as confirmation to handle commit readiness using the workflow commit policy: resolve identity, check Lore, use Lore-first for context-rich commits, and fall back to normal git only when Lore is unavailable, inappropriate, or explicitly requested. |
 
-If two consecutive user turns do not advance, revise, or explicitly defer the active gate, give a
-compact checkpoint: active focus, current gate, what changed, and the single next question.
+If two consecutive user turns do not advance, revise, or explicitly defer the active readiness
+question, give a compact checkpoint: active focus, what needs confirmation before the next stage,
+what changed, and the single next question.
 
 ## Commit Identity State
 
@@ -163,8 +164,8 @@ fabricated fallback such as Codex, AI, Assistant, unknown@example.com, noreply@e
 ```
 
 If no allowed source yields exactly one complete `Name <email>` pair for author and committer, stop
-at the commit gate and ask the user for the identity. Bare commit intent confirms that the commit
-gate should be handled; it does not confirm an author, a committer, a Lore downgrade, or a
+at commit identity readiness and ask the user for the identity. Bare commit intent confirms that
+commit readiness should be handled; it does not confirm an author, a committer, a Lore downgrade, or a
 machine-global identity. For context-rich workflow commits, especially post-archive commits, use
 Lore-first when Lore is available and appropriate.
 

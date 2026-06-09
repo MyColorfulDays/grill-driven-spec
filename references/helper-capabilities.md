@@ -3,7 +3,7 @@
 Use these as optional capability slots. They are not fixed dependencies.
 
 `grill-driven-spec` remains the driver: helpers enrich the current phase and return decisions to the
-project artifacts and OpenSpec gates.
+project artifacts and OpenSpec readiness checks.
 
 Before using any helper, define:
 
@@ -17,7 +17,7 @@ If a helper is unavailable, do not stop the workflow by default. Record the limi
 to local project artifacts, existing docs, screenshots, or agent-native reasoning.
 
 Helper findings are advisory until written into Grill Driven Spec artifacts and accepted by the
-relevant OpenSpec review gate. Treat findings as blocking only when they affect safety,
+relevant OpenSpec review readiness check. Treat findings as blocking only when they affect safety,
 correctness, data, deployment, reversibility, or the user's confirmed goal.
 
 ## Product Maturity Helper
@@ -91,8 +91,8 @@ decisions are written to `DESIGN.md` or the active OpenSpec `design.md`. If not,
 screenshots, existing UI, or agent-native UI review.
 
 Helper skills may use their own lightweight interaction patterns when they make the discussion
-better. Keep them bounded: state the current `Driving` gate, name the narrow decision the helper is
-supporting, and reconnect the user's next reply to that gate. A standalone visual-companion prompt or
+better. Keep them bounded: state the current `Driving` readiness question, name the narrow decision the helper is
+supporting, and reconnect the user's next reply to that readiness question. A standalone visual-companion prompt or
 browser consent step is allowed, but it must not become an unexplained stop in the main workflow.
 Accept ordinary chat replies as valid decisions unless the user explicitly chose a visual-only flow.
 
@@ -100,7 +100,7 @@ For requests such as "optimize the current project's UI and interactions", the v
 reply after preflight must stand on its own even if screenshots, browser review, or a visual board
 would help. Ask one text-answerable design-focus question, such as which outcome matters most:
 visual polish, workflow friction, accessibility/responsiveness, or a specific screen. Mention any
-browser or visual companion as optional support, not as the blocking gate.
+browser or visual companion as optional support, not as the blocking readiness check.
 
 ## Architecture Maturity Helper
 
@@ -123,7 +123,7 @@ Typical outputs:
 - risk register
 - threat model or security review notes
 - technical debt assessment
-- release gate checklist
+- release readiness checklist
 
 Write back to:
 
@@ -148,7 +148,7 @@ Example mapping for an architecture helper pack:
 - technology adoption -> technology selection evaluation
 - security-sensitive design -> threat modeling or security review
 - technical debt roadmap -> technical debt assessment
-- release readiness -> product release gating
+- release readiness -> product release readiness
 
 Do not invoke architecture helpers for routine feature changes unless architecture risk is actually
 part of the current problem.

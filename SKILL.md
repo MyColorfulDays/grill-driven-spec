@@ -1,11 +1,11 @@
 ---
 name: grill-driven-spec
-description: Use when turning vague product ideas, existing-project adoption, or specific feature/change requests into clarified PRD/context docs and OpenSpec-ready proposals before coding; also use when resuming Grill Driven Spec/OpenSpec work, handling archived-but-uncommitted changes, commit gates, or Lore-first workflow commits. Triggers on grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, 0-to-1 project setup, existing project adoption, next-slice selection, requests to clarify requirements before implementation, OpenSpec archive follow-up, and bare commit intent after workflow/archive work.
+description: Use when turning vague product ideas, existing-project adoption, or specific feature/change requests into clarified PRD/context docs and OpenSpec-ready proposals before coding; also use when resuming Grill Driven Spec/OpenSpec work, handling archived-but-uncommitted changes, commit readiness, or Lore-first workflow commits. Triggers on grill-driven spec, grill-to-OpenSpec, PRD plus OpenSpec, 0-to-1 project setup, existing project adoption, next-slice selection, requests to clarify requirements before implementation, OpenSpec archive follow-up, and bare commit intent after workflow/archive work.
 ---
 
 # Grill Driven Spec
 
-Use this skill to act as a stage-gated product/spec lead for AI-assisted development.
+Use this skill to act as a staged product/spec lead for AI-assisted development.
 
 The core rule:
 
@@ -13,12 +13,12 @@ The core rule:
 grill first, spec second, code last
 ```
 
-The user expresses ideas and confirms phase transitions. You ask focused questions, update project documents, decide whether the current phase is ready to advance, and explicitly ask for confirmation before crossing major gates.
+The user expresses ideas and confirms phase transitions. You ask focused questions, update project documents, decide whether the current phase is ready to advance, and explicitly ask for confirmation before entering the next stage.
 
 ## Post-Archive Commit Policy
 
 When Grill Driven Spec or OpenSpec work has been synced, archived, or appears archived but related
-changes are still uncommitted, a bare commit intent means "handle the workflow commit gate." It does
+changes are still uncommitted, a bare commit intent means "handle workflow commit readiness." It does
 not mean ordinary `git commit` by default.
 
 For context-rich workflow commits, especially post-archive commits, use Lore-first policy:
@@ -46,8 +46,8 @@ Lore -> commits that should preserve decision context
 ```
 
 Do not copy the full behavior of dependent skills into this file. `grill-driven-spec` defines when
-to invoke them, what project artifacts they should read and update, when to stop, and which gates
-must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
+to invoke them, what project artifacts they should read and update, when to stop, and which stage
+boundaries must not be crossed. The dependent skill owns its own interaction style unless this workflow gives a
 specific contract needed for PRD/OpenSpec convergence.
 
 ### Skill Delegation Boundary
@@ -56,7 +56,7 @@ When `grill-driven-spec` is active, it owns:
 
 ```text
 workflow path selection
-stage and gate transitions
+stage transitions and readiness checks
 user confirmation points
 artifact routing
 OpenSpec proposal, review, development, verification, and archive lifecycle
@@ -71,15 +71,15 @@ A delegated helper must:
 receive a narrow contract
 preserve the helper's native interaction style and core behavior
 write findings back to grill-driven-spec artifacts such as PRD.md, CONTEXT.md, docs/, or the active OpenSpec change
-avoid introducing its own unrelated major gates
+avoid introducing its own unrelated major readiness checks
 avoid redirecting to its own unrelated artifact structure
-avoid bypassing OpenSpec gates
+avoid bypassing OpenSpec readiness checks
 return control to grill-driven-spec after the bounded task
 ```
 
 Do not let a helper skill start its own end-to-end workflow, require its own visual/browser/setup
-gate, or create parallel specs outside the Grill Driven Spec artifacts unless the user explicitly
-requested that separate workflow or that gate is the current blocking question.
+confirmation, or create parallel specs outside the Grill Driven Spec artifacts unless the user
+explicitly requested that separate workflow or that confirmation is the current blocking question.
 
 Check dependency availability during preflight. If a required dependent skill or tool is missing,
 install it from a verified source, enable it, or ask the user to do so before crossing the stage that
@@ -101,9 +101,9 @@ Prefer enabling already-installed local skills over installing new global packag
 
 ### First-run Bootstrap
 
-Run a lightweight bootstrap before crossing the first workflow gate in a new project or a new agent
+Run a lightweight bootstrap before the first workflow readiness check in a new project or a new agent
 environment. Bootstrap is not a separate product stage; it is the dependency and workspace sanity
-check that lets the stage gates run predictably.
+check that lets stage progression run predictably.
 
 Classify each dependency by what it blocks:
 
@@ -118,7 +118,7 @@ Lore -> default for context-rich workflow commits; missing Lore does not block S
 Skill dependencies such as `grill-me` and `grill-with-docs` are agent skills, not shell commands.
 Do not check them with `which` or install similarly named CLI packages. If the current agent cannot
 prove that a required skill is loaded, say which stage is blocked, show the verified install or
-enablement source, and ask the user whether to install, enable, or stop at that gate.
+enablement source, and ask the user whether to install, enable, or stop at that boundary.
 
 Do not silently install global tools, write global prompt/config files, or substitute package names.
 When a dependency is missing, report:
@@ -135,9 +135,9 @@ Record durable setup limitations in `docs/ai-tools.md` once the project skeleton
 skeleton exists, keep the bootstrap report in chat and continue only with stages not blocked by the
 missing dependency.
 
-## Stage Gates
+## Stage Readiness
 
-Follow these gates in order unless the project already has later-stage artifacts.
+Follow these readiness checks in order unless the project already has later-stage artifacts.
 
 ### Stage 0 Invariants
 
@@ -159,7 +159,7 @@ create the thin skeleton files listed in references/file-skeletons.md
 preserve raw source materials in place and list their paths in PRD.md without treating them as confirmed requirements
 record missing or skipped tools in docs/ai-tools.md after that file exists
 create an initial baseline commit containing only generated or refreshed workflow skeleton files when git is available and an allowed author/committer identity is available
-stop at the commit identity gate before any baseline commit when no allowed author/committer identity is available
+stop at commit identity readiness before any baseline commit when no allowed author/committer identity is available
 ```
 
 Stage 0 must not:
@@ -188,7 +188,7 @@ read references/helper-capabilities.md before invoking product, design, or archi
 ```
 
 The references are not optional background. They are the canonical detailed rules for their topics.
-`SKILL.md` remains the workflow owner: it defines the trigger, delegation boundary, hard gates, and
+`SKILL.md` remains the workflow owner: it defines the trigger, delegation boundary, hard boundaries, and
 rules that must not be bypassed.
 
 ## Progress Tracking
@@ -200,10 +200,10 @@ Rules:
 
 ```text
 create the progress plan during preflight or resume, before doing substantial stage work
-use one task per active gate or phase, not one task per tiny substep
+use one task per active readiness check or phase, not one task per tiny substep
 keep exactly one task in progress whenever possible
-mark tasks completed as soon as their gate is actually satisfied
-when resuming, rebuild the plan from the earliest incomplete gate based on files, not chat memory
+mark tasks completed as soon as their readiness check is actually satisfied
+when resuming, rebuild the plan from the earliest incomplete readiness check based on files, not chat memory
 when switching focus, replace the plan with tasks for the newly selected focus
 do not mark implementation, user verification, or archive complete until the corresponding file/tool/user evidence exists
 ```
@@ -223,7 +223,7 @@ Sync and archive
 ```
 
 For Existing Project Adoption, Existing Project Change, or Next-slice selection, create a shorter
-plan that matches the chosen path and starts at the earliest incomplete gate. Keep the user-facing
+plan that matches the chosen path and starts at the earliest incomplete readiness check. Keep the user-facing
 `Driving` heading as the phase label in chat, and use the progress plan as the side-channel status.
 
 ## Conversation Steering
@@ -235,48 +235,48 @@ route every turn back into the active workflow state.
 Before responding to each user turn, classify it:
 
 ```text
-gate-answer -> the user answered the current blocking question or confirmed a gate transition
-gate-clarification -> the user asks what the current question means, why it matters, or how to choose
+readiness-answer -> the user answered the current blocking question or confirmed the next stage
+readiness-clarification -> the user asks what the current question means, why it matters, or how to choose
 productive-tangent -> the user asks a related side question that may reveal requirements, risks, constraints, terminology, or implementation context
 new-focus -> the user introduces a different feature, product direction, or change request
-meta-process -> the user questions the workflow, pace, gates, or whether this process is working
+meta-process -> the user questions the workflow, pace, readiness checks, or whether this process is working
 ```
 
 Then respond according to the route:
 
 ```text
-gate-answer:
-  absorb the answer, update or prepare the relevant artifact, and reassess whether the current gate can advance
+readiness-answer:
+  absorb the answer, update or prepare the relevant artifact, and reassess whether the current stage can advance
 
-gate-clarification:
-  explain the question briefly, reduce the decision to an easier shape, and ask one clearer version of the current gate question
+readiness-clarification:
+  explain the question briefly, reduce the decision to an easier shape, and ask one clearer version of the current readiness question
 
 productive-tangent:
-  answer the tangent, record any durable requirement/risk/constraint/term/open question/candidate in the right artifact when file edits are in scope, then steer back to the active gate
+  answer the tangent, record any durable requirement/risk/constraint/term/open question/candidate in the right artifact when file edits are in scope, then steer back to the active readiness question
 
 new-focus:
-  do not silently switch; ask whether to switch focus now, record it as a Candidate Change, or return to the current gate
+  do not silently switch; ask whether to switch focus now, record it as a Candidate Change, or return to the current readiness question
 
 meta-process:
-  pause forward motion, explain the purpose of the current gate, adjust the pace if needed, then offer the smallest useful next step
+  pause forward motion, explain why the current confirmation is needed, adjust the pace if needed, then offer the smallest useful next step
 ```
 
 A tangent must end in one of these explicit steering outcomes:
 
 ```text
-return to current gate
+return to current readiness question
 record as Candidate Change
 switch-focus confirmation
-update artifact and reassess gate
+update artifact and reassess readiness
 pause workflow by explicit user request
 ```
 
-Do not let the last line of a workflow reply be vague when the active gate is still open. Prefer a
+Do not let the last line of a workflow reply be vague when the active readiness question is still open. Prefer a
 concrete steering move:
 
 ```text
 Good:
-"I will record that as a Candidate Change. Back to the current gate: for the first slice, should the user complete A or B first?"
+"I will record that as a Candidate Change. Before the next stage: for the first slice, should the user complete A or B first?"
 
 Bad:
 "Anything else?"
@@ -285,12 +285,12 @@ Bad:
 ```
 
 Use checkpoint recovery when drift accumulates. If two consecutive user turns do not advance,
-revise, or explicitly defer the active gate, the next assistant reply must include a short
+revise, or explicitly defer the active readiness question, the next assistant reply must include a short
 checkpoint:
 
 ```text
 active focus
-current gate
+what needs confirmation before the next stage
 what the side discussion changed or clarified
 the single next question or confirmation needed
 ```
@@ -299,9 +299,9 @@ Also checkpoint when:
 
 ```text
 the user says continue, next, then what, or similar
-the conversation has become long enough that the current gate may be unclear
+the conversation has become long enough that the next needed confirmation may be unclear
 the user raises a new direction without saying whether to switch focus
-the assistant is about to cross a major gate
+the assistant is about to enter a major new stage
 the assistant resumes after interruption or context compaction
 ```
 
@@ -323,7 +323,7 @@ Existing Project Change
 Next-slice selection
 ```
 
-If signals conflict, explain the classification briefly and ask before crossing a major gate. Do not
+If signals conflict, explain the classification briefly and ask before entering a major new stage. Do not
 run the 0-to-1 skeleton flow in an implemented project. Do not run full adoption when a baseline is
 already sufficient for a specific requested change.
 
@@ -332,9 +332,9 @@ already sufficient for a specific requested change.
 When a session resumes or the user says to continue, inspect current artifacts before choosing a
 stage. Do not rely on chat memory alone. Use `references/state-machine.md` for the resume checklist,
 OpenSpec file-state matrix, multiple-active-change handling, and archived-but-uncommitted commit
-gate.
+readiness.
 
-Resume from the earliest incomplete gate. Do not repeat completed stages unless artifacts are
+Resume from the earliest incomplete readiness check. Do not repeat completed stages unless artifacts are
 missing, inconsistent, or the user explicitly asks to revisit them.
 
 ## Change Focus and Candidates
@@ -348,7 +348,7 @@ impact are clear enough for review.
 
 If planning artifacts contain future-facing requirements, next-slice notes, first-slice direction,
 design direction, architecture/security decisions, product-track decisions, or Candidate Changes
-that are not linked to an active OpenSpec change, treat that as a Planning Artifact Promotion gate.
+that are not linked to an active OpenSpec change, treat that as Planning Artifact Promotion readiness.
 Planning artifacts include `PRD.md`, `CONTEXT.md`, `DESIGN.md`, `SECURITY.md`,
 `docs/architecture.md`, `docs/adr/`, `docs/proposals/`, and Candidate Changes. Do not implement from
 unpromoted planning content. Ask whether to promote it into an OpenSpec proposal, keep/defer it as a
@@ -361,7 +361,7 @@ Before creating a git or Lore commit, resolve author and committer identity. Do 
 machine's global git identity in an existing project. Use `references/state-machine.md` for the full
 commit identity preflight and selection rules.
 
-A bare commit intent means the user is asking the workflow to handle the current commit gate without
+A bare commit intent means the user is asking the workflow to handle current commit readiness without
 specifying a commit tool, message, file scope, handoff, or skip decision. It is not approval to
 invent author data, use a partial identity, use machine-global git config, or downgrade from Lore to
 a normal git commit when Lore is available and appropriate. For context-rich workflow commits,
@@ -400,7 +400,7 @@ Design Maturity:
 
 Architecture Maturity:
 - use when a change affects architecture boundaries, data model, security, privacy, integrations, performance, reliability, deployment, technology selection, or intentional refactoring
-- optional helper capability: solution design, architecture review, technology selection, threat modeling, technical debt assessment, release gating
+- optional helper capability: solution design, architecture review, technology selection, threat modeling, technical debt assessment, release readiness
 - write outcomes to docs/architecture.md, docs/adr/, SECURITY.md, active OpenSpec design.md, and tasks.md
 ```
 
@@ -430,11 +430,11 @@ fallback: what to do if the helper, external reference, MCP, browser, private sk
 Maturity helpers must not block the Fast Path. If a helper implementation is unavailable, record the
 limitation and fall back to local project artifacts, existing docs, screenshots, or agent-native
 reasoning. Helper findings are advisory until written into Grill Driven Spec artifacts and accepted
-by the relevant OpenSpec review gate. Treat findings as blocking only when they affect safety,
+by the relevant OpenSpec review readiness check. Treat findings as blocking only when they affect safety,
 correctness, data, deployment, reversibility, or the user's confirmed goal.
 
 For Design Maturity, visual companion tools may be used when they make UI or interaction decisions
-easier to evaluate. They are acceptable only when the current `Driving` phase and gate remain clear,
+easier to evaluate. They are acceptable only when the current `Driving` phase and readiness question remain clear,
 the visual board answers a narrow design question, text replies are accepted equally to visual
 clicks, choices are mirrored back into chat, and decisions are written to `DESIGN.md` or the active
 OpenSpec `design.md`. If those conditions are not met, fall back to chat, screenshots, existing
@@ -442,19 +442,19 @@ project UI, or agent-native UI review.
 
 Helper skills and visual companions may run their own lightweight interaction flow when that improves
 the user's thinking. Treat that flow as a bounded handoff, not a replacement for Grill Driven Spec.
-Before yielding to a helper-specific prompt, keep the current `Driving` gate visible and say what
+Before yielding to a helper-specific prompt, keep the current `Driving` phase and readiness question visible and say what
 decision the helper is helping with. If the helper requires a standalone invitation, browser consent,
 or other waiting step, the same assistant turn must still include a normal chat response with the
-active focus, current gate, and one concrete text-answerable question. The helper invitation may be
+active focus, current readiness question, and one concrete text-answerable question. The helper invitation may be
 offered as an option, but it must not be the only visible next step. The next assistant turn must
-resume from the user's reply and reconnect it to the current gate. Do not leave the user with an
+resume from the user's reply and reconnect it to the current readiness question. Do not leave the user with an
 unexplained helper prompt, and do not require a visual click when a normal chat reply is enough.
 
 When a user asks to improve UI or interactions in an existing project, treat it as a Design Maturity
 existing-project change unless project-state signals say otherwise. The first stopping point after
 preflight should ask for the narrow design outcome to optimize, for example visual polish,
 workflow friction, accessibility/responsiveness, or a specific screen. Offer screenshots or browser
-review only as optional support after the `Driving` gate and text-answerable question are visible.
+review only as optional support after the `Driving` phase and text-answerable question are visible.
 
 See `references/helper-capabilities.md` for helper capability slots and example implementations.
 
@@ -472,15 +472,17 @@ for new projects, use the primary language of the user's initial project request
 for existing projects, inherit the primary language of authoritative docs such as README.md, PRD.md, CONTEXT.md, or OpenSpec artifacts
 if the project language is unclear, ask the user once before creating substantial docs
 do not switch artifact language just because a later chat message uses a different language
-keep file names, commands, code identifiers, dependency names, and workflow/tool names such as grill-me, grill-with-docs, OpenSpec, Lore, Stage, gate, proposal.md, design.md, tasks.md, Observed, Confirmed, and Open Questions in their established form
+keep file names, commands, code identifiers, dependency names, and workflow/tool names such as grill-me, grill-with-docs, OpenSpec, Lore, Stage, readiness, proposal.md, design.md, and tasks.md in their established form
+do not preserve template section headings, placeholder words, or explanatory prose in English merely because this skill's examples are written in English
+translate generated document titles, section headings, status labels, placeholders, and prose into the resolved project artifact language unless an existing project has already established those labels
 preserve raw source materials in their original language
 write summaries, confirmed requirements, OpenSpec proposal text, spec requirements, acceptance criteria, design notes, and tasks in the project artifact language unless quoting source material
-write user-visible phase transitions, gate prompts, validation summaries, status updates, and confirmation questions in the project language
+write user-visible phase transitions, readiness prompts, validation summaries, status updates, and confirmation questions in the project language
 apply this conversation-language rule throughout Stage 0 through Stage 8, including development progress, verification handoff, and archive reporting
-do not paste English gate prompt templates verbatim when the project language is not English; translate or adapt the prompt while preserving command names and file names
+do not paste English readiness prompt templates verbatim when the project language is not English; translate or adapt the prompt while preserving command names and file names
 do not let English CLI output, OpenSpec output, tool labels, or prompt templates change the reply language; summarize tool results in the project language while preserving exact commands, file names, and error identifiers
 do not let English examples in this skill become the default language for generated project artifacts
-prefer natural wording in the project language over rigid literal translation; keep the gate meaning and decision point clear
+prefer natural wording in the project language over rigid literal translation; keep the readiness meaning and decision point clear
 ```
 
 Do not rewrite unrelated existing docs just to normalize language. Keep language consistent within
@@ -488,7 +490,7 @@ the files, OpenSpec change, and user-visible workflow messages touched by the cu
 When a change touches artifacts in the wrong language, fix the touched artifact sections before
 review or archive rather than translating the whole repository.
 
-English examples and gate prompts in this skill are semantic templates, not required output text.
+English examples and readiness prompts in this skill are semantic templates, not required output text.
 Before showing them to the user, translate or adapt them to the project language. Keep established
 workflow identifiers such as `Driving`, `OpenSpec`, `proposal.md`, `design.md`, `tasks.md`, and
 command names unchanged when translating them would reduce precision. Surrounding explanation should
@@ -526,7 +528,7 @@ briefly name the pattern when it helps the first slice
 explain why it fits in one sentence
 propose a conservative boundary instead of a broad domain model
 ask at most one blocking question at a time
-record pattern assumptions in PRD.md Open Questions or design.md, not specs
+record pattern assumptions in the localized open-questions section of PRD.md or in design.md, not specs
 do not treat industry-pattern assumptions as confirmed external-system facts
 ```
 
@@ -542,7 +544,7 @@ Markdown heading before doing phase work.
 
 For the first assistant response in a new conversation, make the heading and first sentence
 title-friendly. If the user's message starts with a command such as `/grill-driven-spec`, restate the
-actual project, adoption, or change focus in natural language before asking the first gate question.
+actual project, adoption, or change focus in natural language before asking the first readiness question.
 Do not use only a generic tool name, stage number, or command echo as the first visible topic.
 
 Use this semantic shape, adapting labels to the project language:
@@ -550,7 +552,7 @@ Use this semantic shape, adapting labels to the project language:
 ```markdown
 # Driving: <short phase or focus>
 
-Current gate: <one sentence describing what must happen before moving on>.
+Before the next stage: <one sentence describing what must be confirmed before moving on>.
 ```
 
 Use `Driving` headings for 0-to-1, adoption, existing-project changes, implementation,
@@ -558,11 +560,11 @@ verification, and archive. Do not rely on numbered Stage headings, `Adoption:` h
 `Change:` headings in user-facing transition output.
 
 When the project language is not English, keep `Driving` as the stable workflow label, but translate
-or adapt labels such as `Current gate` and the descriptive text so the transition does not feel like
+or adapt labels such as `Before the next stage` and the descriptive text so the transition does not feel like
 an English template pasted into the conversation.
 
 Tool-generated labels such as `Implementing: <change-name>` may appear, but they do not replace the
-`Driving` heading and current gate.
+`Driving` heading and current readiness question.
 
 Keep the heading short and stable. Do not rely on emojis, colors, terminal control codes, or
 agent-specific UI features for stage visibility.
@@ -684,9 +686,9 @@ Before Stage 4 work, read `references/path-guides.md#openspec-proposal`.
 
 Review before coding. The proposal must match PRD/context, specs must be testable, design must not
 depend on unconfirmed assumptions, technical approach must be ready, and tasks must be executable.
-OpenSpec artifacts and user-facing gate text must use the resolved project language except for code
+OpenSpec artifacts and user-facing readiness text must use the resolved project language except for code
 identifiers, commands, file names, and established workflow terms. If review fails, return to the
-relevant grill/context gate and ask one blocking question. If it passes, ask the user to confirm
+relevant grill/context readiness check and ask one blocking question. If it passes, ask the user to confirm
 development.
 
 Before Stage 5 work, read `references/path-guides.md#review-before-development` and
@@ -713,14 +715,14 @@ Before Stage 7 work, read `references/path-guides.md#implement-verify-sync-and-a
 Archive only after user verification passes. Before archiving, re-check tasks, tests/lint/build,
 README, PRD, CONTEXT, docs, specs, blocking open questions, and the Durable Docs Closure Audit.
 Also check language consistency for artifacts touched by the current change. After archive
-verification, handle the commit gate before calling the workflow complete.
+verification, handle commit readiness before calling the workflow complete.
 
 Before Stage 8 work, read `references/path-guides.md#implement-verify-sync-and-archive` and the
 commit identity rules in `references/state-machine.md#commit-identity-state`.
 
 ## Hard Rules
 
-- Do not cross a major stage gate without telling the user what you are about to do.
+- Do not enter a major new stage without telling the user what you are about to do.
 - Do not skip First-run Bootstrap when dependencies or agent skill availability are unknown.
 - Do not ask product, stack, design, visual companion, or OpenSpec proposal questions before Stage 0 skeleton exists for a 0-to-1 project.
 - Do not treat a product idea in the first user message as permission to grill before Stage 0; capture it as seed input and bootstrap first.
@@ -737,11 +739,11 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 - Do not create git or Lore commits before resolving the intended author and committer identity.
 - Do not fabricate commit author or committer identity from usernames, project names, remote owners, package metadata, chat names, or placeholder emails.
 - Do not call a new-project Stage 0 fully initialized when git is available but the generated baseline has not been committed or explicitly handed off.
-- Do not call an archived change fully complete until the commit gate has been handled by commit, user handoff, or explicit skip.
-- Do not answer side questions in a way that loses the active gate; classify the turn, capture durable facts when needed, and steer to an explicit outcome.
-- Do not silently switch focus when the user mentions another feature or direction; ask whether to switch, record a candidate, or return to the current gate.
-- Do not end workflow replies with vague invitations while a gate is open; ask the single next question or name the next confirmation.
-- Do not end a workflow turn after tool use, preflight, helper handoff, or browser/visual-companion invitation without a normal visible chat response that includes the current `Driving` gate and one text-answerable next question.
+- Do not call an archived change fully complete until commit readiness has been handled by commit, user handoff, or explicit skip.
+- Do not answer side questions in a way that loses the active readiness question; classify the turn, capture durable facts when needed, and steer to an explicit outcome.
+- Do not silently switch focus when the user mentions another feature or direction; ask whether to switch, record a candidate, or return to the current readiness question.
+- Do not end workflow replies with vague invitations while a readiness question is open; ask the single next question or name the next confirmation.
+- Do not end a workflow turn after tool use, preflight, helper handoff, or browser/visual-companion invitation without a normal visible chat response that includes the current `Driving` phase and one text-answerable next question.
 - Keep documentation alive throughout the work, not only at the end.
 
 ## References
@@ -749,7 +751,7 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 Reference map:
 
 - `references/state-machine.md` for entry classification, workflow resume, focus switching, conversation routing, and commit identity.
-- `references/path-guides.md` for path-specific execution details and gate prompts.
+- `references/path-guides.md` for path-specific execution details and readiness prompts.
 - `references/prompts.md` for stage prompts.
 - `references/file-skeletons.md` for starter document skeletons.
 - `references/review-checklist.md` for proposal/task review.
