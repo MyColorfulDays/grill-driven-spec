@@ -418,6 +418,9 @@ Confirmed: enter OpenSpec propose.
 
 Create the first OpenSpec change from PRD.md, CONTEXT.md, docs/, and the grill results.
 Write proposal.md, specs/, design.md, and tasks.md.
+Resolve the project artifact language first. Use it for proposal narrative, spec requirements and
+acceptance criteria, design notes, and task descriptions. Keep file names, commands, code
+identifiers, API names, and established workflow terms unchanged.
 Include implementation, tests, docs, CI, durable docs closure work when relevant, and DDD/TDD tasks
 required by the selected build track.
 In design.md, include Technical Approach with confirmed choices, proposed defaults awaiting approval,
@@ -448,8 +451,9 @@ Do not implement.
 ```text
 Review the current OpenSpec change before development.
 
-Check proposal vs PRD.md, testability of specs, unconfirmed assumptions in design,
-technical readiness for implementation, task size and order, and missing tests/docs/CI.
+Check proposal vs PRD.md, project artifact language consistency, testability of specs, unconfirmed
+assumptions in design, technical readiness for implementation, task size and order, and missing
+tests/docs/CI.
 For greenfield projects, review must fail if the build track is unknown or required stack/runtime,
 persistence, security/data handling, source layout, broad UI direction, integrations, local
 verification, or deployment choices are still TBD and not explicitly delegated to the agent. For
@@ -465,6 +469,8 @@ question with a recommended stack, not a development confirmation.
 If required external knowledge is blocking, the next gate is an integration readiness question: ask
 for docs/examples/access details, identify the existing project contract to inherit, or ask whether
 to proceed with a provisional mock boundary and documented assumptions.
+If proposal.md, specs, design.md, tasks.md, or user-facing gate text use the wrong language, fix the
+touched artifact sections before asking for development confirmation.
 When reporting the review result, summarize validation and the next gate naturally in the project
 language. Keep command names, change names, and file names such as openspec validate, tasks.md, and
 design.md unchanged.
@@ -499,6 +505,8 @@ If local browser automation, network, sandbox, or server issues block verificati
 ```text
 Before archiving, check tasks, tests/lint/build, README.md, PRD.md, CONTEXT.md, docs/,
 openspec/specs/, unresolved open questions or ADRs, and the Durable Docs Closure Audit.
+Also check language consistency for artifacts touched by the current change: generated requirements,
+design notes, summaries, and tasks should use the resolved project artifact language.
 Run the audit even when tasks.md says docs are updated. Scan durable docs and active OpenSpec
 artifacts for future-facing terms such as next, recommended next, future, candidate, TBD, Open
 Questions, 下一步, 候选, and 后续. Classify only matches relevant to the current change or touched

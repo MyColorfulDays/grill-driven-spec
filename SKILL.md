@@ -370,6 +370,12 @@ use `lore commit` unless Lore is unavailable, inappropriate for the environment,
 explicitly asks for a normal git commit. If no allowed source gives one complete `Name <email>`
 identity, ask the user before committing.
 
+Commit messages are repository history, not project documentation. Choose the commit message and
+Lore `intent`/`body` language from recent repository commit history by default. If history is
+clearly English, use English even when the current conversation or project docs are not English. If
+history is clearly in the resolved project language, use that language. If commit history is mixed
+or unclear, use the resolved project language unless the user explicitly asks for a commit language.
+
 ## Progressive Maturity
 
 Start lightweight, then add maturity helpers only when the project shows that need.
@@ -461,22 +467,26 @@ The goal is a natural project-local experience, not word-for-word translation of
 Default rules:
 
 ```text
+resolve the project artifact language before creating or substantially updating PRD, CONTEXT, OpenSpec proposal, design, specs, tasks, or durable docs
 for new projects, use the primary language of the user's initial project request
 for existing projects, inherit the primary language of authoritative docs such as README.md, PRD.md, CONTEXT.md, or OpenSpec artifacts
 if the project language is unclear, ask the user once before creating substantial docs
 do not switch artifact language just because a later chat message uses a different language
 keep file names, commands, code identifiers, dependency names, and workflow/tool names such as grill-me, grill-with-docs, OpenSpec, Lore, Stage, gate, proposal.md, design.md, tasks.md, Observed, Confirmed, and Open Questions in their established form
 preserve raw source materials in their original language
-write summaries, confirmed requirements, specs, design notes, and tasks in the project artifact language unless quoting source material
+write summaries, confirmed requirements, OpenSpec proposal text, spec requirements, acceptance criteria, design notes, and tasks in the project artifact language unless quoting source material
 write user-visible phase transitions, gate prompts, validation summaries, status updates, and confirmation questions in the project language
 apply this conversation-language rule throughout Stage 0 through Stage 8, including development progress, verification handoff, and archive reporting
 do not paste English gate prompt templates verbatim when the project language is not English; translate or adapt the prompt while preserving command names and file names
 do not let English CLI output, OpenSpec output, tool labels, or prompt templates change the reply language; summarize tool results in the project language while preserving exact commands, file names, and error identifiers
+do not let English examples in this skill become the default language for generated project artifacts
 prefer natural wording in the project language over rigid literal translation; keep the gate meaning and decision point clear
 ```
 
 Do not rewrite unrelated existing docs just to normalize language. Keep language consistent within
 the files, OpenSpec change, and user-visible workflow messages touched by the current workflow.
+When a change touches artifacts in the wrong language, fix the touched artifact sections before
+review or archive rather than translating the whole repository.
 
 English examples and gate prompts in this skill are semantic templates, not required output text.
 Before showing them to the user, translate or adapt them to the project language. Keep established
@@ -665,7 +675,8 @@ Before Stage 3 work, read `references/path-guides.md#project-context`.
 Create OpenSpec change artifacts only after user confirmation. Specs describe testable behavior;
 design records technical approach, constraints, risks, and classified assumptions; tasks include
 implementation, tests, docs, CI, durable docs closure work when relevant, and TDD/DDD tasks required
-by the selected build track. Do not implement after proposing.
+by the selected build track. Resolve the project artifact language before writing them. Do not
+implement after proposing.
 
 Before Stage 4 work, read `references/path-guides.md#openspec-proposal`.
 
@@ -673,8 +684,10 @@ Before Stage 4 work, read `references/path-guides.md#openspec-proposal`.
 
 Review before coding. The proposal must match PRD/context, specs must be testable, design must not
 depend on unconfirmed assumptions, technical approach must be ready, and tasks must be executable.
-If review fails, return to the relevant grill/context gate and ask one blocking question. If it
-passes, ask the user to confirm development.
+OpenSpec artifacts and user-facing gate text must use the resolved project language except for code
+identifiers, commands, file names, and established workflow terms. If review fails, return to the
+relevant grill/context gate and ask one blocking question. If it passes, ask the user to confirm
+development.
 
 Before Stage 5 work, read `references/path-guides.md#review-before-development` and
 `references/review-checklist.md`.
@@ -699,7 +712,8 @@ Before Stage 7 work, read `references/path-guides.md#implement-verify-sync-and-a
 
 Archive only after user verification passes. Before archiving, re-check tasks, tests/lint/build,
 README, PRD, CONTEXT, docs, specs, blocking open questions, and the Durable Docs Closure Audit.
-After archive verification, handle the commit gate before calling the workflow complete.
+Also check language consistency for artifacts touched by the current change. After archive
+verification, handle the commit gate before calling the workflow complete.
 
 Before Stage 8 work, read `references/path-guides.md#implement-verify-sync-and-archive` and the
 commit identity rules in `references/state-machine.md#commit-identity-state`.
@@ -717,6 +731,7 @@ commit identity rules in `references/state-machine.md#commit-identity-state`.
 - Do not implement immediately after propose; review first.
 - Do not implement from future-facing planning artifact changes before the user chooses whether to promote them to OpenSpec, keep/defer them as Candidate Changes, commit/archive them as docs-only housekeeping, or treat them as background context.
 - Do not put unconfirmed assumptions into specs as facts.
+- Do not generate OpenSpec `proposal.md`, `design.md`, `tasks.md`, or specs in English by default when the resolved project artifact language is not English.
 - Do not archive before user verification.
 - Do not archive until the Durable Docs Closure Audit has been run; block archive only on future-facing durable-doc content that is relevant to the current change and still unresolved.
 - Do not create git or Lore commits before resolving the intended author and committer identity.

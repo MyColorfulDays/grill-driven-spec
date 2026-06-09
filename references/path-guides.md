@@ -350,6 +350,13 @@ implementation details. `design.md` records technical approach, constraints, ris
 questions. `tasks.md` includes implementation, tests, docs, CI, durable docs closure work when
 relevant, and DDD/TDD tasks required by the selected build track.
 
+Before writing these files, resolve the project artifact language. Use that language for
+`proposal.md` narrative text, `design.md` design notes, `tasks.md` task descriptions, spec
+requirements, and acceptance criteria. Keep file names, commands, code identifiers, API names, and
+established workflow terms unchanged. For new projects, default to the user's initial project
+request language. For existing projects, inherit the primary language of authoritative docs. If the
+language is mixed or unclear, ask once before creating substantial docs.
+
 For greenfield projects, `design.md` must include a Technical Approach section before review. It
 must record confirmed choices, proposed defaults awaiting approval, and technical open questions for
 application shape/runtime, source and test layout, persistence, sensitive-data handling,
@@ -391,6 +398,7 @@ Review the new change before coding. Check:
 
 ```text
 proposal matches PRD.md
+OpenSpec artifacts use the resolved project artifact language
 specs are testable
 design does not depend on unconfirmed assumptions
 technical approach is ready for implementation
@@ -419,6 +427,10 @@ If required external knowledge is blocking, ask for docs/examples/access details
 existing project contract to inherit, or ask whether to proceed with a provisional mock boundary and
 documented assumptions. Do not ask for development confirmation yet.
 
+If `proposal.md`, `design.md`, `tasks.md`, specs, or user-facing gate text drift into the wrong
+language, fail review and fix the touched artifact sections before asking for development
+confirmation. Do not rewrite unrelated historical docs solely to normalize language.
+
 If review fails, return to the relevant grill/context gate and ask one blocking question. If review
 passes, ask the user to confirm development.
 
@@ -436,6 +448,11 @@ Archive only after user verification passes. Before archiving, check tasks, test
 README.md, PRD.md, CONTEXT.md, docs, specs, unresolved open questions or ADRs, and the Durable Docs
 Closure Audit. The audit is mandatory before archive, regardless of whether `tasks.md` included a
 docs task.
+
+Also run a language consistency check for artifacts touched by the current change. Touched durable
+docs and OpenSpec artifacts should use the resolved project artifact language for generated
+requirements, design notes, summaries, and tasks. Do not block archive on unrelated historical docs,
+quoted raw source material, code identifiers, commands, file names, or established workflow terms.
 
 Durable Docs Closure Audit:
 

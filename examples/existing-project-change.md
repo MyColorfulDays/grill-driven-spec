@@ -79,6 +79,8 @@ Or:
 - If the user explicitly asks for productization, DDD/TDD migration, maintainability refactoring, or product-grade architecture, the agent treats that as a scoped product-track refactoring change instead of silently applying it to unrelated small changes.
 - If baseline docs are too thin to judge desired behavior, the agent creates or refreshes only the minimum adoption baseline before proposing.
 - The agent creates an OpenSpec proposal only after desired behavior and convention impact are clear.
+- Before creating OpenSpec artifacts, the agent resolves the project artifact language and uses it for `proposal.md`, specs, `design.md`, and `tasks.md` generated content.
+- Review fails if touched OpenSpec artifacts or user-facing gate text drift into the wrong language.
 - If a previous session left an active OpenSpec change in `openspec/changes/`, the agent resumes that change before recommending another one.
 - If multiple active changes exist, the agent lists them with detected gate or phase and asks which one to continue.
 - If a feature idea is not ready for OpenSpec, the agent records it as a lightweight candidate instead of relying on chat memory.
@@ -90,6 +92,7 @@ Or:
 - After archive and spec sync, the agent checks git status and handles the commit gate before calling the workflow fully complete.
 - Before archive, the agent runs the Durable Docs Closure Audit and resolves only relevant future-facing durable-doc content: completed work becomes current state, unfinished work remains backlog/candidate, historical/background material stays non-requirement, and unclear relevant items are asked about.
 - Before creating Lore or normal git commits, the agent compares repository-local git identity with recent commit authors/committers and uses only an allowed complete identity source or asks the user.
+- Commit messages and Lore `intent`/`body` use the dominant recent commit message language by default, not automatically the current chat language.
 - If the user manually applied, verified, and archived the change, the agent detects an archived-but-uncommitted state on resume and handles the commit gate with Lore-first policy; normal git is offered only when Lore is unavailable, inappropriate, or explicitly requested.
 - When the user expresses bare commit intent after archive, the agent treats that as permission to handle the commit gate with Lore-first policy, not as permission to invent author/committer identity or to use a normal git commit when Lore is available and appropriate.
 - For post-archive commits, the agent uses Lore when available and appropriate; normal git is used only when Lore is unavailable, inappropriate, or explicitly requested.
@@ -110,6 +113,8 @@ Or:
 - Depending on a visual click without accepting a normal text reply as the workflow decision.
 - Asking stack, CSS framework, screen-layout, or deployment questions when the change follows existing conventions.
 - Creating an OpenSpec change before knowing whether the requested behavior conflicts with current desired behavior.
+- Generating `proposal.md`, specs, `design.md`, or `tasks.md` in English by default when the resolved project artifact language is not English.
+- Rewriting unrelated historical docs just to normalize language.
 - Implementing directly from planning artifact changes that were intended for the next spec without asking the Planning Artifact Promotion question.
 - Treating future-facing planning artifact edits as ordinary documentation sync when they affect implementation.
 - Archiving while durable docs still describe completed current-change work as the recommended next step.
@@ -126,6 +131,7 @@ Or:
 - Creating a post-archive commit with a fabricated author or committer inferred from OS username, remote owner, package metadata, README, chat name, project name, or placeholder email.
 - Treating bare commit intent as approval to use a guessed, partial, ambiguous, or machine-global identity.
 - Treating bare commit intent as a request for ordinary git commit when Lore is available and appropriate.
+- Using the current chat language for commit messages when recent repository commit history clearly uses another language.
 - Using normal git for a post-archive commit when Lore is available and appropriate and the user did not request normal git.
 - Treating missing Lore as a reason to ignore the post-archive commit gate instead of offering normal git commit or user handoff.
 - Treating one session as unable to switch feature focus when the user explicitly changes topic.

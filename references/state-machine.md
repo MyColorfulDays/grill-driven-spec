@@ -44,6 +44,7 @@ Check:
 git status and current branch
 repository-local git author/committer config and recent commit identities when commits may be needed
 recent commits when deciding whether a baseline or archived change has already been committed
+recent commit message language when a commit may be needed
 PRD.md, CONTEXT.md, SECURITY.md, DESIGN.md, docs/, docs/proposals/, docs/ai-tools.md, and docs/adr/ when present
 recent planning artifact changes from git diff or recent commits when they may describe the next spec
 raw sources already recorded in PRD.md
@@ -170,3 +171,8 @@ Lore-first when Lore is available and appropriate.
 When the selected identity differs from current git config, pass identity explicitly through
 `--author` and the relevant `GIT_COMMITTER_NAME` / `GIT_COMMITTER_EMAIL` environment variables, or
 set repository-local config only with user approval.
+
+Choose commit message language separately from project artifact language. Inherit the dominant
+language of recent repository commit messages by default. Use the resolved project artifact language
+only when commit history is mixed or unclear, or when that is already the dominant commit language.
+Follow an explicit user request for commit language.

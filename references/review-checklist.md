@@ -5,6 +5,7 @@ Use after an OpenSpec change is created and before development begins.
 ## Proposal
 
 - Does `proposal.md` match `PRD.md`?
+- Does `proposal.md` use the resolved project artifact language, except for file names, commands, code identifiers, and established workflow terms?
 - Are future-facing planning artifact changes either represented by this OpenSpec change, recorded/deferred as Candidate Changes, committed/archived as docs-only housekeeping, or explicitly treated as background context?
 - Does it explain why the change exists?
 - Does it clearly say what is in scope?
@@ -13,6 +14,7 @@ Use after an OpenSpec change is created and before development begins.
 
 ## Specs
 
+- Do specs use the resolved project artifact language for requirements and acceptance criteria?
 - Is each requirement observable from user or system behavior?
 - Can each requirement be tested?
 - Are acceptance criteria specific enough?
@@ -21,6 +23,7 @@ Use after an OpenSpec change is created and before development begins.
 
 ## Design
 
+- Does `design.md` use the resolved project artifact language for design notes and tradeoffs?
 - Does `design.md` depend on unconfirmed product assumptions?
 - Are technical constraints and risks explicit?
 - For greenfield projects, is the build track recorded as throwaway prototype or product-track build?
@@ -42,6 +45,7 @@ Use after an OpenSpec change is created and before development begins.
 
 ## Tasks
 
+- Does `tasks.md` use the resolved project artifact language for task descriptions?
 - Are tasks small enough to execute and verify?
 - Are tasks ordered sensibly?
 - For product-track builds, do core behavior test tasks appear before related implementation tasks?
@@ -63,6 +67,11 @@ the Planning Artifact Promotion question before development.
 If planning artifacts are represented by the active OpenSpec change but `tasks.md` does not schedule
 the durable docs closure work needed after implementation, fail review and add that task before
 asking for development confirmation.
+
+If `proposal.md`, specs, `design.md`, `tasks.md`, or user-facing gate text use a different language
+from the resolved project artifact language, fail review and fix the touched artifact sections
+before asking for development confirmation. Do not fail review on quoted source material, code
+identifiers, file names, commands, or established workflow terms.
 
 If greenfield review fails because the build track is missing, ask whether this is a throwaway
 prototype or product-track build and record the answer in `PRD.md`. If greenfield review fails
